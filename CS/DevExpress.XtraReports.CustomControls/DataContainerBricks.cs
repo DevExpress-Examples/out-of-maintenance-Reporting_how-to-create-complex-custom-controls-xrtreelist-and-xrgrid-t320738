@@ -45,20 +45,17 @@ namespace DevExpress.XtraReports.CustomControls
             this.isHeader = isHeader;
         }
 
-        protected override bool AfterPrintOnPage(IList<int> indices, Page page, int pageIndex, int pageCount, Action<BrickBase> callback)
-        {
+        protected override bool AfterPrintOnPage(IList<int> indices, RectangleF brickBounds, RectangleF clipRect, Page page, int pageIndex, int pageCount, Action<BrickBase, RectangleF> callback) {
             bool isFirstPage = pageIndex == 0;
-            if (!isFirstPage)
-            {
+            if(!isFirstPage) {
                 RectangleF rect = page.GetBrickBounds(this);
                 isFirstPage = !((IPage)page).UsefulPageRectF.IntersectsWith(rect);
             }
 
-            if (isFirstPage)
-                foreach (RecordPrintCache cache in this.PrintCache.RecordsCache)
+            if(isFirstPage)
+                foreach(RecordPrintCache cache in this.PrintCache.RecordsCache)
                     ((DataRecordBrick)cache.Brick).ResetCellVerticalPosition();
-
-            return base.AfterPrintOnPage(indices, page, pageIndex, pageCount, callback);
+            return base.AfterPrintOnPage(indices, brickBounds, clipRect, page, pageIndex, pageCount, callback);
         }
 
         public override void Dispose()
@@ -105,10 +102,8 @@ namespace DevExpress.XtraReports.CustomControls
                 innerBrick.CellPosition |= position;
         }
 
-        protected override bool AfterPrintOnPage(IList<int> indices, Page page, int pageIndex, int pageCount, Action<BrickBase> callback)
-        {
-            if (!IsHeaderBrick)
-            {
+        protected override bool AfterPrintOnPage(IList<int> indices, RectangleF brickBounds, RectangleF clipRect, Page page, int pageIndex, int pageCount, Action<BrickBase, RectangleF> callback) {
+            if(!IsHeaderBrick) {
                 RecordPrintCache headerCache = parentBrick.PrintCache.HeaderCache;
                 VisualBrick headerBrick = headerCache.Brick;
 
@@ -122,21 +117,19 @@ namespace DevExpress.XtraReports.CustomControls
 
                 RecordPrintCache prevCache = null;
                 float prevNodeHeight = 1;
-                if (cacheIndex > 0)
-                {
+                if(cacheIndex > 0) {
                     prevCache = parentBrick.PrintCache.RecordsCache[cacheIndex - 1] as RecordPrintCache;
                     prevNodeHeight = prevCache.Brick.Rect.Height;
                 }
 
-                if (delta >= 0 && delta < prevNodeHeight)
-                {
+                if(delta >= 0 && delta < prevNodeHeight) {
                     this.AddCellPosition(XRDataCellPosition.FirstOnPage);
 
-                    if (prevCache != null)
+                    if(prevCache != null)
                         ((DataRecordBrick)prevCache.Brick).AddCellPosition(XRDataCellPosition.LastOnPage);
                 }
             }
-            return base.AfterPrintOnPage(indices, page, pageIndex, pageCount, callback);
+            return base.AfterPrintOnPage(indices, brickBounds, clipRect, page, pageIndex, pageCount, callback);
         }
 
         protected void RemoveCellPosition(XRDataCellPosition position)

@@ -37,20 +37,15 @@ namespace DevExpress.XtraReports.CustomControls
         public TreeListNodeBrick(IBrickOwner brickOwner, DataContainerBrick parentBrick, bool isHeaderBrick)
             : base(brickOwner, parentBrick, isHeaderBrick) { }
 
-        protected override bool AfterPrintOnPage(IList<int> indices, Page page, int pageIndex, int pageCount, Action<BrickBase> callback)
-        {
-            bool result = base.AfterPrintOnPage(indices, page, pageIndex, pageCount, callback);
-
-            if (!IsHeaderBrick)
-            {
+        protected override bool AfterPrintOnPage(IList<int> indices, RectangleF brickBounds, RectangleF clipRect, Page page, int pageIndex, int pageCount, Action<BrickBase, RectangleF> callback) {
+            bool result = base.AfterPrintOnPage(indices, brickBounds, clipRect, page, pageIndex, pageCount, callback);
+            if(!IsHeaderBrick) {
                 TreeListNodePrintCache currentCache = parentBrick.PrintCache.GetCacheByBrick(this) as TreeListNodePrintCache;
                 int cacheIndex = parentBrick.PrintCache.RecordsCache.IndexOf(currentCache);
 
-                if (cacheIndex > 0)
-                {
+                if(cacheIndex > 0) {
                     TreeListNodePrintCache prevCache = parentBrick.PrintCache.RecordsCache[cacheIndex - 1] as TreeListNodePrintCache;
-                    if (currentCache.NodeLevel < prevCache.NodeLevel)
-                    {
+                    if(currentCache.NodeLevel < prevCache.NodeLevel) {
                         ((TreeListNodeBrick)currentCache.Brick).AddCellPosition(XRDataCellPosition.HigherLevel);
                         ((TreeListNodeBrick)prevCache.Brick).AddCellPosition(XRDataCellPosition.LowerLevel);
                     }
