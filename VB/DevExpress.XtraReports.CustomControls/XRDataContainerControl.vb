@@ -519,7 +519,8 @@ Namespace DevExpress.XtraReports.CustomControls
             End Set
         End Property
 
-        <TypeConverter(GetType(DataMemberTypeConverter)), Editor(GetType(DataContainerDataMemberEditor), GetType(UITypeEditor)), RefreshProperties(RefreshProperties.All), DefaultValue("")> _
+        <TypeConverter(GetType(DataMemberTypeConverter)), Editor(GetType(DataContainerDataMemberEditor), GetType(UITypeEditor)), RefreshProperties(RefreshProperties.All), DefaultValue("")>
+        <XtraSerializableProperty>
         Public Property DataMember() As String Implements IDataContainerBase.DataMember
             Get
                 Return Me.dataMember_Renamed
