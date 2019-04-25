@@ -43,8 +43,8 @@ Namespace DevExpress.XtraReports.CustomControls
             MyBase.New(brickOwner, parentBrick, isHeaderBrick)
         End Sub
 
-        Protected Overrides Function AfterPrintOnPage(ByVal indices As IList(Of Integer), ByVal page As Page, ByVal pageIndex As Integer, ByVal pageCount As Integer, ByVal callback As Action(Of BrickBase)) As Boolean
-            Dim result As Boolean = MyBase.AfterPrintOnPage(indices, page, pageIndex, pageCount, callback)
+        Protected Overrides Function AfterPrintOnPage(indices As IList(Of Integer), brickBounds As RectangleF, clipRect As RectangleF, page As Page, pageIndex As Integer, pageCount As Integer, callback As Action(Of BrickBase, RectangleF)) As Boolean
+            Dim result As Boolean = MyBase.AfterPrintOnPage(indices, brickBounds, clipRect, page, pageIndex, pageCount, callback)
 
             If Not IsHeaderBrick Then
                 Dim currentCache As TreeListNodePrintCache = TryCast(parentBrick.PrintCache.GetCacheByBrick(Me), TreeListNodePrintCache)

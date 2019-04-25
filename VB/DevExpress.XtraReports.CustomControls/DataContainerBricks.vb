@@ -46,7 +46,7 @@ Namespace DevExpress.XtraReports.CustomControls
             Me.isHeader_Renamed = isHeader
         End Sub
 
-        Protected Overrides Function AfterPrintOnPage(ByVal indices As IList(Of Integer), ByVal page As Page, ByVal pageIndex As Integer, ByVal pageCount As Integer, ByVal callback As Action(Of BrickBase)) As Boolean
+        Protected Overrides Function AfterPrintOnPage(indices As IList(Of Integer), brickBounds As RectangleF, clipRect As RectangleF, page As Page, pageIndex As Integer, pageCount As Integer, callback As Action(Of BrickBase, RectangleF)) As Boolean
             Dim isFirstPage As Boolean = pageIndex = 0
             If Not isFirstPage Then
                 Dim rect As RectangleF = page.GetBrickBounds(Me)
@@ -58,9 +58,9 @@ Namespace DevExpress.XtraReports.CustomControls
                     CType(cache.Brick, DataRecordBrick).ResetCellVerticalPosition()
                 Next cache
             End If
-
-            Return MyBase.AfterPrintOnPage(indices, page, pageIndex, pageCount, callback)
+            Return MyBase.AfterPrintOnPage(indices, brickBounds, clipRect, page, pageIndex, pageCount, callback)
         End Function
+
 
         Public Overrides Sub Dispose()
             If cache IsNot Nothing Then
@@ -114,7 +114,7 @@ Namespace DevExpress.XtraReports.CustomControls
             Next innerBrick
         End Sub
 
-        Protected Overrides Function AfterPrintOnPage(ByVal indices As IList(Of Integer), ByVal page As Page, ByVal pageIndex As Integer, ByVal pageCount As Integer, ByVal callback As Action(Of BrickBase)) As Boolean
+        Protected Overrides Function AfterPrintOnPage(indices As IList(Of Integer), brickBounds As RectangleF, clipRect As RectangleF, page As Page, pageIndex As Integer, pageCount As Integer, callback As Action(Of BrickBase, RectangleF)) As Boolean
             If Not IsHeaderBrick Then
                 Dim headerCache As RecordPrintCache = parentBrick.PrintCache.HeaderCache
                 Dim headerBrick As VisualBrick = headerCache.Brick
@@ -142,7 +142,7 @@ Namespace DevExpress.XtraReports.CustomControls
                     End If
                 End If
             End If
-            Return MyBase.AfterPrintOnPage(indices, page, pageIndex, pageCount, callback)
+            Return MyBase.AfterPrintOnPage(indices, brickBounds, clipRect, page, pageIndex, pageCount, callback)
         End Function
 
         Protected Sub RemoveCellPosition(ByVal position As XRDataCellPosition)

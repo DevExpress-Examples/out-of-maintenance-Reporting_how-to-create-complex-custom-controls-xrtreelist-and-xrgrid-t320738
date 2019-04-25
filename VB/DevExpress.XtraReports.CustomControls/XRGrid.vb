@@ -36,12 +36,10 @@ Namespace DevExpress.XtraReports.CustomControls
 
         Protected Overrides Function CreatePresenter() As Native.Presenters.ControlPresenter
             Return MyBase.CreatePresenter(Of ControlPresenter)(Function()
-                Return New XRGridRuntimePresenter(Me)
-            End Function, Function()
-                Return New XRGridDesignTimePresenter(Me)
-            End Function, Function()
-                Return New XRGridDesignTimePresenter(Me)
-            End Function)
+                                                                   Return New XRGridRuntimePresenter(Me)
+                                                               End Function, Function()
+                                                                                 Return New XRGridDesignTimePresenter(Me)
+                                                                             End Function)
         End Function
 
         #End Region
