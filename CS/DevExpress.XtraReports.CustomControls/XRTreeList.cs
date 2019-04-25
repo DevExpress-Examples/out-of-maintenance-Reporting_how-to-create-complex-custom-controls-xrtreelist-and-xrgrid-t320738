@@ -107,9 +107,6 @@ namespace DevExpress.XtraReports.CustomControls
             }, delegate
             {
                 return new XRTreeListDesignTimePresenter(this);
-            }, delegate
-            {
-                return new XRTreeListDesignTimePresenter(this);
             });
         }
 

@@ -47,9 +47,6 @@ namespace DevExpress.XtraReports.CustomControls
             }, delegate
             {
                 return new XRGridDesignTimePresenter(this);
-            }, delegate
-            {
-                return new XRGridDesignTimePresenter(this);
             });
         }
    

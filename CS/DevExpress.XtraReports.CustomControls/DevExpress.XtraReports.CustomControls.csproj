@@ -33,120 +33,120 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Charts.v18.1.Core">
+    <Reference Include="DevExpress.Charts.v19.1.Core">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.Charts.v18.1.Core.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.Data.v18.1">
+    <Reference Include="DevExpress.Data.v19.1">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.Data.v18.1.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.Office.v18.1.Core">
+    <Reference Include="DevExpress.Office.v19.1.Core">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.Office.v18.1.Core.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.PivotGrid.v18.1.Core">
+    <Reference Include="DevExpress.PivotGrid.v19.1.Core">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.PivotGrid.v18.1.Core.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.Images.v18.1">
+    <Reference Include="DevExpress.Images.v19.1">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.Images.v18.1.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.Printing.v18.1.Core, Version=18.1.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
-      <HintPath>bin\Debug\DevExpress.Printing.v18.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.2.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v18.1.Core">
+    <Reference Include="DevExpress.RichEdit.v19.1.Core">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.RichEdit.v18.1.Core.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.Sparkline.v18.1.Core">
+    <Reference Include="DevExpress.Sparkline.v19.1.Core">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.Sparkline.v18.1.Core.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.Utils.v18.1">
+    <Reference Include="DevExpress.Utils.v19.1">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.Utils.v18.1.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.Utils.v18.1.UI">
+    <Reference Include="DevExpress.Utils.v19.1.UI">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.Utils.v18.1.UI.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v18.1.Wizard">
+    <Reference Include="DevExpress.XtraCharts.v19.1.Wizard">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.XtraCharts.v18.1.Wizard.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.XtraCharts.v18.1">
+    <Reference Include="DevExpress.XtraCharts.v19.1">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.XtraCharts.v18.1.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.XtraEditors.v18.1">
+    <Reference Include="DevExpress.XtraEditors.v19.1">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.XtraEditors.v18.1.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.XtraGauges.v18.1.Core">
+    <Reference Include="DevExpress.XtraGauges.v19.1.Core">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.XtraGauges.v18.1.Core.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.XtraGrid.v18.1">
+    <Reference Include="DevExpress.XtraGrid.v19.1">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.XtraGrid.v18.1.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.XtraPrinting.v18.1">
+    <Reference Include="DevExpress.XtraPrinting.v19.1">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.XtraPrinting.v18.1.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.CodeParser.v18.1">
+    <Reference Include="DevExpress.CodeParser.v19.1">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.CodeParser.v18.1.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.RichEdit.v18.1.Export">
+    <Reference Include="DevExpress.RichEdit.v19.1.Export">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.RichEdit.v18.1.Export.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v18.1">
+    <Reference Include="DevExpress.XtraReports.v19.1">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.XtraReports.v18.1.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.DataAccess.v18.1">
+    <Reference Include="DevExpress.DataAccess.v19.1">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.DataAccess.v18.1.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.DataAccess.v18.1.UI">
+    <Reference Include="DevExpress.DataAccess.v19.1.UI">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.DataAccess.v18.1.UI.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.Xpo.v18.1">
+    <Reference Include="DevExpress.Xpo.v19.1">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.Xpo.v18.1.dll</HintPath>
+      
     </Reference>
-    <Reference Include="DevExpress.XtraReports.v18.1.Extensions">
+    <Reference Include="DevExpress.XtraReports.v19.1.Extensions">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\DevExpress.XtraReports.v18.1.Extensions.dll</HintPath>
+      
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

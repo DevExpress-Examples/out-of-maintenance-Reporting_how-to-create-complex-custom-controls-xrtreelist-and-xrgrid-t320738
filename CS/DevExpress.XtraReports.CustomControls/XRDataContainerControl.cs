@@ -481,6 +481,7 @@ namespace DevExpress.XtraReports.CustomControls
         RefreshProperties(RefreshProperties.All),
         DefaultValue("")
         ]
+        [XtraSerializableProperty]
         public string DataMember
         {
             get
