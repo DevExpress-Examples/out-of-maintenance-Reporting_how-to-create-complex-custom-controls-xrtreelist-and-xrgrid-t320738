@@ -498,7 +498,8 @@ namespace DevExpress.XtraReports.CustomControls
         Editor(typeof(DataSourceEditor), typeof(UITypeEditor)),
         TypeConverter(typeof(DataSourceConverter)),
         RefreshProperties(RefreshProperties.All),
-        DefaultValue(null)
+        DefaultValue(null),
+        XtraSerializableProperty(XtraSerializationVisibility.Reference)
         ]
         public object DataSource
         {
