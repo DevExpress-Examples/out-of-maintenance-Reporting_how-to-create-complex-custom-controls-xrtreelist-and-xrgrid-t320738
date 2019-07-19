@@ -530,7 +530,8 @@ Namespace DevExpress.XtraReports.CustomControls
             End Set
         End Property
 
-        <Editor(GetType(DataSourceEditor), GetType(UITypeEditor)), TypeConverter(GetType(DataSourceConverter)), RefreshProperties(RefreshProperties.All), System.ComponentModel.DefaultValue(CType(Nothing, Object))> _
+        <Editor(GetType(DataSourceEditor), GetType(UITypeEditor)), TypeConverter(GetType(DataSourceConverter)), RefreshProperties(RefreshProperties.All), System.ComponentModel.DefaultValue(CType(Nothing, Object))>
+        <XtraSerializableProperty(XtraSerializationVisibility.Reference)>
         Public Property DataSource() As Object Implements IDataContainerBase.DataSource
             Get
                 Return Me.dataSource_Renamed
