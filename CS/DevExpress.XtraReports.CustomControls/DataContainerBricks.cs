@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -31,12 +31,9 @@ namespace DevExpress.XtraReports.CustomControls
 
     public class DataContainerBrick : PanelBrick
     {
-        #region Fields
         XRDataContainerPrintCache cache;
         bool isHeader;
-        #endregion
 
-        #region Methods
         public DataContainerBrick() : base() { }
 
         public DataContainerBrick(XRDataContainerControl owner, bool isHeader)
@@ -45,7 +42,7 @@ namespace DevExpress.XtraReports.CustomControls
             this.isHeader = isHeader;
         }
 
-        protected override bool AfterPrintOnPage(IList<int> indices, RectangleF brickBounds, RectangleF clipRect, Page page, int pageIndex, int pageCount, Action<BrickBase, RectangleF> callback) {
+        protected override bool AfterPrintOnPage(IList<int> indices, RectangleF brickBounds, RectangleF clipRect, Page page, int pageIndex, int pageCount, Action<Brick, RectangleF> callback) {
             bool isFirstPage = pageIndex == 0;
             if(!isFirstPage) {
                 RectangleF rect = page.GetBrickBounds(this);
@@ -67,9 +64,7 @@ namespace DevExpress.XtraReports.CustomControls
             }
             base.Dispose();
         }
-        #endregion
 
-        #region Properties
         [XtraSerializableProperty]
         public bool IsHeader { get { return isHeader; } }
 
@@ -79,7 +74,6 @@ namespace DevExpress.XtraReports.CustomControls
             get { return cache; }
             set { cache = value; }
         }
-        #endregion
     }
 
     public class DataRecordBrick : PanelBrick
@@ -101,8 +95,7 @@ namespace DevExpress.XtraReports.CustomControls
             foreach (IDataCellBrick innerBrick in this.Bricks)
                 innerBrick.CellPosition |= position;
         }
-
-        protected override bool AfterPrintOnPage(IList<int> indices, RectangleF brickBounds, RectangleF clipRect, Page page, int pageIndex, int pageCount, Action<BrickBase, RectangleF> callback) {
+        protected override bool AfterPrintOnPage(IList<int> indices, RectangleF brickBounds, RectangleF clipRect, Page page, int pageIndex, int pageCount, Action<Brick, RectangleF> callback) {
             if(!IsHeaderBrick) {
                 RecordPrintCache headerCache = parentBrick.PrintCache.HeaderCache;
                 VisualBrick headerBrick = headerCache.Brick;
@@ -297,7 +290,7 @@ namespace DevExpress.XtraReports.CustomControls
             using (BrickStyle curStyle = DataCellExportHelper.GetResultingStyle(false, DataCellTextBrick.Style, DataCellTextBrick.CellPosition))
             {
                 curStyle.Sides = BorderSide.All;
-                exportProvider.CurrentData.Style = curStyle;
+                ((BrickViewData)exportProvider.CurrentData).Style = curStyle;
                 base.FillXlTableCellInternal(exportProvider);
             }
         }
@@ -337,7 +330,7 @@ namespace DevExpress.XtraReports.CustomControls
             using (BrickStyle curStyle = DataCellExportHelper.GetResultingStyle(false, DataCellCheckBrick.Style, DataCellCheckBrick.CellPosition))
             {
                 curStyle.Sides = BorderSide.All;
-                exportProvider.CurrentData.Style = curStyle;
+                ((BrickViewData)exportProvider.CurrentData).Style = curStyle;
                 base.FillXlTableCellInternal(exportProvider);
             }
         }

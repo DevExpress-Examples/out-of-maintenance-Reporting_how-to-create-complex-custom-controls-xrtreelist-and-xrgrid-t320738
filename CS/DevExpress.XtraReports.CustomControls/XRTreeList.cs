@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
@@ -23,7 +23,6 @@ namespace DevExpress.XtraReports.CustomControls
     XRDesigner("DevExpress.XtraReports.CustomControls.XRTreeListDesigner, DevExpress.XtraReports.CustomControls")]
     public class XRTreeList : XRTableLikeContainerControl
     {
-        #region Fields
         string keyField;
         string parentField;
         
@@ -33,9 +32,7 @@ namespace DevExpress.XtraReports.CustomControls
         int nodeIndent;
 
         XRTreeListNodeCollection nodes;        
-        #endregion
 
-        #region Events
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public override event PrintRecordEventHandler PrintRecord { add { } remove { } }
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
@@ -52,9 +49,7 @@ namespace DevExpress.XtraReports.CustomControls
             add { Events.AddHandler(PrintNodeCellEvent, value); }
             remove { Events.RemoveHandler(PrintNodeCellEvent, value); }
         }
-        #endregion
 
-        #region Methods
 
         public XRTreeList() : base()
         {            
@@ -150,9 +145,7 @@ namespace DevExpress.XtraReports.CustomControls
             base.SyncDpi(dpi);
             NodeIndent = GraphicsUnitConverter.Convert(NodeIndent, prevDpi, dpi);                   
         }
-        #endregion        
 
-        #region Properties
 
         [
         XtraSerializableProperty(XtraSerializationVisibility.Collection, true, false, false, -1, XtraSerializationFlags.Cached), 
@@ -225,14 +218,12 @@ namespace DevExpress.XtraReports.CustomControls
                 return (XRTreeListScripts)base.fEventScripts;
             }
         }
-        #endregion
     }
 
     public class XRTreeListColumn : XRResizableFieldHeader { }
     
     public class XRTreeListColumnCollection : XRFieldHeaderCollection
     {
-        #region Methods
         public XRTreeListColumnCollection(XRTreeList control) : base(control) { }
         
         public override XRFieldHeader Add()
@@ -241,12 +232,9 @@ namespace DevExpress.XtraReports.CustomControls
             return header;
         } 
 
-        #endregion
 
-        #region Properties        
         public new XRTreeListColumn this[string fieldName] { get { return base[fieldName] as XRTreeListColumn; } }
         public new XRTreeListColumn this[int index] { get { return base[index] as XRTreeListColumn; } }
-        #endregion
 
         public new IEnumerator<XRTreeListColumn> GetEnumerator()
         {
@@ -257,32 +245,23 @@ namespace DevExpress.XtraReports.CustomControls
 
     public class XRTreeListNodeCollection : XRDataRecordCollection
     {
-        #region Fields
         XRTreeListNode parent;
-        #endregion
 
-        #region Methods
         public XRTreeListNodeCollection(XRTreeListNode parent)
         {
             this.parent = parent;
         }
-        #endregion
 
-        #region Properties
         public new XRTreeListNode this[int index] { get { return base[index] as XRTreeListNode; } }
-        #endregion
     }
 
     public class XRTreeListNode : XRDataRecord
     {
-        #region Fields
         XRTreeListNode parentNode;
         XRTreeListNodeCollection nodes;
         object keyValue;
         object parentValue;
-        #endregion
 
-        #region Methods
         public XRTreeListNode(XRTreeList treeList)
             : base(treeList)
         {
@@ -303,9 +282,7 @@ namespace DevExpress.XtraReports.CustomControls
                 sortResult = Comparer.Default.Compare(this.KeyValue, ((XRTreeListNode)other).KeyValue);
             return sortResult;
         }
-        #endregion
 
-        #region Properties
         public object KeyValue
         {
             get
@@ -367,27 +344,21 @@ namespace DevExpress.XtraReports.CustomControls
         }
 
         public XRTreeList TreeList { get { return base.Control as XRTreeList; } }
-        #endregion
     }
 
     public enum NodeSuppressType { Leave, Suppress, SuppressWithChildren };
 
     public class PrintNodeEventArgs : EventArgs
     {
-        #region Fields
         private NodeSuppressType suppressType;
         private XRTreeListNode node;
-        #endregion
 
-        #region Methods
         public PrintNodeEventArgs(XRTreeListNode currentNode)
         {
             this.node = currentNode;
             suppressType = NodeSuppressType.Leave;
         }
-        #endregion
 
-        #region Properties
         public XRTreeListNode Node
         {
             get
@@ -407,23 +378,17 @@ namespace DevExpress.XtraReports.CustomControls
                 this.suppressType = value;
             }
         }
-        #endregion
     }
 
     public class PrintNodeCellEventArgs : PrintCellEventArgs
     {
-        #region Fields
         private XRTreeListNode node;
-        #endregion
 
-        #region Methods
         public PrintNodeCellEventArgs(XRTreeListNode currentNode, XRTreeListColumn column, VisualBrick brick, BrickStyle style) : base(column, brick, style)
         {
             this.node = currentNode;
         }
-        #endregion
 
-        #region Properties
         public XRTreeListNode Node
         {
             get
@@ -431,7 +396,6 @@ namespace DevExpress.XtraReports.CustomControls
                 return this.node;
             }
         }
-        #endregion
     }
 
     public delegate void PrintNodeEventHandler(object sender, PrintNodeEventArgs e);
@@ -439,21 +403,16 @@ namespace DevExpress.XtraReports.CustomControls
 
     public class XRTreeListScripts : XRDataContainerScripts
     {
-        #region Fields
         private string printNode;
         private string printNodeCell;
-        #endregion
 
-        #region Methods
         public XRTreeListScripts(XRControl control)
             : base(control)
         {
             printNode = string.Empty;
             printNodeCell = string.Empty;
         }
-        #endregion
 
-        #region Properties
         [EditorBrowsable(EditorBrowsableState.Always), Browsable(true), DefaultValue(""), Editor(typeof(ScriptEditor), typeof(UITypeEditor)), NotifyParentProperty(true), EventScript(typeof(XRTreeList), "PrintNode"), XtraSerializableProperty]
         public string OnPrintNode
         {
@@ -493,6 +452,5 @@ namespace DevExpress.XtraReports.CustomControls
                 base.OnPrintRecordCell = value;
             }
         }
-        #endregion
     }
 }

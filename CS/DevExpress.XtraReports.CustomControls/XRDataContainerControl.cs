@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,7 +31,6 @@ namespace DevExpress.XtraReports.CustomControls
     XRDesigner("DevExpress.XtraReports.CustomControls.XRDataContainerControlDesigner, DevExpress.XtraReports.CustomControls")]
     public class XRDataContainerControl : XRControl, IDataContainer, ICustomDataContainer, ISupportInitialize
     {
-        #region Fields
         float cellHeight;
         bool cellAutoHeight;
         object dataSource;
@@ -55,9 +54,7 @@ namespace DevExpress.XtraReports.CustomControls
         private static readonly object PrintHeaderCellEvent = new object();
         private static readonly object PrintRecordEvent = new object();
         private static readonly object PrintRecordCellEvent = new object();
-        #endregion
 
-        #region Events
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public override event DrawEventHandler Draw { add { } remove { } }
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
@@ -96,9 +93,7 @@ namespace DevExpress.XtraReports.CustomControls
             add { Events.AddHandler(PrintRecordCellEvent, value); }
             remove { Events.RemoveHandler(PrintRecordCellEvent, value); }
         }
-        #endregion
 
-        #region Methods
         public XRDataContainerControl()
         {
             evenCellStyleName = string.Empty;
@@ -427,9 +422,7 @@ namespace DevExpress.XtraReports.CustomControls
                 base.WriteContentTo(writeInfo, brick);
             }
         }
-        #endregion
 
-        #region Properties
         [XtraSerializableProperty, DefaultValue(false), RefreshProperties(RefreshProperties.All)]
         public bool CellAutoHeight
         {
@@ -650,7 +643,6 @@ namespace DevExpress.XtraReports.CustomControls
                 return (XRDataContainerScripts)base.fEventScripts;
             }
         }
-        #endregion
     }
 
     [
@@ -660,11 +652,8 @@ namespace DevExpress.XtraReports.CustomControls
     ]
     public class XRFieldHeaderCollection : CollectionBase, IEnumerable<XRFieldHeader>
     {
-        #region Fields
         XRDataContainerControl control;
-        #endregion
 
-        #region Methods
         public XRFieldHeaderCollection(XRDataContainerControl control)
         {
             this.control = control;
@@ -772,29 +761,23 @@ namespace DevExpress.XtraReports.CustomControls
             if (!List.Contains(header)) return;
             List.Remove(header);
         }
-        #endregion
 
-        #region Properties
         [Browsable(false)]
         internal XRDataContainerControl Control { get { return control; } }
 
         public virtual XRFieldHeader this[string fieldName] { get { return GetHeaderByFieldName(fieldName); } }
         public virtual XRFieldHeader this[int index] { get { return (XRFieldHeader)List[index]; } }
-        #endregion
     }
 
     public class XRFieldHeader : ICustomDataContainer
     {
-        #region Fields
         XRFieldHeaderCollection owner;
         private string fieldName;
         private Type fieldType;
         private string caption;
         private bool isCaptionAssigned;
         private bool visible;
-        #endregion
 
-        #region Methods
         public XRFieldHeader()
         {
             fieldName = string.Empty;
@@ -808,9 +791,7 @@ namespace DevExpress.XtraReports.CustomControls
         {
             return ((ICustomDataContainer)this.Owner.Control).GetDataSource();
         }
-        #endregion
 
-        #region Properties
         [
         XtraSerializableProperty, DefaultValue("")
         ]
@@ -893,7 +874,6 @@ namespace DevExpress.XtraReports.CustomControls
                 }
             }
         }
-        #endregion
 
         public override string ToString()
         {
@@ -910,12 +890,9 @@ namespace DevExpress.XtraReports.CustomControls
 
     public class XRDataRecord : IComparable<XRDataRecord>
     {
-        #region Fields
         XRDataContainerControl control;
         object[] itemArray;
-        #endregion
 
-        #region Methods
         public XRDataRecord(XRDataContainerControl control)
         {
             //Visible Headers
@@ -942,9 +919,7 @@ namespace DevExpress.XtraReports.CustomControls
                     }
             return sortResult;
         }
-        #endregion
 
-        #region Properties
         public object this[int index]
         {
             get
@@ -975,16 +950,12 @@ namespace DevExpress.XtraReports.CustomControls
         }
 
         public XRDataContainerControl Control { get { return control; } }
-        #endregion
     }
 
     public class XRSortFieldCollection : CollectionBase, IEnumerable<XRSortField>
     {
-        #region Fields
         XRDataContainerControl control;
-        #endregion
 
-        #region Methods
         public XRSortFieldCollection(XRDataContainerControl control)
         {
             this.control = control;
@@ -1070,26 +1041,20 @@ namespace DevExpress.XtraReports.CustomControls
             if (!List.Contains(field)) return;
             List.Remove(field);
         }
-        #endregion
 
-        #region Properties
         [Browsable(false)]
         internal XRDataContainerControl Control { get { return control; } }
 
         public virtual XRSortField this[string fieldName] { get { return GetFieldByFieldName(fieldName); } }
         public virtual XRSortField this[int index] { get { return (XRSortField)List[index]; } }
-        #endregion
     }
 
     public class XRSortField : ICustomDataContainer
     {
-        #region Fields
         string fieldName;
         XRSortFieldCollection owner;
         XRColumnSortOrder sortOrder;
-        #endregion
 
-        #region Methods
         public XRSortField()
         {
             fieldName = string.Empty;
@@ -1100,9 +1065,7 @@ namespace DevExpress.XtraReports.CustomControls
         {
             return ((ICustomDataContainer)this.Owner.Control).GetDataSource();
         }
-        #endregion
 
-        #region Properties
         [
         Editor(typeof(XRTreeListFieldNameEditor), typeof(UITypeEditor)),
         RefreshProperties(RefreshProperties.All), XtraSerializableProperty,
@@ -1144,7 +1107,6 @@ namespace DevExpress.XtraReports.CustomControls
                 this.sortOrder = value;
             }
         }
-        #endregion
     }
 
     interface ICustomDataContainer
@@ -1154,22 +1116,17 @@ namespace DevExpress.XtraReports.CustomControls
 
     public class PrintCellEventArgs : EventArgs
     {
-        #region Fields
         private XRFieldHeader header;
         private VisualBrick brick;
         private BrickStyle style;
-        #endregion
 
-        #region Methods
         public PrintCellEventArgs(XRFieldHeader header, VisualBrick brick, BrickStyle style)
         {
             this.header = header;
             this.brick = brick;
             this.style = style;
         }
-        #endregion
 
-        #region Properties
         public VisualBrick Brick
         {
             get
@@ -1193,25 +1150,19 @@ namespace DevExpress.XtraReports.CustomControls
                 return this.style;
             }
         }
-        #endregion
     }
 
     public class PrintRecordEventArgs : EventArgs
     {
-        #region Fields
         private bool cancel;
         private XRDataRecord record;
-        #endregion
 
-        #region Methods
         public PrintRecordEventArgs(XRDataRecord currentRecord)
         {
             this.record = currentRecord;
             cancel = false;
         }
-        #endregion
 
-        #region Properties
         public XRDataRecord Record
         {
             get
@@ -1231,24 +1182,18 @@ namespace DevExpress.XtraReports.CustomControls
                 this.cancel = value;
             }
         }
-        #endregion
     }
 
     public class PrintRecordCellEventArgs : PrintCellEventArgs
     {
-        #region Fields
         private XRDataRecord record;
-        #endregion
 
-        #region Methods
         public PrintRecordCellEventArgs(XRDataRecord currentRecord, XRFieldHeader header, VisualBrick brick, BrickStyle style)
             : base(header, brick, style)
         {
             this.record = currentRecord;
         }
-        #endregion
 
-        #region Properties
         public XRDataRecord Record
         {
             get
@@ -1256,7 +1201,6 @@ namespace DevExpress.XtraReports.CustomControls
                 return this.record;
             }
         }
-        #endregion
     }
 
     public delegate void PrintRecordEventHandler(object sender, PrintRecordEventArgs e);
@@ -1265,13 +1209,10 @@ namespace DevExpress.XtraReports.CustomControls
 
     public class XRDataContainerScripts : TruncatedControlScripts
     {
-        #region Fields
         private string printHeaderCell;
         private string printRecord;
         private string printRecordCell;
-        #endregion
 
-        #region Methods
         public XRDataContainerScripts(XRControl control)
             : base(control)
         {
@@ -1279,9 +1220,7 @@ namespace DevExpress.XtraReports.CustomControls
             printRecord = string.Empty;
             printRecordCell = string.Empty;
         }
-        #endregion
 
-        #region Properties
         [EditorBrowsable(EditorBrowsableState.Always), Browsable(true), DefaultValue(""), Editor(typeof(ScriptEditor), typeof(UITypeEditor)), NotifyParentProperty(true), EventScript(typeof(XRDataContainerControl), "PrintHeaderCell"), XtraSerializableProperty]
         public string OnPrintHeaderCell
         {
@@ -1302,6 +1241,5 @@ namespace DevExpress.XtraReports.CustomControls
             get { return printRecordCell; }
             set { printRecordCell = value; }
         }
-        #endregion
     }
 }

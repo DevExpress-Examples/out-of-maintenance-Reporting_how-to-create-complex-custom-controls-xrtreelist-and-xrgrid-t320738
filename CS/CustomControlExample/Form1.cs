@@ -1,19 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using DevExpress.XtraReports.UI;
-using DevExpress.XtraReports.CustomControls;
-using System.ComponentModel.Design;
-using DevExpress.XtraReports.UserDesigner;
 using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.XtraReports.CustomControls;
+using DevExpress.XtraReports.UI;
 
-namespace TreeListExample
-{
+namespace TreeListExample {
     public partial class Form1 : Form
     {
         public Form1()
@@ -26,36 +18,34 @@ namespace TreeListExample
             using (XtraReport report = CreateTreeListReport())
             {
                 ReportPrintTool pt = new ReportPrintTool(report);
-                pt.ShowPreviewDialog();              
+                pt.ShowRibbonPreviewDialog();
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             using (XtraReport report = new XtraReport2())
+            using (ReportPrintTool pt = new ReportPrintTool(report))
             {
-                ReportPrintTool pt = new ReportPrintTool(report);
-                pt.ShowPreviewDialog();
+                pt.ShowRibbonPreviewDialog();
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             using (XtraReport report = CreateTreeListReport())
+            using (ReportDesignTool dt = new ReportDesignTool(report))
             {
-                ReportDesignTool dt = new ReportDesignTool(report);
-                dt.ShowDesignerDialog();
-                dt.Dispose();
+                dt.ShowRibbonDesignerDialog();
             }
-            GC.Collect();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             using (XtraReport report = new XtraReport2())
+            using (ReportDesignTool dt = new ReportDesignTool(report))
             {
-                ReportDesignTool dt = new ReportDesignTool(report);
-                dt.ShowDesignerDialog();
+                dt.ShowRibbonDesignerDialog();
             }
         }
 
@@ -112,7 +102,7 @@ namespace TreeListExample
             XtraReport report = new XtraReport1();
             XRTreeList treeList = report.FindControl("xrTreeList1", true) as XRTreeList;
             ((ObjectDataSource)treeList.DataSource).DataSource = list;
-            return report;   
+            return report;
         }
     }
 }

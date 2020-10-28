@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -15,7 +15,6 @@ namespace DevExpress.XtraReports.CustomControls
 {
     internal class XRDataContainerControlPresenter : ControlPresenter
     {        
-        #region Methods
         public XRDataContainerControlPresenter(XRDataContainerControl control)
             : base(control)
         {
@@ -217,15 +216,12 @@ namespace DevExpress.XtraReports.CustomControls
 
             VisualBrickHelper.SetBrickBounds(brick, actualBounds, Control.Dpi);
         }
-        #endregion
 
-        #region Properties
         protected XRDataContainerControl Control
         {
             get { return (XRDataContainerControl)control; }
         }
 
         protected virtual bool IsDesignMode { get { return false; } }
-        #endregion
     }
 }

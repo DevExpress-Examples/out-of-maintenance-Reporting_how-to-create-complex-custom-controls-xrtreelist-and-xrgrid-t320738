@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,12 +11,9 @@ namespace DevExpress.XtraReports.CustomControls
     [ToolboxItem(false)]
     public class XRTableLikeContainerControl : XRDataContainerControl
     {
-        #region Fields
         float headerHeight;
         bool headerAutoHeight;
-        #endregion
 
-        #region Methods
         public XRTableLikeContainerControl() : base() 
         {
             headerHeight = 25f;
@@ -78,9 +75,7 @@ namespace DevExpress.XtraReports.CustomControls
                 this.EndInit();
             }
         }
-        #endregion
 
-        #region Properties
         [XtraSerializableProperty, DefaultValue(false), RefreshProperties(RefreshProperties.All)]
         public bool HeaderAutoHeight
         {
@@ -108,7 +103,6 @@ namespace DevExpress.XtraReports.CustomControls
                 headerHeight = value;
             }
         }
-        #endregion
     }
 
     public class  XRResizableFieldHeader : XRFieldHeader

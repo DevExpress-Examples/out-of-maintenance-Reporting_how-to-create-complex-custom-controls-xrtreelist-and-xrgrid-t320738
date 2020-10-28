@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,11 +9,8 @@ namespace DevExpress.XtraReports.CustomControls
 {
     public class XRDataContainerControlDataHelper
     {
-        #region Fields
         XRDataContainerControl control;
-        #endregion
 
-        #region Methods
         public XRDataContainerControlDataHelper(XRDataContainerControl control)
         {
             this.control = control;
@@ -71,6 +68,5 @@ namespace DevExpress.XtraReports.CustomControls
         {
             control.Records.Sort();
         }
-        #endregion
     }
 }

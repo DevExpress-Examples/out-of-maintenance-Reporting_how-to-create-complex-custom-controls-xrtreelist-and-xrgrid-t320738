@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -31,13 +31,13 @@ namespace DevExpress.XtraReports.CustomControls
     }
 
     public class TreeListNodeBrick : DataRecordBrick
-    {        
+    {
         public TreeListNodeBrick() : base() { }
 
         public TreeListNodeBrick(IBrickOwner brickOwner, DataContainerBrick parentBrick, bool isHeaderBrick)
             : base(brickOwner, parentBrick, isHeaderBrick) { }
 
-        protected override bool AfterPrintOnPage(IList<int> indices, RectangleF brickBounds, RectangleF clipRect, Page page, int pageIndex, int pageCount, Action<BrickBase, RectangleF> callback) {
+        protected override bool AfterPrintOnPage(IList<int> indices, RectangleF brickBounds, RectangleF clipRect, Page page, int pageIndex, int pageCount, Action<Brick, RectangleF> callback) {
             bool result = base.AfterPrintOnPage(indices, brickBounds, clipRect, page, pageIndex, pageCount, callback);
             if(!IsHeaderBrick) {
                 TreeListNodePrintCache currentCache = parentBrick.PrintCache.GetCacheByBrick(this) as TreeListNodePrintCache;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
@@ -13,7 +13,6 @@ namespace DevExpress.XtraReports.CustomControls
 {
     public class XRDataContainerControlDesigner : XRControlDesigner
     {
-        #region Methods
         public XRDataContainerControlDesigner() : base() 
         {
             
@@ -53,16 +52,12 @@ namespace DevExpress.XtraReports.CustomControls
             list.Add(new XRDataContainerDesignerSortActionList(this));
             list.Add(CreateColumnActionList());              
         }        
-        #endregion
     }
 
     public class XRDataContainerDesignerDataActionList : XRComponentDesignerActionList
     {
-        #region Fields
         XRDataContainerControl control;
-        #endregion
 
-        #region Methods
         public XRDataContainerDesignerDataActionList(XRComponentDesigner componentDesigner)
             : base(componentDesigner)
         {
@@ -74,9 +69,7 @@ namespace DevExpress.XtraReports.CustomControls
             AddPropertyItem(actionItems, "DataMember", "DataMember");
             AddPropertyItem(actionItems, "DataAdapter", "DataAdapter");           
         }
-        #endregion
 
-        #region Properties
         [
         Editor(typeof(DataAdapterEditor), typeof(UITypeEditor)),
         TypeConverterAttribute(typeof(DataAdapterConverter))
@@ -114,16 +107,12 @@ namespace DevExpress.XtraReports.CustomControls
                SetPropertyValue("DataSource", value);
             }
         }        
-        #endregion
     }
 
     public class XRDataContainerDesignerSortActionList : XRComponentDesignerActionList
     {
-        #region Fields
         XRDataContainerControl control;
-        #endregion
 
-        #region Methods
         public XRDataContainerDesignerSortActionList(XRComponentDesigner componentDesigner)
             : base(componentDesigner)
         {
@@ -138,16 +127,12 @@ namespace DevExpress.XtraReports.CustomControls
         {
             get { return control.SortFields; }
         }
-        #endregion
     }
 
     public class XRDataContainerDesignerColumnActionList : XRComponentDesignerActionList
     {
-        #region Fields
         internal XRDataContainerControl control;
-        #endregion
 
-        #region Methods
         public XRDataContainerDesignerColumnActionList(XRComponentDesigner componentDesigner)
             : base(componentDesigner)
         {
@@ -173,14 +158,11 @@ namespace DevExpress.XtraReports.CustomControls
             control.CreateAllHeaders();
             ((XRDataContainerControlDesigner)this.designer).InvalidateControl();
         }
-        #endregion
 
-        #region Properties
         public XRFieldHeaderCollection Headers
         {
             get { return control.Headers; }
         }
-        #endregion
     }
 
     public class XRCollectionEditor : CollectionEditor

@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraReports.Design;
+using DevExpress.XtraReports.Design;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,19 +11,16 @@ namespace DevExpress.XtraReports.CustomControls
 {
     public class XRGridDesigner : XRDataContainerControlDesigner
     {
-        #region Methods
         public XRGridDesigner() : base() { }
 
         protected override XRDataContainerDesignerColumnActionList CreateColumnActionList()
         {
             return new XRGridColumnActionList(this);
         }
-        #endregion
     }
 
     public class XRGridColumnActionList : XRDataContainerDesignerColumnActionList
     {
-        #region Methods
         public XRGridColumnActionList(XRComponentDesigner componentDesigner)
             : base(componentDesigner)
         {
@@ -42,6 +39,5 @@ namespace DevExpress.XtraReports.CustomControls
                 return base.Headers as XRGridColumnCollection;
             }
         }
-        #endregion
     }
 }

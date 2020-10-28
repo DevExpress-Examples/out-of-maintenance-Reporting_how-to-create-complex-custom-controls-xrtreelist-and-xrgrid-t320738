@@ -6,54 +6,54 @@ Imports DevExpress.Utils.Serializing
 Imports DevExpress.XtraPrinting
 
 Namespace DevExpress.XtraReports.CustomControls
-    Friend Class XRDataContainerPrintCache
-        Private control As XRDataContainerControl
+	Friend Class XRDataContainerPrintCache
+		Private control As XRDataContainerControl
+'INSTANT VB NOTE: The field recordsCache was renamed since Visual Basic does not allow fields to have the same name as other class members:
+		Private recordsCache_Renamed As List(Of RecordPrintCache)
 
-        Private recordsCache_Renamed As List(Of RecordPrintCache)
+		Public Sub New(ByVal control As XRDataContainerControl)
+			Me.control = control
+			recordsCache_Renamed = New List(Of RecordPrintCache)()
+		End Sub
 
-        Public Sub New(ByVal control As XRDataContainerControl)
-            Me.control = control
-            recordsCache_Renamed = New List(Of RecordPrintCache)()
-        End Sub
+		Public Sub Clear()
+			HeaderCache = Nothing
+			RecordsCache.Clear()
+		End Sub
 
-        Public Sub Clear()
-            HeaderCache = Nothing
-            RecordsCache.Clear()
-        End Sub
+		Public Function GetCacheByBrick(ByVal brick As VisualBrick) As RecordPrintCache
+			For Each recordCache As RecordPrintCache In recordsCache_Renamed
+				If recordCache.Brick Is brick Then
+					Return recordCache
+				End If
+			Next recordCache
 
-        Public Function GetCacheByBrick(ByVal brick As VisualBrick) As RecordPrintCache
-            For Each recordCache As RecordPrintCache In recordsCache_Renamed
-                If recordCache.Brick Is brick Then
-                    Return recordCache
-                End If
-            Next recordCache
+			Return Nothing
+		End Function
 
-            Return Nothing
-        End Function
+		<XtraSerializableProperty>
+		Public Property HeaderCache() As RecordPrintCache
 
-        <XtraSerializableProperty> _
-        Public Property HeaderCache() As RecordPrintCache
+		<XtraSerializableProperty>
+		Public ReadOnly Property RecordsCache() As List(Of RecordPrintCache)
+			Get
+				Return recordsCache_Renamed
+			End Get
+		End Property
+	End Class
 
-        <XtraSerializableProperty> _
-        Public ReadOnly Property RecordsCache() As List(Of RecordPrintCache)
-            Get
-                Return recordsCache_Renamed
-            End Get
-        End Property
-    End Class
+	Friend Class RecordPrintCache
+		Private recordBrick As VisualBrick
 
-    Friend Class RecordPrintCache
-        Private recordBrick As VisualBrick
+		Public Sub New(ByVal brick As VisualBrick)
+			Me.recordBrick = brick
+		End Sub
 
-        Public Sub New(ByVal brick As VisualBrick)
-            Me.recordBrick = brick
-        End Sub
-
-        <XtraSerializableProperty> _
-        Public ReadOnly Property Brick() As VisualBrick
-            Get
-                Return recordBrick
-            End Get
-        End Property
-    End Class
+		<XtraSerializableProperty>
+		Public ReadOnly Property Brick() As VisualBrick
+			Get
+				Return recordBrick
+			End Get
+		End Property
+	End Class
 End Namespace

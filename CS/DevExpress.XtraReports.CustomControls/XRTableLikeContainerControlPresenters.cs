@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,7 +10,6 @@ namespace DevExpress.XtraReports.CustomControls
 {
     internal class XRTableLikeContainerControlPresenter : XRDataContainerControlPresenter
     {
-        #region Methods
         public XRTableLikeContainerControlPresenter(XRTableLikeContainerControl control) : base(control) { }
 
         protected override void CreateHeaders(XtraPrinting.PanelBrick parentBrick, ref float actualHeight)
@@ -62,13 +61,10 @@ namespace DevExpress.XtraReports.CustomControls
 
             return brickHeight;
         }
-        #endregion
 
-        #region Properties
         private XRTableLikeContainerControl TableControl
         {
             get { return (XRTableLikeContainerControl)control; }
         }
-        #endregion
     }
 }

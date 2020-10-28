@@ -14,58 +14,57 @@ Imports DevExpress.XtraPrinting.Native
 Imports DevExpress.XtraPrinting.NativeBricks
 
 Namespace DevExpress.XtraReports.CustomControls
-    Public Class TreeListBrick
-        Inherits DataContainerBrick
+	Public Class TreeListBrick
+		Inherits DataContainerBrick
 
-        Public Sub New()
-            MyBase.New()
-        End Sub
+		Public Sub New()
+			MyBase.New()
+		End Sub
 
-        Public Sub New(ByVal owner As XRDataContainerControl, ByVal isHeader As Boolean)
-            MyBase.New(owner, isHeader)
-        End Sub
+		Public Sub New(ByVal owner As XRDataContainerControl, ByVal isHeader As Boolean)
+			MyBase.New(owner, isHeader)
+		End Sub
 
-        Public Overrides ReadOnly Property BrickType() As String
-            Get
-                Return "TreeList"
-            End Get
-        End Property
-    End Class
+		Public Overrides ReadOnly Property BrickType() As String
+			Get
+				Return "TreeList"
+			End Get
+		End Property
+	End Class
 
-    Public Class TreeListNodeBrick
-        Inherits DataRecordBrick
+	Public Class TreeListNodeBrick
+		Inherits DataRecordBrick
 
-        Public Sub New()
-            MyBase.New()
-        End Sub
+		Public Sub New()
+			MyBase.New()
+		End Sub
 
-        Public Sub New(ByVal brickOwner As IBrickOwner, ByVal parentBrick As DataContainerBrick, ByVal isHeaderBrick As Boolean)
-            MyBase.New(brickOwner, parentBrick, isHeaderBrick)
-        End Sub
+		Public Sub New(ByVal brickOwner As IBrickOwner, ByVal parentBrick As DataContainerBrick, ByVal isHeaderBrick As Boolean)
+			MyBase.New(brickOwner, parentBrick, isHeaderBrick)
+		End Sub
 
-        Protected Overrides Function AfterPrintOnPage(indices As IList(Of Integer), brickBounds As RectangleF, clipRect As RectangleF, page As Page, pageIndex As Integer, pageCount As Integer, callback As Action(Of BrickBase, RectangleF)) As Boolean
-            Dim result As Boolean = MyBase.AfterPrintOnPage(indices, brickBounds, clipRect, page, pageIndex, pageCount, callback)
+		Protected Overrides Function AfterPrintOnPage(ByVal indices As IList(Of Integer), ByVal brickBounds As RectangleF, ByVal clipRect As RectangleF, ByVal page As Page, ByVal pageIndex As Integer, ByVal pageCount As Integer, ByVal callback As Action(Of Brick, RectangleF)) As Boolean
+			Dim result As Boolean = MyBase.AfterPrintOnPage(indices, brickBounds, clipRect, page, pageIndex, pageCount, callback)
+			If Not IsHeaderBrick Then
+				Dim currentCache As TreeListNodePrintCache = TryCast(parentBrick.PrintCache.GetCacheByBrick(Me), TreeListNodePrintCache)
+				Dim cacheIndex As Integer = parentBrick.PrintCache.RecordsCache.IndexOf(currentCache)
 
-            If Not IsHeaderBrick Then
-                Dim currentCache As TreeListNodePrintCache = TryCast(parentBrick.PrintCache.GetCacheByBrick(Me), TreeListNodePrintCache)
-                Dim cacheIndex As Integer = parentBrick.PrintCache.RecordsCache.IndexOf(currentCache)
+				If cacheIndex > 0 Then
+					Dim prevCache As TreeListNodePrintCache = TryCast(parentBrick.PrintCache.RecordsCache(cacheIndex - 1), TreeListNodePrintCache)
+					If currentCache.NodeLevel < prevCache.NodeLevel Then
+						CType(currentCache.Brick, TreeListNodeBrick).AddCellPosition(XRDataCellPosition.HigherLevel)
+						CType(prevCache.Brick, TreeListNodeBrick).AddCellPosition(XRDataCellPosition.LowerLevel)
+					End If
+				End If
+			End If
 
-                If cacheIndex > 0 Then
-                    Dim prevCache As TreeListNodePrintCache = TryCast(parentBrick.PrintCache.RecordsCache(cacheIndex - 1), TreeListNodePrintCache)
-                    If currentCache.NodeLevel < prevCache.NodeLevel Then
-                        CType(currentCache.Brick, TreeListNodeBrick).AddCellPosition(XRDataCellPosition.HigherLevel)
-                        CType(prevCache.Brick, TreeListNodeBrick).AddCellPosition(XRDataCellPosition.LowerLevel)
-                    End If
-                End If
-            End If
+			Return result
+		End Function
 
-            Return result
-        End Function
-
-        Public Overrides ReadOnly Property BrickType() As String
-            Get
-                Return "TreeListNode"
-            End Get
-        End Property
-    End Class
+		Public Overrides ReadOnly Property BrickType() As String
+			Get
+				Return "TreeListNode"
+			End Get
+		End Property
+	End Class
 End Namespace

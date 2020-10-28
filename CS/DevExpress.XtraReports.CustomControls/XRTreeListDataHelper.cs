@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,14 +9,11 @@ namespace DevExpress.XtraReports.CustomControls
 {
     public class XRTreeListDataHelper : XRDataContainerControlDataHelper
     {
-        #region Fields
         XRTreeList treeList;
         Hashtable nodeTable;
         PropertyDescriptor keyFieldDescriptor;
         PropertyDescriptor parentFieldDescriptor;
-        #endregion
 
-        #region Methods
         public XRTreeListDataHelper(XRTreeList treeList) : base(treeList)
         {
             this.treeList = treeList;
@@ -82,6 +79,5 @@ namespace DevExpress.XtraReports.CustomControls
             foreach (XRTreeListNode node in nodes)
                 SortNodes(node.Nodes);
         }
-        #endregion
     }
 }

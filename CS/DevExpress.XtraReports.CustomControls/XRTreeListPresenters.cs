@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -17,7 +17,6 @@ namespace DevExpress.XtraReports.CustomControls
 {
     internal class XRTreeListRuntimePresenter : XRTableLikeContainerControlPresenter
     {
-        #region Methods
         public XRTreeListRuntimePresenter(XRTreeList treeList) : base(treeList) 
         {            
         }
@@ -110,19 +109,15 @@ namespace DevExpress.XtraReports.CustomControls
 
             return valueBrick;
         }
-        #endregion
 
-        #region Properties
         protected XRTreeList TreeList
         {
             get { return (XRTreeList)control; }
         }
-        #endregion
     }
 
     internal class XRTreeListDesignTimePresenter : XRTreeListRuntimePresenter
     {
-        #region Methods
         public XRTreeListDesignTimePresenter(XRTreeList treeList) : base(treeList) { }
 
 		public override VisualBrick CreateBrick(VisualBrick[] childrenBricks) {
@@ -165,10 +160,7 @@ namespace DevExpress.XtraReports.CustomControls
             return designNodes;
         }
         
-        #endregion
 
-        #region Properties
         protected override bool IsDesignMode { get { return true; } }
-        #endregion
     }
 }

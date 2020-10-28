@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,18 +11,13 @@ namespace DevExpress.XtraReports.CustomControls
 {
     public class DataControlAutoWidthCalculatorArgs : AutoWidthCalculatorArgs
     {
-        #region Fields
         private List<XRResizableFieldHeader> columns;
-        #endregion
 
-        #region Methods
         public DataControlAutoWidthCalculatorArgs(AutoWidthObjectInfoCollection objects, bool isAutoWidth, int maxVisibleWidth)
             : base(objects, isAutoWidth, maxVisibleWidth)
         {
         }
-        #endregion
 
-        #region Properties
         public List<XRResizableFieldHeader> VisibleColumns
         {
             get
@@ -34,17 +29,13 @@ namespace DevExpress.XtraReports.CustomControls
                 this.columns = value;
             }
         }
-        #endregion
     }
 
     //Based on GridViewAutoWidthCalculator
     class XRDataControlAutoWidthCalculator : AutoWidthCalculator
     {
-        #region Fields
         private XRTableLikeContainerControl containerControl;
-        #endregion
 
-        #region Methods
         public XRDataControlAutoWidthCalculator(XRTableLikeContainerControl control)
         {
             this.containerControl = control;
@@ -79,7 +70,6 @@ namespace DevExpress.XtraReports.CustomControls
                 column.Width = info.VisibleWidth;
             }
         }
-        #endregion
     }
 
 

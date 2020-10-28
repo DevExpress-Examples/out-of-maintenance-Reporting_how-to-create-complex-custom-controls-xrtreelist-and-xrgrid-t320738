@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -16,8 +16,6 @@ namespace TreeListExample
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            DevExpress.UserSkins.BonusSkins.Register();
-            DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName = "Metropolis";
 
             BrickFactory.RegisterFactory("TreeList", new DefaultBrickFactory<DevExpress.XtraReports.CustomControls.TreeListBrick>());
             BrickFactory.RegisterFactory("TreeListNode", new DefaultBrickFactory<DevExpress.XtraReports.CustomControls.TreeListNodeBrick>());

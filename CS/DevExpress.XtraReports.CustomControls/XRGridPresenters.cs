@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -11,7 +11,6 @@ namespace DevExpress.XtraReports.CustomControls
 {
     internal class XRGridRuntimePresenter : XRTableLikeContainerControlPresenter
     {
-        #region Methods
         public XRGridRuntimePresenter(XRGrid grid) : base(grid) { }
 
         protected override void CreateBricksForRecord(XRDataRecord record, PanelBrick parentBrick, bool isHeader, ref float actualHeight)
@@ -72,19 +71,15 @@ namespace DevExpress.XtraReports.CustomControls
 
             return valueBrick;
         }
-        #endregion
 
-        #region Properties
         protected XRGrid Grid
         {
             get { return (XRGrid)control; }
         }
-        #endregion
     }
 
     internal class XRGridDesignTimePresenter : XRGridRuntimePresenter
     {
-        #region Methods
         public XRGridDesignTimePresenter(XRGrid grid) : base(grid) { }
 
 		public override VisualBrick CreateBrick(VisualBrick[] childrenBricks) {
@@ -116,10 +111,7 @@ namespace DevExpress.XtraReports.CustomControls
             return designRecords;
         }
         
-        #endregion
 
-        #region Properties
         protected override bool IsDesignMode { get { return true; } }
-        #endregion
     }
 }

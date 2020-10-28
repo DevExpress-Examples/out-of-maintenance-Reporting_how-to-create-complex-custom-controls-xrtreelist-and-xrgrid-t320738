@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,7 +17,6 @@ namespace DevExpress.XtraReports.CustomControls
     XRDesigner("DevExpress.XtraReports.CustomControls.XRGridDesigner, DevExpress.XtraReports.CustomControls")]
     public class XRGrid : XRTableLikeContainerControl
     {
-        #region Methods
         public XRGrid() : base()
         {            
             WidthF = 300f;
@@ -50,9 +49,7 @@ namespace DevExpress.XtraReports.CustomControls
             });
         }
    
-        #endregion
 
-        #region Properties
         [
         XtraSerializableProperty(XtraSerializationVisibility.Collection, true, false, false, -1, XtraSerializationFlags.Cached),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Content)
@@ -60,20 +57,15 @@ namespace DevExpress.XtraReports.CustomControls
         public XRGridColumnCollection Columns { get { return base.Headers as XRGridColumnCollection; } }
 
         internal override string FieldHeaderName { get { return "Columns"; } }
-        #endregion
     }
 
     public class XRGridColumn : XRResizableFieldHeader { }
 
     public class XRGridColumnCollection : XRFieldHeaderCollection
     {
-        #region Methods
         public XRGridColumnCollection(XRGrid control) : base(control) { }
-        #endregion
 
-        #region Properties
         public new XRGridColumn this[string fieldName] { get { return base[fieldName] as XRGridColumn; } }
         public new XRGridColumn this[int index] { get { return base[index] as XRGridColumn; } }
-        #endregion
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +12,7 @@ namespace DevExpress.XtraReports.CustomControls
 
         public TreeListNodePrintCache(VisualBrick brick, int nodeLevel) : base(brick)
         {
-            this.nodeLevel = nodeLevel;    
+            this.nodeLevel = nodeLevel;
         }
 
         public int NodeLevel { get { return nodeLevel; } }

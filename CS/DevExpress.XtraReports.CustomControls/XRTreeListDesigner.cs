@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
@@ -15,7 +15,6 @@ namespace DevExpress.XtraReports.CustomControls
 {
     public class XRTreeListDesigner : XRDataContainerControlDesigner
     {
-        #region Methods
         public XRTreeListDesigner() : base() { }
 
         protected override void RegisterActionLists(System.ComponentModel.Design.DesignerActionListCollection list)
@@ -28,16 +27,12 @@ namespace DevExpress.XtraReports.CustomControls
         {
             return new XRTreeListColumnActionList(this);
         }
-        #endregion
     }
 
     public class XRTreeListDesignerDataActionList : XRComponentDesignerActionList
     {
-        #region Fields
         XRTreeList treeList;
-        #endregion
 
-        #region Methods
         public XRTreeListDesignerDataActionList(XRComponentDesigner componentDesigner, XRTreeList treeList)
             : base(componentDesigner)
         {
@@ -48,9 +43,7 @@ namespace DevExpress.XtraReports.CustomControls
             AddPropertyItem(actionItems, "KeyFieldName", "KeyFieldName");
             AddPropertyItem(actionItems, "ParentFieldName", "ParentKeyFieldName");
         }
-        #endregion
 
-        #region Properties        
         [
         Editor(typeof(XRTreeListFieldNameEditor), typeof(UITypeEditor))
         ]
@@ -74,7 +67,6 @@ namespace DevExpress.XtraReports.CustomControls
                 SetPropertyValue("ParentFieldName", value);
             }
         }
-        #endregion        
     }
 
     public class XRTreeListFieldNameEditor : ColumnNameEditor
@@ -87,7 +79,6 @@ namespace DevExpress.XtraReports.CustomControls
 
     public class XRTreeListColumnActionList : XRDataContainerDesignerColumnActionList
     {
-        #region Methods
         public XRTreeListColumnActionList(XRComponentDesigner componentDesigner)
             : base(componentDesigner)
         {            
@@ -106,6 +97,5 @@ namespace DevExpress.XtraReports.CustomControls
                 return base.Headers as XRTreeListColumnCollection;
             }
         }
-        #endregion
     }
 }
