@@ -313,7 +313,7 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		Public ReadOnly Property TreeList() As XRTreeList
 			Get
-				Return TryCast(MyBase.Control, XRTreeList)
+				Return TryCast(MyBase.ContainerControl, XRTreeList)
 			End Get
 		End Property
 	End Class

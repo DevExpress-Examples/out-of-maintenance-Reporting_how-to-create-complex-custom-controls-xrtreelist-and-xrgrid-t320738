@@ -271,7 +271,7 @@ namespace DevExpress.XtraReports.CustomControls {
 
         public object ParentValue { get; internal set; }
 
-        public XRTreeList TreeList { get { return base.Control as XRTreeList; } }
+        public XRTreeList TreeList { get { return base.ContainerControl as XRTreeList; } }
     }
 
     public enum NodeSuppressType { Leave, Suppress, SuppressWithChildren };

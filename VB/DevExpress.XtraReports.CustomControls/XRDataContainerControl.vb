@@ -341,9 +341,15 @@ Namespace DevExpress.XtraReports.CustomControls
 		Public Function GetEffectiveDataSource() As Object
 			Return Me.DataSource
 		End Function
+		Private Function IDataContainerBase2_GetEffectiveDataSource() As Object Implements IDataContainerBase2.GetEffectiveDataSource
+			Return GetEffectiveDataSource()
+		End Function
 
 		Public Function GetEffectiveDataMember() As String
 			Return Me.DataMember
+		End Function
+		Private Function IDataContainerBase2_GetEffectiveDataMember() As String Implements IDataContainerBase2.GetEffectiveDataMember
+			Return GetEffectiveDataMember()
 		End Function
 
 		Public Function GetSerializableDataSource() As Object
@@ -372,7 +378,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		Friend Sub InitializeControlArea(ByVal bandKind As DocumentBandKind, ByVal parentBand As DocumentBand, ByVal writeInfo As XRWriteInfo, ByVal cache As XRDataContainerPrintCache)
 			Dim band As New DocumentBand(bandKind, 0)
 			parentBand.Bands.Add(band)
-			Dim brick As DataContainerBrick = CreateContainerBrick(Me, bandKind Is DocumentBandKind.PageHeader)
+			Dim brick As DataContainerBrick = CreateContainerBrick(Me, bandKind.Equals(DocumentBandKind.PageHeader)) ' 'Equals()' instead of '==' is for VB Converter
 			brick.PrintCache = cache
 			Me.PutStateToBrick(brick, writeInfo.PrintingSystem)
 			VisualBrickHelper.InitializeBrick(brick, writeInfo.PrintingSystem, brick.Rect)
@@ -496,9 +502,25 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		<TypeConverter(GetType(DataMemberTypeConverter)), Editor(GetType(DataContainerDataMemberEditor), GetType(UITypeEditor)), RefreshProperties(RefreshProperties.All), DefaultValue(""), XtraSerializableProperty>
 		Public Property DataMember() As String
+		Private Property IDataContainerBase_DataMember() As String Implements IDataContainerBase.DataMember
+			Get
+				Return DataMember
+			End Get
+			Set(ByVal value As String)
+				DataMember = value
+			End Set
+		End Property
 
 		<Editor(GetType(DataSourceEditor), GetType(UITypeEditor)), TypeConverter(GetType(DataSourceConverter)), RefreshProperties(RefreshProperties.All), System.ComponentModel.DefaultValue(CType(Nothing, Object)), XtraSerializableProperty(XtraSerializationVisibility.Reference)>
 		Public Property DataSource() As Object
+		Private Property IDataContainerBase_DataSource() As Object Implements IDataContainerBase.DataSource
+			Get
+				Return DataSource
+			End Get
+			Set(ByVal value As Object)
+				DataSource = value
+			End Set
+		End Property
 
 		<Browsable(False), XtraSerializableProperty, DefaultValue("")>
 		Public Overridable Property EvenCellStyleName() As String
@@ -868,13 +890,11 @@ Namespace DevExpress.XtraReports.CustomControls
 	Public Class XRDataRecord
 		Implements IComparable(Of XRDataRecord)
 
-'INSTANT VB NOTE: The field control was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private control_Renamed As XRDataContainerControl
-		Private itemArray() As Object
+		Private ReadOnly itemArray() As Object
 
 		Public Sub New(ByVal control As XRDataContainerControl)
 			'Visible Headers
-			Me.control_Renamed = control
+			Me.ContainerControl = control
 			itemArray = New Object(control.Headers.Count - 1){}
 		End Sub
 
@@ -884,11 +904,11 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		Public Overridable Function Compare(ByVal other As XRDataRecord) As Integer
 			Dim sortResult As Integer = 0
-			If control_Renamed.SortFields.Count > 0 Then
-				For i As Integer = 0 To control_Renamed.SortFields.Count - 1
-					If control_Renamed.SortFields(i).FieldName <> String.Empty Then
-						Dim multiplier As Integer = If(control_Renamed.SortFields(i).SortOrder Is XRColumnSortOrder.Ascending, 1, -1)
-						sortResult = Comparer.Default.Compare(Me(control_Renamed.SortFields(i).FieldName), other(control_Renamed.SortFields(i).FieldName)) * multiplier
+			If ContainerControl.SortFields.Count > 0 Then
+				For i As Integer = 0 To ContainerControl.SortFields.Count - 1
+					If ContainerControl.SortFields(i).FieldName <> String.Empty Then
+						Dim multiplier As Integer = If(ContainerControl.SortFields(i).SortOrder.Equals(XRColumnSortOrder.Ascending), 1, -1) ' '.Equals()' instead of '==' is for VB Converter
+						sortResult = Comparer.Default.Compare(Me(ContainerControl.SortFields(i).FieldName), other(ContainerControl.SortFields(i).FieldName)) * multiplier
 						If sortResult <> 0 Then
 							Exit For
 						End If
@@ -914,20 +934,16 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		Default Public Property Item(ByVal fieldName As String) As Object
 			Get
-				Dim index As Integer = System.Windows.Forms.Control.Headers.GetHeaderIndexByFieldName(fieldName)
+				Dim index As Integer = ContainerControl.Headers.GetHeaderIndexByFieldName(fieldName)
 				Return Me(index)
 			End Get
 			Friend Set(ByVal value As Object)
-				Dim index As Integer = System.Windows.Forms.Control.Headers.GetHeaderIndexByFieldName(fieldName)
+				Dim index As Integer = ContainerControl.Headers.GetHeaderIndexByFieldName(fieldName)
 				Me(index) = value
 			End Set
 		End Property
 
-		Public ReadOnly Property Control() As XRDataContainerControl
-			Get
-				Return control_Renamed
-			End Get
-		End Property
+		Public ReadOnly Property ContainerControl() As XRDataContainerControl
 	End Class
 
 	Public Class XRSortFieldCollection

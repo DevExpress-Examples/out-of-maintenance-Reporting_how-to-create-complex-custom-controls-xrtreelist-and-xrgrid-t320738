@@ -288,10 +288,18 @@ namespace DevExpress.XtraReports.CustomControls
         {
             return this.DataSource;
         }
+        object IDataContainerBase2.GetEffectiveDataSource()
+        {
+            return GetEffectiveDataSource();
+        }
 
         public string GetEffectiveDataMember()
         {
             return this.DataMember;
+        }
+        string IDataContainerBase2.GetEffectiveDataMember()
+        {
+            return GetEffectiveDataMember();
         }
 
         public object GetSerializableDataSource()
@@ -322,7 +330,7 @@ namespace DevExpress.XtraReports.CustomControls
         {
             DocumentBand band = new DocumentBand(bandKind, 0);
             parentBand.Bands.Add(band);
-            DataContainerBrick brick = CreateContainerBrick(this, bandKind == DocumentBandKind.PageHeader);
+            DataContainerBrick brick = CreateContainerBrick(this, bandKind.Equals(DocumentBandKind.PageHeader)); // 'Equals()' instead of '==' is for VB Converter
             brick.PrintCache = cache;
             this.PutStateToBrick(brick, writeInfo.PrintingSystem);
             VisualBrickHelper.InitializeBrick(brick, writeInfo.PrintingSystem, brick.Rect);
@@ -467,6 +475,16 @@ namespace DevExpress.XtraReports.CustomControls
         ]
         [XtraSerializableProperty]
         public string DataMember { get; set; }
+        string IDataContainerBase.DataMember {
+            get
+            {
+                return DataMember;
+            }
+            set
+            {
+                DataMember = value;
+            }
+        }
 
         [
         Editor(typeof(DataSourceEditor), typeof(UITypeEditor)),
@@ -476,6 +494,17 @@ namespace DevExpress.XtraReports.CustomControls
         XtraSerializableProperty(XtraSerializationVisibility.Reference)
         ]
         public object DataSource { get; set; }
+        object IDataContainerBase.DataSource
+        {
+            get
+            {
+                return DataSource;
+            }
+            set
+            {
+                DataSource = value;
+            }
+        }
 
         [Browsable(false), XtraSerializableProperty, DefaultValue("")]
         public virtual string EvenCellStyleName
@@ -855,13 +884,12 @@ namespace DevExpress.XtraReports.CustomControls
 
     public class XRDataRecord : IComparable<XRDataRecord>
     {
-        XRDataContainerControl control;
-        object[] itemArray;
+        readonly object[] itemArray;
 
         public XRDataRecord(XRDataContainerControl control)
         {
             //Visible Headers
-            this.control = control;
+            this.ContainerControl = control;
             itemArray = new object[control.Headers.Count];
         }
 
@@ -873,12 +901,12 @@ namespace DevExpress.XtraReports.CustomControls
         public virtual int Compare(XRDataRecord other)
         {
             int sortResult = 0;
-            if (control.SortFields.Count > 0)
-                for (int i = 0; i < control.SortFields.Count; i++)
-                    if (control.SortFields[i].FieldName != string.Empty)
+            if (ContainerControl.SortFields.Count > 0)
+                for (int i = 0; i < ContainerControl.SortFields.Count; i++)
+                    if (ContainerControl.SortFields[i].FieldName != string.Empty)
                     {
-                        int multiplier = control.SortFields[i].SortOrder == XRColumnSortOrder.Ascending ? 1 : -1;
-                        sortResult = Comparer.Default.Compare(this[control.SortFields[i].FieldName], other[control.SortFields[i].FieldName]) * multiplier;
+                        int multiplier = ContainerControl.SortFields[i].SortOrder.Equals(XRColumnSortOrder.Ascending) ? 1 : -1; // '.Equals()' instead of '==' is for VB Converter
+                        sortResult = Comparer.Default.Compare(this[ContainerControl.SortFields[i].FieldName], other[ContainerControl.SortFields[i].FieldName]) * multiplier;
                         if (sortResult != 0)
                             break;
                     }
@@ -904,17 +932,17 @@ namespace DevExpress.XtraReports.CustomControls
         {
             get
             {
-                int index = Control.Headers.GetHeaderIndexByFieldName(fieldName);
+                int index = ContainerControl.Headers.GetHeaderIndexByFieldName(fieldName);
                 return this[index];
             }
             internal set
             {
-                int index = Control.Headers.GetHeaderIndexByFieldName(fieldName);
+                int index = ContainerControl.Headers.GetHeaderIndexByFieldName(fieldName);
                 this[index] = value;
             }
         }
 
-        public XRDataContainerControl Control { get { return control; } }
+        public XRDataContainerControl ContainerControl { get; }
     }
 
     public class XRSortFieldCollection : CollectionBase, IEnumerable<XRSortField>
