@@ -20,7 +20,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Sub
 
 		Public Overrides Function CreateBrick(ByVal childrenBricks() As VisualBrick) As VisualBrick
-			Return CType(New SubreportBrick(Control), VisualBrick)
+			Return New SubreportBrick(Control)
 		End Function
 
 		Protected Overridable Function CreateBrickStyle(ByVal control As XRDataContainerControl, ByVal parentBrick As VisualBrick, ByVal valueBrick As VisualBrick, ByVal record As XRDataRecord, ByVal fieldIndex As Integer, ByVal isHeader As Boolean) As BrickStyle
@@ -32,7 +32,7 @@ Namespace DevExpress.XtraReports.CustomControls
 				DirectCast(valueBrick, IDataCellBrick).CellPosition = DirectCast(valueBrick, IDataCellBrick).CellPosition Or XRDataCellPosition.Header
 			Else
 				Dim printCellArgs As New PrintRecordCellEventArgs(record, control.VisibleHeaders(fieldIndex), valueBrick, style)
-				Me.Control.OnPrintRecordCell(CType(printCellArgs, PrintRecordCellEventArgs))
+				Me.Control.OnPrintRecordCell(printCellArgs)
 			End If
 
 			Return style
@@ -95,7 +95,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Function
 
 		Protected Overridable Function GetActualBrickStyle(ByVal parentBrick As DataContainerBrick, ByVal isHeader As Boolean) As BrickStyle
-			Dim resultingStyle As XRControlStyle = Nothing
+			Dim resultingStyle As XRControlStyle
 
 
 			If isHeader Then
@@ -131,7 +131,6 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		Private Sub ApplyStyleProperties(ByVal sourceStyle As XRControlStyle, ByVal destStyle As XRControlStyle)
 			Dim assignedProperties As StyleProperty = GetStyleProperties(sourceStyle)
-			Dim resultingProperties As StyleProperty = StyleProperty.All And assignedProperties
 			ApplyProperties(sourceStyle, destStyle, assignedProperties)
 		End Sub
 

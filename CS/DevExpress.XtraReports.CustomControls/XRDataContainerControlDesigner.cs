@@ -4,18 +4,15 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing.Design;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using DevExpress.Data.Design;
 using DevExpress.XtraReports.Design;
 
-namespace DevExpress.XtraReports.CustomControls
-{
+namespace DevExpress.XtraReports.CustomControls {
     public class XRDataContainerControlDesigner : XRControlDesigner
     {
-        public XRDataContainerControlDesigner() : base() 
+        public XRDataContainerControlDesigner() : base()
         {
-            
         }
 
         protected virtual XRDataContainerDesignerColumnActionList CreateColumnActionList()
@@ -50,8 +47,8 @@ namespace DevExpress.XtraReports.CustomControls
             base.RegisterActionLists(list);
             list.Add(new XRDataContainerDesignerDataActionList(this));
             list.Add(new XRDataContainerDesignerSortActionList(this));
-            list.Add(CreateColumnActionList());              
-        }        
+            list.Add(CreateColumnActionList());
+        }
     }
 
     public class XRDataContainerDesignerDataActionList : XRComponentDesignerActionList
@@ -67,7 +64,7 @@ namespace DevExpress.XtraReports.CustomControls
         {
             AddPropertyItem(actionItems, "DataSource", "DataSource");
             AddPropertyItem(actionItems, "DataMember", "DataMember");
-            AddPropertyItem(actionItems, "DataAdapter", "DataAdapter");           
+            AddPropertyItem(actionItems, "DataAdapter", "DataAdapter");
         }
 
         [
@@ -106,12 +103,12 @@ namespace DevExpress.XtraReports.CustomControls
             {
                SetPropertyValue("DataSource", value);
             }
-        }        
+        }
     }
 
     public class XRDataContainerDesignerSortActionList : XRComponentDesignerActionList
     {
-        XRDataContainerControl control;
+        readonly XRDataContainerControl control;
 
         public XRDataContainerDesignerSortActionList(XRComponentDesigner componentDesigner)
             : base(componentDesigner)
@@ -136,8 +133,8 @@ namespace DevExpress.XtraReports.CustomControls
         public XRDataContainerDesignerColumnActionList(XRComponentDesigner componentDesigner)
             : base(componentDesigner)
         {
-            this.control = this.Component as XRDataContainerControl;            
-        }        
+            this.control = this.Component as XRDataContainerControl;
+        }
 
         protected virtual void AddHeadersPropertyItem(DesignerActionItemCollection actionItems) {
             AddPropertyItem(actionItems, control.FieldHeaderName, "Headers");
@@ -154,7 +151,7 @@ namespace DevExpress.XtraReports.CustomControls
         }
 
         public virtual void OnRetrieveFields()
-        {                        
+        {
             control.CreateAllHeaders();
             ((XRDataContainerControlDesigner)this.designer).InvalidateControl();
         }
@@ -166,10 +163,10 @@ namespace DevExpress.XtraReports.CustomControls
     }
 
     public class XRCollectionEditor : CollectionEditor
-    {        
+    {
         public XRCollectionEditor(System.Type type) : base(type)
         {
-            
+
         }
 
         protected override CollectionForm CreateCollectionForm()
@@ -190,10 +187,10 @@ namespace DevExpress.XtraReports.CustomControls
             {
                 IDesignerHost host = this.Context.Container as IDesignerHost;
                 XRDataContainerControlDesigner designer = host.GetDesigner(this.Context.Instance as IComponent) as XRDataContainerControlDesigner;
-                designer.OnCollectionChanged();                
+                designer.OnCollectionChanged();
             }
             finally
-            {                 
+            {
             }
         }
     }

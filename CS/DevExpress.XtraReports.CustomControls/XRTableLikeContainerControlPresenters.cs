@@ -1,18 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraPrinting.Native;
 
-namespace DevExpress.XtraReports.CustomControls
-{
+namespace DevExpress.XtraReports.CustomControls {
     internal class XRTableLikeContainerControlPresenter : XRDataContainerControlPresenter
     {
         public XRTableLikeContainerControlPresenter(XRTableLikeContainerControl control) : base(control) { }
 
-        protected override void CreateHeaders(XtraPrinting.PanelBrick parentBrick, ref float actualHeight)
+        protected override void CreateHeaders(PanelBrick parentBrick, ref float actualHeight)
         {
             if (IsDesignMode || (parentBrick is DataContainerBrick && ((DataContainerBrick)parentBrick).IsHeader))
             {
@@ -47,7 +43,7 @@ namespace DevExpress.XtraReports.CustomControls
 
         protected float GetBrickHeight(VisualBrick valueBrick, float columnWidth, bool isHeader)
         {
-            float brickHeight = 0;
+            float brickHeight;
 
             if ((!isHeader && TableControl.CellAutoHeight) || (isHeader && TableControl.HeaderAutoHeight))
             {

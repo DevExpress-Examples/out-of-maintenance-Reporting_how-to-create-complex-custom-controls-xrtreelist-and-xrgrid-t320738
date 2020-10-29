@@ -30,34 +30,13 @@ Namespace DevExpress.XtraReports.CustomControls
 		Inherits XRControl
 		Implements IDataContainer, ICustomDataContainer, ISupportInitialize
 
-'INSTANT VB NOTE: The field cellHeight was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private cellHeight_Renamed As Single
-'INSTANT VB NOTE: The field cellAutoHeight was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private cellAutoHeight_Renamed As Boolean
-'INSTANT VB NOTE: The field dataSource was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private dataSource_Renamed As Object
-'INSTANT VB NOTE: The field dataMember was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private dataMember_Renamed As String
-'INSTANT VB NOTE: The field dataAdapter was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private dataAdapter_Renamed As Object
+		Private fCellHeight As Single
 		Friend isLoading As Boolean
-
-'INSTANT VB NOTE: The field headers was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private headers_Renamed As XRFieldHeaderCollection
-		Private dataRecords As XRDataRecordCollection
 		Private dataHelper As XRDataContainerControlDataHelper
-'INSTANT VB NOTE: The field sortFields was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private sortFields_Renamed As XRSortFieldCollection
-
-'INSTANT VB NOTE: The field evenCellStyleName was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private evenCellStyleName_Renamed As String
-'INSTANT VB NOTE: The field oddCellStyleName was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private oddCellStyleName_Renamed As String
-'INSTANT VB NOTE: The field cellStyleName was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private cellStyleName_Renamed As String
-'INSTANT VB NOTE: The field headerStyleName was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private headerStyleName_Renamed As String
-
+		Private fEvenCellStyleName As String
+		Private fOddCellStyleName As String
+		Private fCellStyleName As String
+		Private fHeaderStyleName As String
 		Friend fDefaultCellStyle As XRControlStyle
 		Friend fDefaultHeaderStyle As XRControlStyle
 
@@ -190,31 +169,37 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Event
 
 		Public Sub New()
-			evenCellStyleName_Renamed = String.Empty
-			oddCellStyleName_Renamed = String.Empty
-			cellStyleName_Renamed = String.Empty
-			headerStyleName_Renamed = String.Empty
+			fEvenCellStyleName = String.Empty
+			fOddCellStyleName = String.Empty
+			fCellStyleName = String.Empty
+			fHeaderStyleName = String.Empty
 
-			headers_Renamed = CreateHeaders()
+			Headers = CreateHeaders()
 
-			cellHeight_Renamed = 25F
-			cellAutoHeight_Renamed = False
+			fCellHeight = 25F
+			CellAutoHeight = False
 
-			dataRecords = CreateDataRecords()
+			Records = CreateDataRecords()
 			dataHelper = CreateDataHelper()
 
-			sortFields_Renamed = New XRSortFieldCollection(Me)
+			SortFields = New XRSortFieldCollection(Me)
 
 			InitializeDefaultStyles()
 		End Sub
 
-		Public Sub BeginInit() Implements ISupportInitialize.BeginInit
+		Public Sub BeginInit()
 			isLoading = True
 		End Sub
+		Private Sub ISupportInitialize_BeginInit() Implements ISupportInitialize.BeginInit
+			BeginInit()
+		End Sub
 
-		Public Sub EndInit() Implements ISupportInitialize.EndInit
+		Public Sub EndInit()
 			isLoading = False
 			Me.UpdateLayout()
+		End Sub
+		Private Sub ISupportInitialize_EndInit() Implements ISupportInitialize.EndInit
+			EndInit()
 		End Sub
 
 		Protected Overrides Sub CollectAssociatedComponents(ByVal components As DesignItemList)
@@ -223,7 +208,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Sub
 
 		Protected Overrides Sub CopyDataProperties(ByVal control As XRControl)
-			Dim dataControl As XRDataContainerControl = TryCast(control, XRDataContainerControl)
+			Dim dataControl As IDataContainer = TryCast(control, IDataContainer)
 			If dataControl IsNot Nothing Then
 				Me.DataSource = dataControl.DataSource
 				Me.DataAdapter = dataControl.DataAdapter
@@ -303,8 +288,8 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Function
 
 		Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-			dataSource_Renamed = Nothing
-			dataAdapter_Renamed = Nothing
+			DataSource = Nothing
+			DataAdapter = Nothing
 
 			If fDefaultCellStyle IsNot Nothing Then
 				fDefaultCellStyle.Dispose()
@@ -316,17 +301,17 @@ Namespace DevExpress.XtraReports.CustomControls
 				fDefaultHeaderStyle = Nothing
 			End If
 
-			If dataRecords IsNot Nothing Then
-				dataRecords.Clear()
-				dataRecords = Nothing
+			If Records IsNot Nothing Then
+				Records.Clear()
+				Records = Nothing
 			End If
 
 			dataHelper = Nothing
-			sortFields_Renamed = Nothing
+			SortFields = Nothing
 
-			If headers_Renamed IsNot Nothing Then
-				headers_Renamed.ClearHeaders(True)
-				headers_Renamed = Nothing
+			If Headers IsNot Nothing Then
+				Headers.ClearHeaders(True)
+				Headers = Nothing
 			End If
 
 			MyBase.Dispose(disposing)
@@ -334,13 +319,13 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		Friend Function GetAvailableFields() As PropertyDescriptorCollection
 			Using context As New DataContext()
-				Return context.GetListItemProperties(dataSource_Renamed, dataMember_Renamed)
+				Return context.GetListItemProperties(DataSource, DataMember)
 			End Using
 		End Function
 
 		Private Function ICustomDataContainer_GetDataSource() As IList Implements ICustomDataContainer.GetDataSource
 			Using context As New DataContext()
-				Return GetDataSourceCore(context, dataSource_Renamed, dataMember_Renamed)
+				Return GetDataSourceCore(context, DataSource, DataMember)
 			End Using
 		End Function
 
@@ -354,15 +339,18 @@ Namespace DevExpress.XtraReports.CustomControls
 
 
 		Public Function GetEffectiveDataSource() As Object
-			Return Me.dataSource_Renamed
+			Return Me.DataSource
 		End Function
 
 		Public Function GetEffectiveDataMember() As String
-			Return Me.dataMember_Renamed
+			Return Me.DataMember
 		End Function
 
 		Public Function GetSerializableDataSource() As Object
-			Return Me.dataSource_Renamed
+			Return Me.DataSource
+		End Function
+		Private Function IDataContainer_GetSerializableDataSource() As Object Implements IDataContainer.GetSerializableDataSource
+			Return GetSerializableDataSource()
 		End Function
 
 		Protected Friend Shadows Function GetStyle(ByVal styleName As String) As XRControlStyle
@@ -452,7 +440,7 @@ Namespace DevExpress.XtraReports.CustomControls
 			Dim prevDpi As Single = dpi
 			MyBase.SyncDpi(dpi)
 
-			cellHeight_Renamed = GraphicsUnitConverter.Convert(cellHeight_Renamed, prevDpi, dpi)
+			fCellHeight = GraphicsUnitConverter.Convert(fCellHeight, prevDpi, dpi)
 		End Sub
 
 		Friend Overridable Sub UpdateDataLayout()
@@ -481,64 +469,44 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		<XtraSerializableProperty, DefaultValue(False), RefreshProperties(RefreshProperties.All)>
 		Public Property CellAutoHeight() As Boolean
-			Get
-				Return cellAutoHeight_Renamed
-			End Get
-			Set(ByVal value As Boolean)
-				cellAutoHeight_Renamed = value
-			End Set
-		End Property
 
 		<XtraSerializableProperty, DefaultValue(25F), RefreshProperties(RefreshProperties.All)>
 		Public Property CellHeight() As Single
 			Get
-				Return cellHeight_Renamed
+				Return fCellHeight
 			End Get
 			Set(ByVal value As Single)
 				If value < 2 Then
 					value = 2
 				End If
-				cellHeight_Renamed = value
+				fCellHeight = value
 			End Set
 		End Property
 
 		<Editor(GetType(DataAdapterEditor), GetType(UITypeEditor)), TypeConverterAttribute(GetType(DataAdapterConverter)), System.ComponentModel.DefaultValue(CType(Nothing, Object))>
 		Public Property DataAdapter() As Object
+		Private Property IDataContainer_DataAdapter() As Object Implements IDataContainer.DataAdapter
 			Get
-				Return dataAdapter_Renamed
+				Return DataAdapter
 			End Get
 			Set(ByVal value As Object)
-				dataAdapter_Renamed = value
+				DataAdapter = value
 			End Set
 		End Property
 
 		<TypeConverter(GetType(DataMemberTypeConverter)), Editor(GetType(DataContainerDataMemberEditor), GetType(UITypeEditor)), RefreshProperties(RefreshProperties.All), DefaultValue(""), XtraSerializableProperty>
 		Public Property DataMember() As String
-			Get
-				Return Me.dataMember_Renamed
-			End Get
-			Set(ByVal value As String)
-				dataMember_Renamed = value
-			End Set
-		End Property
 
 		<Editor(GetType(DataSourceEditor), GetType(UITypeEditor)), TypeConverter(GetType(DataSourceConverter)), RefreshProperties(RefreshProperties.All), System.ComponentModel.DefaultValue(CType(Nothing, Object)), XtraSerializableProperty(XtraSerializationVisibility.Reference)>
 		Public Property DataSource() As Object
-			Get
-				Return Me.dataSource_Renamed
-			End Get
-			Set(ByVal value As Object)
-				dataSource_Renamed = value
-			End Set
-		End Property
 
 		<Browsable(False), XtraSerializableProperty, DefaultValue("")>
 		Public Overridable Property EvenCellStyleName() As String
 			Get
-				Return Me.evenCellStyleName_Renamed
+				Return Me.fEvenCellStyleName
 			End Get
 			Set(ByVal value As String)
-				Me.evenCellStyleName_Renamed = If(value IsNot Nothing, value, "")
+				Me.fEvenCellStyleName = If(value, "")
 			End Set
 		End Property
 
@@ -551,44 +519,52 @@ Namespace DevExpress.XtraReports.CustomControls
 		<Browsable(False), XtraSerializableProperty, DefaultValue("")>
 		Public Overridable Property OddCellStyleName() As String
 			Get
-				Return Me.oddCellStyleName_Renamed
+				Return Me.fOddCellStyleName
 			End Get
 			Set(ByVal value As String)
-				Me.oddCellStyleName_Renamed = If(value IsNot Nothing, value, "")
+				Me.fOddCellStyleName = If(value IsNot Nothing, value, "")
 			End Set
 		End Property
 
 		<Browsable(False), XtraSerializableProperty, DefaultValue("")>
 		Public Overridable Property CellStyleName() As String
 			Get
-				Return Me.cellStyleName_Renamed
+				Return Me.fCellStyleName
 			End Get
 			Set(ByVal value As String)
-				Me.cellStyleName_Renamed = If(value IsNot Nothing, value, "")
+				Me.fCellStyleName = If(value IsNot Nothing, value, "")
 			End Set
 		End Property
 
+		Private privateHeaders As XRFieldHeaderCollection
 		<Browsable(False), EditorBrowsable(EditorBrowsableState.Never)>
-		Public ReadOnly Property Headers() As XRFieldHeaderCollection
+		Public Property Headers() As XRFieldHeaderCollection
 			Get
-				Return headers_Renamed
+				Return privateHeaders
 			End Get
+			Private Set(ByVal value As XRFieldHeaderCollection)
+				privateHeaders = value
+			End Set
 		End Property
 
+		Private privateRecords As XRDataRecordCollection
 		<Browsable(False), EditorBrowsable(EditorBrowsableState.Never)>
-		Public ReadOnly Property Records() As XRDataRecordCollection
+		Public Property Records() As XRDataRecordCollection
 			Get
-				Return dataRecords
+				Return privateRecords
 			End Get
+			Private Set(ByVal value As XRDataRecordCollection)
+				privateRecords = value
+			End Set
 		End Property
 
 		<Browsable(False), XtraSerializableProperty, DefaultValue("")>
 		Public Overridable Property HeaderStyleName() As String
 			Get
-				Return Me.headerStyleName_Renamed
+				Return Me.fHeaderStyleName
 			End Get
 			Set(ByVal value As String)
-				Me.headerStyleName_Renamed = If(value IsNot Nothing, value, "")
+				Me.fHeaderStyleName = If(value IsNot Nothing, value, "")
 			End Set
 		End Property
 
@@ -597,8 +573,8 @@ Namespace DevExpress.XtraReports.CustomControls
 				Return Me.GetStyle(Me.EvenCellStyleName)
 			End Get
 			Set(ByVal value As XRControlStyle)
-				Me.evenCellStyleName_Renamed = Me.RegisterStyle(value)
-				ValidateStyleName(value, Me.evenCellStyleName_Renamed)
+				Me.fEvenCellStyleName = Me.RegisterStyle(value)
+				ValidateStyleName(value, Me.fEvenCellStyleName)
 			End Set
 		End Property
 
@@ -608,7 +584,7 @@ Namespace DevExpress.XtraReports.CustomControls
 			End Get
 			Set(ByVal value As XRControlStyle)
 				Me.OddCellStyleName = Me.RegisterStyle(value)
-				ValidateStyleName(value, Me.oddCellStyleName_Renamed)
+				ValidateStyleName(value, Me.fOddCellStyleName)
 			End Set
 		End Property
 
@@ -627,16 +603,20 @@ Namespace DevExpress.XtraReports.CustomControls
 				Return Me.GetStyle(Me.HeaderStyleName)
 			End Get
 			Set(ByVal value As XRControlStyle)
-				Me.headerStyleName_Renamed = Me.RegisterStyle(value)
-				ValidateStyleName(value, Me.headerStyleName_Renamed)
+				Me.fHeaderStyleName = Me.RegisterStyle(value)
+				ValidateStyleName(value, Me.fHeaderStyleName)
 			End Set
 		End Property
 
+		Private privateSortFields As XRSortFieldCollection
 		<DesignerSerializationVisibility(DesignerSerializationVisibility.Content), XtraSerializableProperty(XtraSerializationVisibility.Collection, True, False, False, 0, XtraSerializationFlags.Cached)>
-		Public ReadOnly Property SortFields() As XRSortFieldCollection
+		Public Property SortFields() As XRSortFieldCollection
 			Get
-				Return Me.sortFields_Renamed
+				Return privateSortFields
 			End Get
+			Private Set(ByVal value As XRSortFieldCollection)
+				privateSortFields = value
+			End Set
 		End Property
 
 		Friend ReadOnly Property VisibleHeaders() As List(Of XRFieldHeader)

@@ -14,7 +14,7 @@ using System.Diagnostics;
 namespace DevExpress.XtraReports.CustomControls
 {
     internal class XRDataContainerControlPresenter : ControlPresenter
-    {        
+    {
         public XRDataContainerControlPresenter(XRDataContainerControl control)
             : base(control)
         {
@@ -22,7 +22,7 @@ namespace DevExpress.XtraReports.CustomControls
 
         public override VisualBrick CreateBrick(VisualBrick[] childrenBricks)
         {
-            return (VisualBrick)new SubreportBrick(Control);
+            return new SubreportBrick(Control);
         }
 
         protected virtual BrickStyle CreateBrickStyle(XRDataContainerControl control, VisualBrick parentBrick, VisualBrick valueBrick, XRDataRecord record, int fieldIndex, bool isHeader) 
@@ -38,7 +38,7 @@ namespace DevExpress.XtraReports.CustomControls
             else
             {
                 PrintRecordCellEventArgs printCellArgs = new PrintRecordCellEventArgs(record, control.VisibleHeaders[fieldIndex], valueBrick, style);
-                Control.OnPrintRecordCell((PrintRecordCellEventArgs)printCellArgs);
+                Control.OnPrintRecordCell(printCellArgs);
             }
 
             return style;
@@ -85,14 +85,14 @@ namespace DevExpress.XtraReports.CustomControls
 
             for (int i = 0; i < actualCollection.Count; i++)
             {
-                CreateRecordBrick(actualCollection[i], parentBrick, ref actualHeight);                
+                CreateRecordBrick(actualCollection[i], parentBrick, ref actualHeight);
             }
         }
 
         protected virtual void CreateHeaders(PanelBrick parentBrick, ref float actualHeight) { }
 
         protected virtual void CreateRecordBrick(XRDataRecord currentRecord, PanelBrick parentBrick, ref float actualHeight) 
-        {            
+        {
             if (IsDesignMode || (parentBrick is DataContainerBrick && !((DataContainerBrick)parentBrick).IsHeader))
             {
                 CreateBricksForRecord(currentRecord, parentBrick, false, ref actualHeight);
@@ -108,7 +108,7 @@ namespace DevExpress.XtraReports.CustomControls
 
         protected virtual BrickStyle GetActualBrickStyle(DataContainerBrick parentBrick, bool isHeader)
         {
-            XRControlStyle resultingStyle = null;
+            XRControlStyle resultingStyle;
 
 
             if (isHeader)
@@ -128,7 +128,7 @@ namespace DevExpress.XtraReports.CustomControls
 
                 if (parentBrick.PrintCache.RecordsCache.Count % 2 != 0 && ((XRDataContainerStyles)Control.Styles).EvenCellStyle != null)
                     ApplyStyleProperties(((XRDataContainerStyles)Control.Styles).EvenCellStyle, resultingStyle);
-            }            
+            }
 
             resultingStyle.StringFormat = BrickStringFormat.Create(resultingStyle.TextAlignment, Control.WordWrap);
 
@@ -145,7 +145,6 @@ namespace DevExpress.XtraReports.CustomControls
         private void ApplyStyleProperties(XRControlStyle sourceStyle, XRControlStyle destStyle)
         {
             StyleProperty assignedProperties = GetStyleProperties(sourceStyle);
-            StyleProperty resultingProperties = StyleProperty.All & assignedProperties;
             ApplyProperties(sourceStyle, destStyle, assignedProperties);
         }
 
@@ -171,7 +170,7 @@ namespace DevExpress.XtraReports.CustomControls
                 destStyle.TextAlignment = sourceStyle.TextAlignment;
         }
 
-        protected virtual void LoadData() 
+        protected virtual void LoadData()
         {
             if (!IsDesignMode)
                 Control.LoadData();
@@ -181,7 +180,7 @@ namespace DevExpress.XtraReports.CustomControls
         {
             float convertedWidth = GraphicsUnitConverter.Convert(width, dpi, GraphicsDpi.Document);
             style.Padding.DeflateWidth(convertedWidth);
-            
+
             ps.Graph.PageUnit = GraphicsUnit.Document;
             ps.Graph.Font = style.Font;
             SizeF size = ps.Graph.MeasureString(text, (int)convertedWidth, style.StringFormat.Value);
@@ -193,13 +192,13 @@ namespace DevExpress.XtraReports.CustomControls
         public override void PutStateToBrick(VisualBrick brick, PrintingSystemBase ps)
         {
             if (brick is PanelBrick)
-            {                
+            {
                 float actualHeight = 0f;
 
                 brick.PrintingSystem = ps;
 
                 CreateHeaders((PanelBrick)brick, ref actualHeight);
-                CreateDetails((PanelBrick)brick, ref actualHeight);                                
+                CreateDetails((PanelBrick)brick, ref actualHeight);
 
                 CorrectBrickBounds(brick, actualHeight);
             }

@@ -44,7 +44,7 @@ namespace DevExpress.XtraReports.CustomControls
             {
                 PropertyDescriptor descriptor = GetDescriptorByFieldName(fields, control.Headers[i].FieldName);
                 visibleFields.Add(descriptor);
-            }            
+            }
 
             if (list == null)
                 return;

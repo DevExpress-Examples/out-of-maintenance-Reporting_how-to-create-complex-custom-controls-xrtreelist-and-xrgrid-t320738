@@ -10,11 +10,11 @@ using DevExpress.XtraReports.Design;
 namespace DevExpress.XtraReports.CustomControls
 {
     [
-    TypeConverter(typeof(XRControlStylesConverter)), 
+    TypeConverter(typeof(XRControlStylesConverter)),
     Editor(typeof(XRControlStylesEditor), typeof(UITypeEditor))
     ]
     public class XRDataContainerStyles : DevExpress.XtraReports.UI.XRControl.XRControlStyles
-    {        
+    {
         public XRDataContainerStyles(XRDataContainerControl owner) : base(owner)
         {
         }
@@ -61,7 +61,7 @@ namespace DevExpress.XtraReports.CustomControls
                 ((XRDataContainerControl)this.control).EvenCellStyleCore = value;
             }
         }
-        
+
         [
         Editor(typeof(XRControlStyleEditor), typeof(UITypeEditor)),
         DefaultValue((string)null), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden),
@@ -79,7 +79,7 @@ namespace DevExpress.XtraReports.CustomControls
                 ((XRDataContainerControl)this.control).OddCellStyleCore = value;
             }
         }
-        
+
         [
         Editor(typeof(XRControlStyleEditor), typeof(UITypeEditor)),
         DefaultValue((string)null), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden),

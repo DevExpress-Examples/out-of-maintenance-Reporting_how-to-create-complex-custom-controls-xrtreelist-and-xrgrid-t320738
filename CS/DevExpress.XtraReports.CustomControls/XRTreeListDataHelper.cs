@@ -31,7 +31,7 @@ namespace DevExpress.XtraReports.CustomControls
 
             if (node.KeyValue != null && !nodeTable.ContainsKey(node.KeyValue))
                 nodeTable.Add(node.KeyValue, node);
-            else                
+            else
                 nodeTable.Add(Guid.NewGuid(), node);
         }
 
@@ -40,7 +40,7 @@ namespace DevExpress.XtraReports.CustomControls
             nodeTable.Clear();
             treeList.Nodes.Clear();
 
-            PropertyDescriptorCollection fields = treeList.GetAvailableFields();            
+            PropertyDescriptorCollection fields = treeList.GetAvailableFields();
             keyFieldDescriptor = GetDescriptorByFieldName(fields, treeList.KeyFieldName);
             parentFieldDescriptor = GetDescriptorByFieldName(fields, treeList.ParentFieldName);
 

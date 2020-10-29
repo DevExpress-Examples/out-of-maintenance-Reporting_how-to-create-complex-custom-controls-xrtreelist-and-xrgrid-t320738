@@ -1,26 +1,18 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
+using System.Drawing.Design;
 using DevExpress.Utils.Serializing;
 using DevExpress.XtraReports.Native.Presenters;
-using DevExpress.XtraReports.UI;
-using DevExpress.XtraReports.Design;
-using DevExpress.XtraReports.Native;
-using System.Drawing.Design;
 
-namespace DevExpress.XtraReports.CustomControls
-{
+namespace DevExpress.XtraReports.CustomControls {
     [ToolboxItem(true),
     Designer("DevExpress.XtraReports.CustomControls.XRGridDesigner, DevExpress.XtraReports.CustomControls"),
     XRDesigner("DevExpress.XtraReports.CustomControls.XRGridDesigner, DevExpress.XtraReports.CustomControls")]
     public class XRGrid : XRTableLikeContainerControl
     {
         public XRGrid() : base()
-        {            
+        {
             WidthF = 300f;
-            HeightF = 200f;                 
+            HeightF = 200f;
         }
 
         protected override DataContainerBrick CreateContainerBrick(XRDataContainerControl owner, bool isHeader)

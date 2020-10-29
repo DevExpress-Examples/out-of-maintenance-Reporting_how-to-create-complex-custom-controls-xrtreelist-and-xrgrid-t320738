@@ -39,7 +39,7 @@ namespace DevExpress.XtraReports.CustomControls
             this.treeList = treeList;
         }
         protected override void FillActionItemCollection(DesignerActionItemCollection actionItems)
-        {            
+        {
             AddPropertyItem(actionItems, "KeyFieldName", "KeyFieldName");
             AddPropertyItem(actionItems, "ParentFieldName", "ParentKeyFieldName");
         }
@@ -81,7 +81,7 @@ namespace DevExpress.XtraReports.CustomControls
     {
         public XRTreeListColumnActionList(XRComponentDesigner componentDesigner)
             : base(componentDesigner)
-        {            
+        {
         }
 
         protected override void AddHeadersPropertyItem(DesignerActionItemCollection actionItems)

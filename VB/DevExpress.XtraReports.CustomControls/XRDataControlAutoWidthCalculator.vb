@@ -62,6 +62,4 @@ Namespace DevExpress.XtraReports.CustomControls
 			End If
 		End Sub
 	End Class
-
-
 End Namespace

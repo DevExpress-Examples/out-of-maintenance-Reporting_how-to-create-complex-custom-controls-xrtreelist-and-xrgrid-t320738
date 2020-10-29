@@ -1,18 +1,14 @@
 ﻿Imports System
 Imports System.Collections.Generic
 Imports System.Drawing
-Imports System.Linq
-Imports System.Text
 Imports DevExpress.DocumentView
 Imports DevExpress.Utils.Serializing
 Imports DevExpress.XtraPrinting
 Imports DevExpress.XtraPrinting.BrickExporters
 Imports DevExpress.XtraPrinting.Export
 Imports DevExpress.XtraPrinting.Export.Imaging
-Imports DevExpress.XtraPrinting.Export.Rtf
 Imports DevExpress.XtraPrinting.Export.Web
 Imports DevExpress.XtraPrinting.Native
-Imports DevExpress.XtraPrinting.NativeBricks
 
 Namespace DevExpress.XtraReports.CustomControls
 	<Flags>
@@ -30,17 +26,13 @@ Namespace DevExpress.XtraReports.CustomControls
 	Public Class DataContainerBrick
 		Inherits PanelBrick
 
-		Private cache As XRDataContainerPrintCache
-'INSTANT VB NOTE: The field isHeader was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private isHeader_Renamed As Boolean
-
 		Public Sub New()
 			MyBase.New()
 		End Sub
 
 		Public Sub New(ByVal owner As XRDataContainerControl, ByVal isHeader As Boolean)
 			MyBase.New(owner)
-			Me.isHeader_Renamed = isHeader
+			Me.IsHeader = isHeader
 		End Sub
 
 		Protected Overrides Function AfterPrintOnPage(ByVal indices As IList(Of Integer), ByVal brickBounds As RectangleF, ByVal clipRect As RectangleF, ByVal page As Page, ByVal pageIndex As Integer, ByVal pageCount As Integer, ByVal callback As Action(Of Brick, RectangleF)) As Boolean
@@ -59,37 +51,24 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Function
 
 		Public Overrides Sub Dispose()
-			If cache IsNot Nothing Then
-				cache.Clear()
-				cache = Nothing
+			If PrintCache IsNot Nothing Then
+				PrintCache.Clear()
+				PrintCache = Nothing
 			End If
 			MyBase.Dispose()
 		End Sub
 
 		<XtraSerializableProperty>
 		Public ReadOnly Property IsHeader() As Boolean
-			Get
-				Return isHeader_Renamed
-			End Get
-		End Property
 
 		<XtraSerializableProperty>
 		Friend Property PrintCache() As XRDataContainerPrintCache
-			Get
-				Return cache
-			End Get
-			Set(ByVal value As XRDataContainerPrintCache)
-				cache = value
-			End Set
-		End Property
 	End Class
 
 	Public Class DataRecordBrick
 		Inherits PanelBrick
 
 		Protected parentBrick As DataContainerBrick
-'INSTANT VB NOTE: The field isHeaderBrick was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private isHeaderBrick_Renamed As Boolean
 
 		Public Sub New()
 			MyBase.New()
@@ -98,7 +77,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		Public Sub New(ByVal brickOwner As IBrickOwner, ByVal parentBrick As DataContainerBrick, ByVal isHeaderBrick As Boolean)
 			MyBase.New(brickOwner)
 			Me.parentBrick = parentBrick
-			Me.isHeaderBrick_Renamed = isHeaderBrick
+			Me.IsHeaderBrick = isHeaderBrick
 		End Sub
 
 		Protected Sub AddCellPosition(ByVal position As XRDataCellPosition)
@@ -114,7 +93,7 @@ Namespace DevExpress.XtraReports.CustomControls
 				Dim headerBrickBounds As RectangleF = page.GetBrickBounds(headerBrick)
 				Dim brickRect As RectangleF = page.GetBrickBounds(Me)
 
-				Dim currentCache As RecordPrintCache = TryCast(parentBrick.PrintCache.GetCacheByBrick(Me), RecordPrintCache)
+				Dim currentCache As RecordPrintCache = parentBrick.PrintCache.GetCacheByBrick(Me)
 				Dim cacheIndex As Integer = parentBrick.PrintCache.RecordsCache.IndexOf(currentCache)
 
 				Dim delta As Single = brickRect.Top - headerBrickBounds.Bottom
@@ -158,13 +137,6 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		<XtraSerializableProperty>
 		Public Property IsHeaderBrick() As Boolean
-			Get
-				Return isHeaderBrick_Renamed
-			End Get
-			Set(ByVal value As Boolean)
-				isHeaderBrick_Renamed = value
-			End Set
-		End Property
 	End Class
 
 	Friend Interface IDataCellBrick
@@ -175,9 +147,6 @@ Namespace DevExpress.XtraReports.CustomControls
 	Public Class DataCellTextBrick
 		Inherits LabelBrick
 		Implements IDataCellBrick
-
-'INSTANT VB NOTE: The field cellPosition was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private cellPosition_Renamed As XRDataCellPosition
 
 		Public Sub New()
 			MyBase.New()
@@ -194,22 +163,12 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		<XtraSerializableProperty>
 		Public Property CellPosition() As XRDataCellPosition Implements IDataCellBrick.CellPosition
-			Get
-				Return cellPosition_Renamed
-			End Get
-			Set(ByVal value As XRDataCellPosition)
-				cellPosition_Renamed = value
-			End Set
-		End Property
 	End Class
 
 	<BrickExporter(GetType(DataCellCheckBrickExporter))>
 	Public Class DataCellCheckBrick
 		Inherits CheckBoxBrick
 		Implements IDataCellBrick
-
-'INSTANT VB NOTE: The field cellPosition was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private cellPosition_Renamed As XRDataCellPosition
 
 		Public Sub New()
 			MyBase.New()
@@ -226,13 +185,6 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		<XtraSerializableProperty>
 		Public Property CellPosition() As XRDataCellPosition Implements IDataCellBrick.CellPosition
-			Get
-				Return cellPosition_Renamed
-			End Get
-			Set(ByVal value As XRDataCellPosition)
-				cellPosition_Renamed = value
-			End Set
-		End Property
 	End Class
 
 	Friend Module DataCellExportHelper

@@ -1,37 +1,26 @@
 ﻿Imports System
 Imports System.Collections
+Imports System.Collections.Generic
 Imports System.ComponentModel
-Imports System.Drawing
 Imports System.Drawing.Design
-Imports System.Reflection
-Imports System.Reflection.Emit
 Imports DevExpress.Utils.Serializing
 Imports DevExpress.XtraPrinting
-Imports DevExpress.XtraPrinting.Native
-Imports DevExpress.XtraReports.Native
-Imports DevExpress.XtraReports.Native.Presenters
-Imports DevExpress.XtraReports.Native.Printing
-Imports DevExpress.XtraReports.UI
 Imports DevExpress.XtraReports.Design
 Imports DevExpress.XtraReports.Localization
-Imports System.Collections.Generic
+Imports DevExpress.XtraReports.Native
+Imports DevExpress.XtraReports.Native.Presenters
+Imports DevExpress.XtraReports.UI
 
 Namespace DevExpress.XtraReports.CustomControls
 	<ToolboxItem(True), Designer("DevExpress.XtraReports.CustomControls.XRTreeListDesigner, DevExpress.XtraReports.CustomControls"), XRDesigner("DevExpress.XtraReports.CustomControls.XRTreeListDesigner, DevExpress.XtraReports.CustomControls")>
 	Public Class XRTreeList
 		Inherits XRTableLikeContainerControl
 
-		Private keyField As String
-		Private parentField As String
-
 		Private Shared ReadOnly PrintNodeEvent As New Object()
 		Private Shared ReadOnly PrintNodeCellEvent As New Object()
 
 'INSTANT VB NOTE: The field nodeIndent was renamed since Visual Basic does not allow fields to have the same name as other class members:
 		Private nodeIndent_Renamed As Integer
-
-'INSTANT VB NOTE: The field nodes was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private nodes_Renamed As XRTreeListNodeCollection
 
 		<Browsable(False), EditorBrowsable(EditorBrowsableState.Never)>
 		Public Shadows Custom Event PrintRecord As PrintRecordEventHandler
@@ -80,10 +69,10 @@ Namespace DevExpress.XtraReports.CustomControls
 			WidthF = 300F
 			HeightF = 200F
 
-			keyField = String.Empty
-			parentField = String.Empty
+			KeyFieldName = String.Empty
+			ParentFieldName = String.Empty
 
-			nodes_Renamed = New XRTreeListNodeCollection(Nothing)
+			Nodes = New XRTreeListNodeCollection(Nothing)
 
 			nodeIndent_Renamed = 25
 		End Sub
@@ -125,9 +114,9 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Function
 
 		Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-			If nodes_Renamed IsNot Nothing Then
-				nodes_Renamed.Clear()
-				nodes_Renamed = Nothing
+			If Nodes IsNot Nothing Then
+				Nodes.Clear()
+				Nodes = Nothing
 			End If
 
 			MyBase.Dispose(disposing)
@@ -175,13 +164,6 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		<Editor(GetType(XRTreeListFieldNameEditor), GetType(UITypeEditor)), RefreshProperties(RefreshProperties.All), XtraSerializableProperty, DefaultValue("")>
 		Public Property KeyFieldName() As String
-			Get
-				Return keyField
-			End Get
-			Set(ByVal value As String)
-				keyField = value
-			End Set
-		End Property
 
 		<XtraSerializableProperty, RefreshProperties(RefreshProperties.All), DefaultValue(25)>
 		Public Property NodeIndent() As Integer
@@ -196,21 +178,18 @@ Namespace DevExpress.XtraReports.CustomControls
 			End Set
 		End Property
 
-		Protected Friend ReadOnly Property Nodes() As XRTreeListNodeCollection
+		Private privateNodes As XRTreeListNodeCollection
+		Protected Friend Property Nodes() As XRTreeListNodeCollection
 			Get
-				Return nodes_Renamed
+				Return privateNodes
 			End Get
+			Private Set(ByVal value As XRTreeListNodeCollection)
+				privateNodes = value
+			End Set
 		End Property
 
 		<Editor(GetType(XRTreeListFieldNameEditor), GetType(UITypeEditor)), RefreshProperties(RefreshProperties.All), XtraSerializableProperty, DesignerSerializationVisibility(DesignerSerializationVisibility.Visible), DefaultValue("")>
 		Public Property ParentFieldName() As String
-			Get
-				Return parentField
-			End Get
-			Set(ByVal value As String)
-				parentField = value
-			End Set
-		End Property
 
 		<DisplayName("Scripts"), SRCategory(ReportStringId.CatBehavior), DesignerSerializationVisibility(DesignerSerializationVisibility.Content), XtraSerializableProperty(XtraSerializationVisibility.Content)>
 		Public Shadows ReadOnly Property Scripts() As XRTreeListScripts
@@ -259,7 +238,7 @@ Namespace DevExpress.XtraReports.CustomControls
 	Public Class XRTreeListNodeCollection
 		Inherits XRDataRecordCollection
 
-		Private parent As XRTreeListNode
+		Private ReadOnly parent As XRTreeListNode
 
 		Public Sub New(ByVal parent As XRTreeListNode)
 			Me.parent = parent
@@ -275,19 +254,10 @@ Namespace DevExpress.XtraReports.CustomControls
 	Public Class XRTreeListNode
 		Inherits XRDataRecord
 
-'INSTANT VB NOTE: The field parentNode was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private parentNode_Renamed As XRTreeListNode
-'INSTANT VB NOTE: The field nodes was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private nodes_Renamed As XRTreeListNodeCollection
-'INSTANT VB NOTE: The field keyValue was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private keyValue_Renamed As Object
-'INSTANT VB NOTE: The field parentValue was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private parentValue_Renamed As Object
-
 		Public Sub New(ByVal treeList As XRTreeList)
 			MyBase.New(treeList)
-			nodes_Renamed = New XRTreeListNodeCollection(Me)
-			parentNode_Renamed = Nothing
+			Nodes = New XRTreeListNodeCollection(Me)
+			ParentNode = Nothing
 		End Sub
 
 		Public Sub AddNode(ByVal childNode As XRTreeListNode)
@@ -303,12 +273,13 @@ Namespace DevExpress.XtraReports.CustomControls
 			Return sortResult
 		End Function
 
+		Private privateKeyValue As Object
 		Public Property KeyValue() As Object
 			Get
-				Return keyValue_Renamed
+				Return privateKeyValue
 			End Get
 			Friend Set(ByVal value As Object)
-				keyValue_Renamed = value
+				privateKeyValue = value
 			End Set
 		End Property
 
@@ -316,7 +287,7 @@ Namespace DevExpress.XtraReports.CustomControls
 			Get
 'INSTANT VB NOTE: The local variable level was renamed since Visual Basic will not allow local variables with the same name as their enclosing function or property:
 				Dim level_Renamed As Integer = 0
-				Dim nextNode As XRTreeListNode = parentNode_Renamed
+				Dim nextNode As XRTreeListNode = ParentNode
 				Do While nextNode IsNot Nothing
 					nextNode = nextNode.ParentNode
 					level_Renamed += 1
@@ -327,26 +298,16 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Property
 
 		Public ReadOnly Property Nodes() As XRTreeListNodeCollection
-			Get
-				Return nodes_Renamed
-			End Get
-		End Property
 
 		Public Property ParentNode() As XRTreeListNode
-			Get
-				Return parentNode_Renamed
-			End Get
-			Set(ByVal value As XRTreeListNode)
-				parentNode_Renamed = value
-			End Set
-		End Property
 
+		Private privateParentValue As Object
 		Public Property ParentValue() As Object
 			Get
-				Return parentValue_Renamed
+				Return privateParentValue
 			End Get
 			Friend Set(ByVal value As Object)
-				parentValue_Renamed = value
+				privateParentValue = value
 			End Set
 		End Property
 
@@ -366,30 +327,14 @@ Namespace DevExpress.XtraReports.CustomControls
 	Public Class PrintNodeEventArgs
 		Inherits EventArgs
 
-'INSTANT VB NOTE: The field suppressType was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private suppressType_Renamed As NodeSuppressType
-'INSTANT VB NOTE: The field node was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private node_Renamed As XRTreeListNode
-
 		Public Sub New(ByVal currentNode As XRTreeListNode)
-			Me.node_Renamed = currentNode
-			suppressType_Renamed = NodeSuppressType.Leave
+			Me.Node = currentNode
+			SuppressType = NodeSuppressType.Leave
 		End Sub
 
 		Public ReadOnly Property Node() As XRTreeListNode
-			Get
-				Return Me.node_Renamed
-			End Get
-		End Property
 
 		Public Property SuppressType() As NodeSuppressType
-			Get
-				Return Me.suppressType_Renamed
-			End Get
-			Set(ByVal value As NodeSuppressType)
-				Me.suppressType_Renamed = value
-			End Set
-		End Property
 	End Class
 
 	Public Class PrintNodeCellEventArgs

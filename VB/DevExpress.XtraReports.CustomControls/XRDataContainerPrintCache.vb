@@ -1,19 +1,14 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
+﻿Imports System.Collections.Generic
 Imports DevExpress.Utils.Serializing
 Imports DevExpress.XtraPrinting
 
 Namespace DevExpress.XtraReports.CustomControls
 	Friend Class XRDataContainerPrintCache
-		Private control As XRDataContainerControl
-'INSTANT VB NOTE: The field recordsCache was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private recordsCache_Renamed As List(Of RecordPrintCache)
+		Private ReadOnly control As XRDataContainerControl
 
 		Public Sub New(ByVal control As XRDataContainerControl)
 			Me.control = control
-			recordsCache_Renamed = New List(Of RecordPrintCache)()
+			RecordsCache = New List(Of RecordPrintCache)()
 		End Sub
 
 		Public Sub Clear()
@@ -22,7 +17,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Sub
 
 		Public Function GetCacheByBrick(ByVal brick As VisualBrick) As RecordPrintCache
-			For Each recordCache As RecordPrintCache In recordsCache_Renamed
+			For Each recordCache As RecordPrintCache In RecordsCache
 				If recordCache.Brick Is brick Then
 					Return recordCache
 				End If
@@ -36,24 +31,14 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		<XtraSerializableProperty>
 		Public ReadOnly Property RecordsCache() As List(Of RecordPrintCache)
-			Get
-				Return recordsCache_Renamed
-			End Get
-		End Property
 	End Class
 
 	Friend Class RecordPrintCache
-		Private recordBrick As VisualBrick
-
 		Public Sub New(ByVal brick As VisualBrick)
-			Me.recordBrick = brick
+			Me.Brick = brick
 		End Sub
 
 		<XtraSerializableProperty>
 		Public ReadOnly Property Brick() As VisualBrick
-			Get
-				Return recordBrick
-			End Get
-		End Property
 	End Class
 End Namespace

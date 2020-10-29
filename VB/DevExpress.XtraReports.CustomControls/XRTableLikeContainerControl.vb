@@ -13,13 +13,11 @@ Namespace DevExpress.XtraReports.CustomControls
 
 'INSTANT VB NOTE: The field headerHeight was renamed since Visual Basic does not allow fields to have the same name as other class members:
 		Private headerHeight_Renamed As Single
-'INSTANT VB NOTE: The field headerAutoHeight was renamed since Visual Basic does not allow fields to have the same name as other class members:
-		Private headerAutoHeight_Renamed As Boolean
 
 		Public Sub New()
 			MyBase.New()
 			headerHeight_Renamed = 25F
-			headerAutoHeight_Renamed = False
+			HeaderAutoHeight = False
 		End Sub
 
 		Protected Overrides Sub SyncDpi(ByVal dpi As Single)
@@ -78,13 +76,6 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		<XtraSerializableProperty, DefaultValue(False), RefreshProperties(RefreshProperties.All)>
 		Public Property HeaderAutoHeight() As Boolean
-			Get
-				Return headerAutoHeight_Renamed
-			End Get
-			Set(ByVal value As Boolean)
-				headerAutoHeight_Renamed = value
-			End Set
-		End Property
 
 		<XtraSerializableProperty, DefaultValue(25F), RefreshProperties(RefreshProperties.All)>
 		Public Property HeaderHeight() As Single

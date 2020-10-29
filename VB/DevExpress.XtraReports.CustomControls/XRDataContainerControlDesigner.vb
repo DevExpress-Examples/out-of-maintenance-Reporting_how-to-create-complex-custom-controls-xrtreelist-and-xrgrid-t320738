@@ -4,7 +4,6 @@ Imports System.ComponentModel
 Imports System.ComponentModel.Design
 Imports System.Drawing.Design
 Imports System.Linq
-Imports System.Text
 Imports System.Windows.Forms
 Imports DevExpress.Data.Design
 Imports DevExpress.XtraReports.Design
@@ -15,7 +14,6 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		Public Sub New()
 			MyBase.New()
-
 		End Sub
 
 		Protected Overridable Function CreateColumnActionList() As XRDataContainerDesignerColumnActionList
@@ -97,7 +95,7 @@ Namespace DevExpress.XtraReports.CustomControls
 	Public Class XRDataContainerDesignerSortActionList
 		Inherits XRComponentDesignerActionList
 
-		Private control As XRDataContainerControl
+		Private ReadOnly control As XRDataContainerControl
 
 		Public Sub New(ByVal componentDesigner As XRComponentDesigner)
 			MyBase.New(componentDesigner)

@@ -1,14 +1,7 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.ComponentModel
-Imports System.Linq
-Imports System.Text
+﻿Imports System.ComponentModel
+Imports System.Drawing.Design
 Imports DevExpress.Utils.Serializing
 Imports DevExpress.XtraReports.Native.Presenters
-Imports DevExpress.XtraReports.UI
-Imports DevExpress.XtraReports.Design
-Imports DevExpress.XtraReports.Native
-Imports System.Drawing.Design
 
 Namespace DevExpress.XtraReports.CustomControls
 	<ToolboxItem(True), Designer("DevExpress.XtraReports.CustomControls.XRGridDesigner, DevExpress.XtraReports.CustomControls"), XRDesigner("DevExpress.XtraReports.CustomControls.XRGridDesigner, DevExpress.XtraReports.CustomControls")>

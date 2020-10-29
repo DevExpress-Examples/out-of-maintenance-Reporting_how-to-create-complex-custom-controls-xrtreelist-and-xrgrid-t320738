@@ -71,6 +71,4 @@ namespace DevExpress.XtraReports.CustomControls
             }
         }
     }
-
-
 }

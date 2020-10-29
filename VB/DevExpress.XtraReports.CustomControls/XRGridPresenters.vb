@@ -1,8 +1,5 @@
-﻿Imports System
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.Drawing
-Imports System.Linq
-Imports System.Text
 Imports DevExpress.XtraPrinting
 Imports DevExpress.XtraPrinting.Native
 Imports DevExpress.XtraReports.UI

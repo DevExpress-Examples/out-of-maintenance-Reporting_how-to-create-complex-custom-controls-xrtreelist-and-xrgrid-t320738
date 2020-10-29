@@ -1,20 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraPrinting.Native;
 using DevExpress.XtraReports.UI;
 
-namespace DevExpress.XtraReports.CustomControls
-{
+namespace DevExpress.XtraReports.CustomControls {
     internal class XRGridRuntimePresenter : XRTableLikeContainerControlPresenter
     {
         public XRGridRuntimePresenter(XRGrid grid) : base(grid) { }
 
         protected override void CreateBricksForRecord(XRDataRecord record, PanelBrick parentBrick, bool isHeader, ref float actualHeight)
-        {            
+        {
             PrintRecordEventArgs args = new PrintRecordEventArgs(record);
             if (!isHeader)
                 Grid.OnPrintRecord(args);
@@ -54,7 +50,7 @@ namespace DevExpress.XtraReports.CustomControls
         }
 
         protected override VisualBrick CreateCellBrick(XRDataContainerControl control, VisualBrick parentBrick, XRDataRecord record, int fieldIndex, bool isHeader)
-        {            
+        {
             VisualBrick valueBrick = base.CreateCellBrick(control, parentBrick, record, fieldIndex, isHeader);
 
             float columnWidth = ((XRGridColumn)control.VisibleHeaders[fieldIndex]).Width;
@@ -62,10 +58,10 @@ namespace DevExpress.XtraReports.CustomControls
 
             for (int j = 0; j < fieldIndex; j++)
                 columnPos += ((XRGridColumn)control.VisibleHeaders[j]).Width;
-            
+
             valueBrick.Style = CreateBrickStyle(control, parentBrick, valueBrick, record, fieldIndex, isHeader);
 
-            float brickHeight = GetBrickHeight(valueBrick, columnWidth, isHeader);            
+            float brickHeight = GetBrickHeight(valueBrick, columnWidth, isHeader);
 
             valueBrick.Rect = new RectangleF(columnPos, 0, columnWidth, brickHeight);
 
@@ -110,7 +106,7 @@ namespace DevExpress.XtraReports.CustomControls
 
             return designRecords;
         }
-        
+
 
         protected override bool IsDesignMode { get { return true; } }
     }

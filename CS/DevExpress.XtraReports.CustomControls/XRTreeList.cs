@@ -1,37 +1,26 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Drawing.Design;
-using System.Reflection;
-using System.Reflection.Emit;
 using DevExpress.Utils.Serializing;
 using DevExpress.XtraPrinting;
-using DevExpress.XtraPrinting.Native;
-using DevExpress.XtraReports.Native;
-using DevExpress.XtraReports.Native.Presenters;
-using DevExpress.XtraReports.Native.Printing;
-using DevExpress.XtraReports.UI;
 using DevExpress.XtraReports.Design;
 using DevExpress.XtraReports.Localization;
-using System.Collections.Generic;
+using DevExpress.XtraReports.Native;
+using DevExpress.XtraReports.Native.Presenters;
+using DevExpress.XtraReports.UI;
 
-namespace DevExpress.XtraReports.CustomControls
-{
+namespace DevExpress.XtraReports.CustomControls {
     [ToolboxItem(true),
     Designer("DevExpress.XtraReports.CustomControls.XRTreeListDesigner, DevExpress.XtraReports.CustomControls"),
     XRDesigner("DevExpress.XtraReports.CustomControls.XRTreeListDesigner, DevExpress.XtraReports.CustomControls")]
     public class XRTreeList : XRTableLikeContainerControl
     {
-        string keyField;
-        string parentField;
-        
-        private static readonly object PrintNodeEvent = new object();
-        private static readonly object PrintNodeCellEvent = new object();
+        static readonly object PrintNodeEvent = new object();
+        static readonly object PrintNodeCellEvent = new object();
 
         int nodeIndent;
-
-        XRTreeListNodeCollection nodes;        
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public override event PrintRecordEventHandler PrintRecord { add { } remove { } }
@@ -52,14 +41,14 @@ namespace DevExpress.XtraReports.CustomControls
 
 
         public XRTreeList() : base()
-        {            
+        {
             WidthF = 300f;
             HeightF = 200f;
 
-            keyField = string.Empty;
-            parentField = string.Empty;
-            
-            nodes = new XRTreeListNodeCollection(null);                        
+            KeyFieldName = string.Empty;
+            ParentFieldName = string.Empty;
+
+            Nodes = new XRTreeListNodeCollection(null);
 
             nodeIndent = 25;
         }
@@ -95,7 +84,7 @@ namespace DevExpress.XtraReports.CustomControls
         }
 
         protected override Native.Presenters.ControlPresenter CreatePresenter()
-        {            
+        {
             return base.CreatePresenter<ControlPresenter>(delegate
             {
                 return new XRTreeListRuntimePresenter(this);
@@ -112,11 +101,11 @@ namespace DevExpress.XtraReports.CustomControls
 
         protected override void Dispose(bool disposing)
         {
-            if (nodes != null)
+            if (Nodes != null)
             {
-                nodes.Clear();
-                nodes = null;
-            }            
+                Nodes.Clear();
+                Nodes = null;
+            }
 
             base.Dispose(disposing);
         }
@@ -131,7 +120,7 @@ namespace DevExpress.XtraReports.CustomControls
         }
 
         protected internal virtual void OnPrintNodeCell(PrintNodeCellEventArgs e)
-        {            
+        {
             this.RunEventScriptAndExpressionBindings<PrintNodeCellEventArgs>(PrintNodeCellEvent, "PrintNodeCell", e);
             PrintNodeCellEventHandler handler = (PrintNodeCellEventHandler)base.Events[PrintNodeCellEvent];
             if (!base.DesignMode)
@@ -143,7 +132,7 @@ namespace DevExpress.XtraReports.CustomControls
         {
             float prevDpi = this.Dpi;
             base.SyncDpi(dpi);
-            NodeIndent = GraphicsUnitConverter.Convert(NodeIndent, prevDpi, dpi);                   
+            NodeIndent = GraphicsUnitConverter.Convert(NodeIndent, prevDpi, dpi);
         }
 
 
@@ -156,21 +145,11 @@ namespace DevExpress.XtraReports.CustomControls
         internal override string FieldHeaderName { get { return "Columns"; } }
 
         [
-        Editor(typeof(XRTreeListFieldNameEditor), typeof(UITypeEditor)), 
+        Editor(typeof(XRTreeListFieldNameEditor), typeof(UITypeEditor)),
         RefreshProperties(RefreshProperties.All), XtraSerializableProperty,
         DefaultValue("")
         ]
-        public string KeyFieldName
-        {
-            get
-            {
-                return keyField;
-            }
-            set
-            {
-                keyField = value;
-            }
-        }
+        public string KeyFieldName { get; set; }
 
         [
         XtraSerializableProperty, RefreshProperties(RefreshProperties.All),
@@ -190,25 +169,15 @@ namespace DevExpress.XtraReports.CustomControls
             }
         }
 
-        protected internal XRTreeListNodeCollection Nodes { get { return nodes; } }
+        protected internal XRTreeListNodeCollection Nodes { get; private set; }
 
         [
-        Editor(typeof(XRTreeListFieldNameEditor), typeof(UITypeEditor)), 
-        RefreshProperties(RefreshProperties.All), XtraSerializableProperty, 
+        Editor(typeof(XRTreeListFieldNameEditor), typeof(UITypeEditor)),
+        RefreshProperties(RefreshProperties.All), XtraSerializableProperty,
         DesignerSerializationVisibility(DesignerSerializationVisibility.Visible),
         DefaultValue("")
         ]
-        public string ParentFieldName
-        {
-            get
-            {
-                return parentField;
-            }
-            set
-            {
-                parentField = value;
-            }
-        }
+        public string ParentFieldName { get; set; }
 
         [DisplayName("Scripts"), SRCategory(ReportStringId.CatBehavior), DesignerSerializationVisibility(DesignerSerializationVisibility.Content), XtraSerializableProperty(XtraSerializationVisibility.Content)]
         public new XRTreeListScripts Scripts
@@ -221,11 +190,11 @@ namespace DevExpress.XtraReports.CustomControls
     }
 
     public class XRTreeListColumn : XRResizableFieldHeader { }
-    
+
     public class XRTreeListColumnCollection : XRFieldHeaderCollection
     {
         public XRTreeListColumnCollection(XRTreeList control) : base(control) { }
-        
+
         public override XRFieldHeader Add()
         {
             XRTreeListColumn header = CreateHeader() as XRTreeListColumn;
@@ -245,7 +214,7 @@ namespace DevExpress.XtraReports.CustomControls
 
     public class XRTreeListNodeCollection : XRDataRecordCollection
     {
-        XRTreeListNode parent;
+        readonly XRTreeListNode parent;
 
         public XRTreeListNodeCollection(XRTreeListNode parent)
         {
@@ -257,16 +226,11 @@ namespace DevExpress.XtraReports.CustomControls
 
     public class XRTreeListNode : XRDataRecord
     {
-        XRTreeListNode parentNode;
-        XRTreeListNodeCollection nodes;
-        object keyValue;
-        object parentValue;
-
         public XRTreeListNode(XRTreeList treeList)
             : base(treeList)
         {
-            nodes = new XRTreeListNodeCollection(this);
-            parentNode = null;
+            Nodes = new XRTreeListNodeCollection(this);
+            ParentNode = null;
         }
 
         public void AddNode(XRTreeListNode childNode)
@@ -283,24 +247,14 @@ namespace DevExpress.XtraReports.CustomControls
             return sortResult;
         }
 
-        public object KeyValue
-        {
-            get
-            {
-                return keyValue;
-            }
-            internal set
-            {
-                keyValue = value;
-            }
-        }
+        public object KeyValue { get; internal set; }
 
         public int Level
         {
             get
             {
                 int level = 0;
-                XRTreeListNode nextNode = parentNode;
+                XRTreeListNode nextNode = ParentNode;
                 while (nextNode != null)
                 {
                     nextNode = nextNode.ParentNode;
@@ -311,37 +265,11 @@ namespace DevExpress.XtraReports.CustomControls
             }
         }
 
-        public XRTreeListNodeCollection Nodes
-        {
-            get
-            {
-                return nodes;
-            }
-        }
+        public XRTreeListNodeCollection Nodes { get; }
 
-        public XRTreeListNode ParentNode
-        {
-            get
-            {
-                return parentNode;
-            }
-            set
-            {
-                parentNode = value;
-            }
-        }
+        public XRTreeListNode ParentNode { get; set; }
 
-        public object ParentValue
-        {
-            get
-            {
-                return parentValue;
-            }
-            internal set
-            {
-                parentValue = value;
-            }
-        }
+        public object ParentValue { get; internal set; }
 
         public XRTreeList TreeList { get { return base.Control as XRTreeList; } }
     }
@@ -350,34 +278,15 @@ namespace DevExpress.XtraReports.CustomControls
 
     public class PrintNodeEventArgs : EventArgs
     {
-        private NodeSuppressType suppressType;
-        private XRTreeListNode node;
-
         public PrintNodeEventArgs(XRTreeListNode currentNode)
         {
-            this.node = currentNode;
-            suppressType = NodeSuppressType.Leave;
+            this.Node = currentNode;
+            SuppressType = NodeSuppressType.Leave;
         }
 
-        public XRTreeListNode Node
-        {
-            get
-            {
-                return this.node;
-            }            
-        }
+        public XRTreeListNode Node { get; }
 
-        public NodeSuppressType SuppressType
-        {
-            get
-            {
-                return this.suppressType;
-            }
-            set
-            {
-                this.suppressType = value;
-            }
-        }
+        public NodeSuppressType SuppressType { get; set; }
     }
 
     public class PrintNodeCellEventArgs : PrintCellEventArgs

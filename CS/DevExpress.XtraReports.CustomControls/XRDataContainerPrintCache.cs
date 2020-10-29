@@ -1,21 +1,16 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using DevExpress.Utils.Serializing;
 using DevExpress.XtraPrinting;
 
-namespace DevExpress.XtraReports.CustomControls
-{
+namespace DevExpress.XtraReports.CustomControls {
     internal class XRDataContainerPrintCache
     {
-        XRDataContainerControl control;
-        List<RecordPrintCache> recordsCache;
+        readonly XRDataContainerControl control;
 
         public XRDataContainerPrintCache(XRDataContainerControl control)
         {
             this.control = control;
-            recordsCache = new List<RecordPrintCache>();
+            RecordsCache = new List<RecordPrintCache>();
         }
 
         public void Clear()
@@ -26,7 +21,7 @@ namespace DevExpress.XtraReports.CustomControls
 
         public RecordPrintCache GetCacheByBrick(VisualBrick brick)
         {
-            foreach (RecordPrintCache recordCache in recordsCache)
+            foreach (RecordPrintCache recordCache in RecordsCache)
                 if (recordCache.Brick == brick)
                     return recordCache;
 
@@ -37,19 +32,17 @@ namespace DevExpress.XtraReports.CustomControls
         public RecordPrintCache HeaderCache { get; set; }
 
         [XtraSerializableProperty]
-        public List<RecordPrintCache> RecordsCache { get { return recordsCache; } }
+        public List<RecordPrintCache> RecordsCache { get; }
     }
 
     internal class RecordPrintCache
     {
-        VisualBrick recordBrick;
-
         public RecordPrintCache(VisualBrick brick)
         {
-            this.recordBrick = brick;
+            this.Brick = brick;
         }
 
         [XtraSerializableProperty]
-        public VisualBrick Brick { get { return recordBrick; } }
+        public VisualBrick Brick { get; }
     }
 }

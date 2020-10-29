@@ -12,12 +12,11 @@ namespace DevExpress.XtraReports.CustomControls
     public class XRTableLikeContainerControl : XRDataContainerControl
     {
         float headerHeight;
-        bool headerAutoHeight;
 
-        public XRTableLikeContainerControl() : base() 
+        public XRTableLikeContainerControl() : base()
         {
             headerHeight = 25f;
-            headerAutoHeight = false;
+            HeaderAutoHeight = false;
         }
 
         protected override void SyncDpi(float dpi)
@@ -77,17 +76,7 @@ namespace DevExpress.XtraReports.CustomControls
         }
 
         [XtraSerializableProperty, DefaultValue(false), RefreshProperties(RefreshProperties.All)]
-        public bool HeaderAutoHeight
-        {
-            get
-            {
-                return headerAutoHeight;
-            }
-            set
-            {
-                headerAutoHeight = value;
-            }
-        }
+        public bool HeaderAutoHeight { get; set; }
 
         [XtraSerializableProperty, DefaultValue(25f), RefreshProperties(RefreshProperties.All)]
         public float HeaderHeight

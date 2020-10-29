@@ -17,8 +17,8 @@ namespace DevExpress.XtraReports.CustomControls
 {
     internal class XRTreeListRuntimePresenter : XRTableLikeContainerControlPresenter
     {
-        public XRTreeListRuntimePresenter(XRTreeList treeList) : base(treeList) 
-        {            
+        public XRTreeListRuntimePresenter(XRTreeList treeList) : base(treeList)
+        {
         }
 
         protected override XRDataRecordCollection GetActualDataCollection()
@@ -41,14 +41,14 @@ namespace DevExpress.XtraReports.CustomControls
                 nodeBrick.Style = XRControlStyle.Default.Clone() as XRControlStyle;
                 nodeBrick.Separable = false;
 
-                RecordPrintCache cache = new TreeListNodePrintCache(nodeBrick, node.Level);                                                
+                RecordPrintCache cache = new TreeListNodePrintCache(nodeBrick, node.Level);
 
-                List<VisualBrick> childBricks = new List<VisualBrick>();         
+                List<VisualBrick> childBricks = new List<VisualBrick>();
                 List<XRFieldHeader> visibleHeaders = TreeList.VisibleHeaders;
 
                 for (int i = 0; i < visibleHeaders.Count; i++)
-                {                    
-                    VisualBrick valueBrick = CreateCellBrick(TreeList, parentBrick, node, i, isHeader);                              
+                {
+                    VisualBrick valueBrick = CreateCellBrick(TreeList, parentBrick, node, i, isHeader);
                     childBricks.Add(valueBrick);
                 }
 
@@ -75,7 +75,7 @@ namespace DevExpress.XtraReports.CustomControls
 
         protected override BrickStyle CreateBrickStyle(XRDataContainerControl control, VisualBrick parentBrick, VisualBrick valueBrick, XRDataRecord record, int fieldIndex, bool isHeader)
         {
-            BrickStyle style = base.CreateBrickStyle(control, parentBrick, valueBrick, record, fieldIndex, isHeader);            
+            BrickStyle style = base.CreateBrickStyle(control, parentBrick, valueBrick, record, fieldIndex, isHeader);
 
             if (!isHeader)
             {
@@ -103,9 +103,9 @@ namespace DevExpress.XtraReports.CustomControls
 
             valueBrick.Style = CreateBrickStyle(control, parentBrick, valueBrick, record, fieldIndex, isHeader);
 
-            float brickHeight = GetBrickHeight(valueBrick, columnWidth, isHeader); 
+            float brickHeight = GetBrickHeight(valueBrick, columnWidth, isHeader);
 
-            valueBrick.Rect = new RectangleF(columnPos, 0, curColWidth, brickHeight);    
+            valueBrick.Rect = new RectangleF(columnPos, 0, curColWidth, brickHeight);
 
             return valueBrick;
         }
@@ -159,7 +159,7 @@ namespace DevExpress.XtraReports.CustomControls
 
             return designNodes;
         }
-        
+
 
         protected override bool IsDesignMode { get { return true; } }
     }

@@ -25,35 +25,25 @@ using DevExpress.XtraReports.Localization;
 using System.ComponentModel.Design;
 
 namespace DevExpress.XtraReports.CustomControls
-{    
+{
     [ToolboxItem(false),
     Designer("DevExpress.XtraReports.CustomControls.XRDataContainerControlDesigner, DevExpress.XtraReports.CustomControls"),
     XRDesigner("DevExpress.XtraReports.CustomControls.XRDataContainerControlDesigner, DevExpress.XtraReports.CustomControls")]
     public class XRDataContainerControl : XRControl, IDataContainer, ICustomDataContainer, ISupportInitialize
     {
-        float cellHeight;
-        bool cellAutoHeight;
-        object dataSource;
-        string dataMember;
-        object dataAdapter;
+        float fCellHeight;
         internal bool isLoading;
-
-        XRFieldHeaderCollection headers;
-        XRDataRecordCollection dataRecords;
         XRDataContainerControlDataHelper dataHelper;
-        XRSortFieldCollection sortFields;
-
-        string evenCellStyleName;
-        string oddCellStyleName;
-        string cellStyleName;
-        string headerStyleName;
-
+        string fEvenCellStyleName;
+        string fOddCellStyleName;
+        string fCellStyleName;
+        string fHeaderStyleName;
         internal XRControlStyle fDefaultCellStyle;
         internal XRControlStyle fDefaultHeaderStyle;
 
-        private static readonly object PrintHeaderCellEvent = new object();
-        private static readonly object PrintRecordEvent = new object();
-        private static readonly object PrintRecordCellEvent = new object();
+        static readonly object PrintHeaderCellEvent = new object();
+        static readonly object PrintRecordEvent = new object();
+        static readonly object PrintRecordCellEvent = new object();
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public override event DrawEventHandler Draw { add { } remove { } }
@@ -96,27 +86,31 @@ namespace DevExpress.XtraReports.CustomControls
 
         public XRDataContainerControl()
         {
-            evenCellStyleName = string.Empty;
-            oddCellStyleName = string.Empty;
-            cellStyleName = string.Empty;
-            headerStyleName = string.Empty;
+            fEvenCellStyleName = string.Empty;
+            fOddCellStyleName = string.Empty;
+            fCellStyleName = string.Empty;
+            fHeaderStyleName = string.Empty;
 
-            headers = CreateHeaders();
+            Headers = CreateHeaders();
 
-            cellHeight = 25f;
-            cellAutoHeight = false;
+            fCellHeight = 25f;
+            CellAutoHeight = false;
 
-            dataRecords = CreateDataRecords();
+            Records = CreateDataRecords();
             dataHelper = CreateDataHelper();
 
-            sortFields = new XRSortFieldCollection(this);
+            SortFields = new XRSortFieldCollection(this);
 
             InitializeDefaultStyles();
-        }        
+        }
 
         public void BeginInit()
         {
             isLoading = true;
+        }
+        void ISupportInitialize.BeginInit()
+        {
+            BeginInit();
         }
 
         public void EndInit()
@@ -124,16 +118,20 @@ namespace DevExpress.XtraReports.CustomControls
             isLoading = false;
             this.UpdateLayout();
         }
+        void ISupportInitialize.EndInit()
+        {
+            EndInit();
+        }
 
         protected override void CollectAssociatedComponents(DesignItemList components)
         {
-            base.CollectAssociatedComponents(components);            
+            base.CollectAssociatedComponents(components);
             components.Add(this);
         }
 
         protected override void CopyDataProperties(XRControl control)
         {
-            XRDataContainerControl dataControl = control as XRDataContainerControl;
+            IDataContainer dataControl = control as IDataContainer;
             if (dataControl != null)
             {
                 this.DataSource = dataControl.DataSource;
@@ -175,7 +173,7 @@ namespace DevExpress.XtraReports.CustomControls
         public void CreateAllHeaders()
         {
             CreateAllHeaders(true);
-        }       
+        }
 
         public void CreateAllHeaders(bool clearFields)
         {
@@ -226,8 +224,8 @@ namespace DevExpress.XtraReports.CustomControls
 
         protected override void Dispose(bool disposing)
         {
-            dataSource = null;
-            dataAdapter = null;
+            DataSource = null;
+            DataAdapter = null;
 
             if (fDefaultCellStyle != null)
             {
@@ -241,19 +239,19 @@ namespace DevExpress.XtraReports.CustomControls
                 fDefaultHeaderStyle = null;
             }
 
-            if (dataRecords != null)
+            if (Records != null)
             {
-                dataRecords.Clear();
-                dataRecords = null;
+                Records.Clear();
+                Records = null;
             }
 
             dataHelper = null;
-            sortFields = null;
+            SortFields = null;
 
-            if (headers != null)
+            if (Headers != null)
             {
-                headers.ClearHeaders(true);
-                headers = null;
+                Headers.ClearHeaders(true);
+                Headers = null;
             }
 
             base.Dispose(disposing);
@@ -263,7 +261,7 @@ namespace DevExpress.XtraReports.CustomControls
         {
             using (DataContext context = new DataContext())
             {
-                return context.GetListItemProperties(dataSource, dataMember);
+                return context.GetListItemProperties(DataSource, DataMember);
             }
         }
 
@@ -271,7 +269,7 @@ namespace DevExpress.XtraReports.CustomControls
         {
             using (DataContext context = new DataContext())
             {
-                return GetDataSourceCore(context, dataSource, dataMember);
+                return GetDataSourceCore(context, DataSource, DataMember);
             }
         }
 
@@ -288,17 +286,20 @@ namespace DevExpress.XtraReports.CustomControls
 
         public object GetEffectiveDataSource()
         {
-            return this.dataSource;
+            return this.DataSource;
         }
 
         public string GetEffectiveDataMember()
         {
-            return this.dataMember;
+            return this.DataMember;
         }
 
         public object GetSerializableDataSource()
         {
-            return this.dataSource;
+            return this.DataSource;
+        }
+        object IDataContainer.GetSerializableDataSource() {
+            return GetSerializableDataSource();
         }
 
         protected internal new XRControlStyle GetStyle(string styleName)
@@ -319,10 +320,10 @@ namespace DevExpress.XtraReports.CustomControls
 
         internal void InitializeControlArea(DocumentBandKind bandKind, DocumentBand parentBand, XRWriteInfo writeInfo, XRDataContainerPrintCache cache)
         {
-            DocumentBand band = new DocumentBand(bandKind, 0);            
-            parentBand.Bands.Add(band);            
+            DocumentBand band = new DocumentBand(bandKind, 0);
+            parentBand.Bands.Add(band);
             DataContainerBrick brick = CreateContainerBrick(this, bandKind == DocumentBandKind.PageHeader);
-            brick.PrintCache = cache;            
+            brick.PrintCache = cache;
             this.PutStateToBrick(brick, writeInfo.PrintingSystem);
             VisualBrickHelper.InitializeBrick(brick, writeInfo.PrintingSystem, brick.Rect);
             band.Bricks.Add(brick);
@@ -391,7 +392,7 @@ namespace DevExpress.XtraReports.CustomControls
             float prevDpi = dpi;
             base.SyncDpi(dpi);
 
-            cellHeight = GraphicsUnitConverter.Convert(cellHeight, prevDpi, dpi);
+            fCellHeight = GraphicsUnitConverter.Convert(fCellHeight, prevDpi, dpi);
         }
 
         internal virtual void UpdateDataLayout() { }
@@ -405,13 +406,13 @@ namespace DevExpress.XtraReports.CustomControls
         }
 
         protected override void WriteContentTo(XRWriteInfo writeInfo, VisualBrick brick)
-        {            
+        {
             if ((writeInfo != null) && (brick is SubreportBrick))
-            {                
+            {
                 XRDataContainerPrintCache printCache = new XRDataContainerPrintCache(this);
-                SubreportDocumentBand controlBand = new SubreportDocumentBand(brick.Rect); 
-               
-                ((SubreportBrick)brick).DocumentBand = controlBand;                
+                SubreportDocumentBand controlBand = new SubreportDocumentBand(brick.Rect);
+
+                ((SubreportBrick)brick).DocumentBand = controlBand;
 
                 InitializeControlArea(DocumentBandKind.PageHeader, controlBand, writeInfo, printCache);
                 InitializeControlArea(DocumentBandKind.Detail, controlBand, writeInfo, printCache);
@@ -424,30 +425,20 @@ namespace DevExpress.XtraReports.CustomControls
         }
 
         [XtraSerializableProperty, DefaultValue(false), RefreshProperties(RefreshProperties.All)]
-        public bool CellAutoHeight
-        {
-            get
-            {
-                return cellAutoHeight;
-            }
-            set
-            {
-                cellAutoHeight = value;
-            }
-        }
+        public bool CellAutoHeight { get; set; }
 
         [XtraSerializableProperty, DefaultValue(25f), RefreshProperties(RefreshProperties.All)]
         public float CellHeight
         {
             get
             {
-                return cellHeight;
+                return fCellHeight;
             }
             set
             {
                 if (value < 2)
                     value = 2;
-                cellHeight = value;
+                fCellHeight = value;
             }
         }
 
@@ -456,15 +447,15 @@ namespace DevExpress.XtraReports.CustomControls
         TypeConverterAttribute(typeof(DataAdapterConverter)),
         DefaultValue(null)
         ]
-        public object DataAdapter
-        {
+        public object DataAdapter { get; set; }
+        object IDataContainer.DataAdapter {
             get
             {
-                return dataAdapter;
+                return DataAdapter;
             }
             set
             {
-                dataAdapter = value;
+                DataAdapter = value;
             }
         }
 
@@ -475,17 +466,7 @@ namespace DevExpress.XtraReports.CustomControls
         DefaultValue("")
         ]
         [XtraSerializableProperty]
-        public string DataMember
-        {
-            get
-            {
-                return this.dataMember;
-            }
-            set
-            {
-                dataMember = value;
-            }
-        }
+        public string DataMember { get; set; }
 
         [
         Editor(typeof(DataSourceEditor), typeof(UITypeEditor)),
@@ -494,28 +475,18 @@ namespace DevExpress.XtraReports.CustomControls
         DefaultValue(null),
         XtraSerializableProperty(XtraSerializationVisibility.Reference)
         ]
-        public object DataSource
-        {
-            get
-            {
-                return this.dataSource;
-            }
-            set
-            {
-                dataSource = value;
-            }
-        }
+        public object DataSource { get; set; }
 
         [Browsable(false), XtraSerializableProperty, DefaultValue("")]
         public virtual string EvenCellStyleName
         {
             get
             {
-                return this.evenCellStyleName;
+                return this.fEvenCellStyleName;
             }
             set
             {
-                this.evenCellStyleName = (value != null) ? value : "";
+                this.fEvenCellStyleName = value ?? "";
             }
         }
 
@@ -526,11 +497,11 @@ namespace DevExpress.XtraReports.CustomControls
         {
             get
             {
-                return this.oddCellStyleName;
+                return this.fOddCellStyleName;
             }
             set
             {
-                this.oddCellStyleName = (value != null) ? value : "";
+                this.fOddCellStyleName = (value != null) ? value : "";
             }
         }
 
@@ -539,11 +510,11 @@ namespace DevExpress.XtraReports.CustomControls
         {
             get
             {
-                return this.cellStyleName;
+                return this.fCellStyleName;
             }
             set
             {
-                this.cellStyleName = (value != null) ? value : "";
+                this.fCellStyleName = (value != null) ? value : "";
             }
         }
 
@@ -551,24 +522,24 @@ namespace DevExpress.XtraReports.CustomControls
         Browsable(false),
         EditorBrowsable(EditorBrowsableState.Never)
         ]
-        public XRFieldHeaderCollection Headers { get { return headers; } }
+        public XRFieldHeaderCollection Headers { get; private set; }
 
         [
         Browsable(false),
         EditorBrowsable(EditorBrowsableState.Never)
         ]
-        public XRDataRecordCollection Records { get { return dataRecords; } }
+        public XRDataRecordCollection Records { get; private set; }
 
         [Browsable(false), XtraSerializableProperty, DefaultValue("")]
         public virtual string HeaderStyleName
         {
             get
             {
-                return this.headerStyleName;
+                return this.fHeaderStyleName;
             }
             set
             {
-                this.headerStyleName = (value != null) ? value : "";
+                this.fHeaderStyleName = (value != null) ? value : "";
             }
         }
 
@@ -580,8 +551,8 @@ namespace DevExpress.XtraReports.CustomControls
             }
             set
             {
-                this.evenCellStyleName = this.RegisterStyle(value);
-                ValidateStyleName(value, this.evenCellStyleName);
+                this.fEvenCellStyleName = this.RegisterStyle(value);
+                ValidateStyleName(value, this.fEvenCellStyleName);
             }
         }
 
@@ -594,7 +565,7 @@ namespace DevExpress.XtraReports.CustomControls
             set
             {
                 this.OddCellStyleName = this.RegisterStyle(value);
-                ValidateStyleName(value, this.oddCellStyleName);
+                ValidateStyleName(value, this.fOddCellStyleName);
             }
         }
 
@@ -619,19 +590,13 @@ namespace DevExpress.XtraReports.CustomControls
             }
             set
             {
-                this.headerStyleName = this.RegisterStyle(value);
-                ValidateStyleName(value, this.headerStyleName);
+                this.fHeaderStyleName = this.RegisterStyle(value);
+                ValidateStyleName(value, this.fHeaderStyleName);
             }
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content), XtraSerializableProperty(XtraSerializationVisibility.Collection, true, false, false, 0, XtraSerializationFlags.Cached)]
-        public XRSortFieldCollection SortFields
-        {
-            get
-            {
-                return this.sortFields;
-            }
-        }
+        public XRSortFieldCollection SortFields { get; private set; }
 
         internal List<XRFieldHeader> VisibleHeaders { get { return GetVisibleHeaders(); } }
 

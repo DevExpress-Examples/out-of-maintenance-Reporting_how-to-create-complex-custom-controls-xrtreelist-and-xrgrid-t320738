@@ -1,8 +1,5 @@
-﻿Imports System
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.Drawing
-Imports System.Linq
-Imports System.Text
 Imports DevExpress.XtraPrinting
 Imports DevExpress.XtraPrinting.Native
 
@@ -14,8 +11,8 @@ Namespace DevExpress.XtraReports.CustomControls
 			MyBase.New(control)
 		End Sub
 
-		Protected Overrides Sub CreateHeaders(ByVal parentBrick As XtraPrinting.PanelBrick, ByRef actualHeight As Single)
-			If IsDesignMode OrElse (TypeOf parentBrick Is DataContainerBrick AndAlso CType(parentBrick, DataContainerBrick).IsHeader) Then
+		Protected Overrides Sub CreateHeaders(ByVal parentBrick As PanelBrick, ByRef actualHeight As Single)
+			If IsDesignMode OrElse (TypeOf parentBrick Is DataContainerBrick AndAlso DirectCast(parentBrick, DataContainerBrick).IsHeader) Then
 				Dim headerRecord As XRDataRecord = TableControl.CreateDataRecord()
 
 				Dim visibleHeaders As List(Of XRFieldHeader) = TableControl.VisibleHeaders
@@ -47,7 +44,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Sub
 
 		Protected Function GetBrickHeight(ByVal valueBrick As VisualBrick, ByVal columnWidth As Single, ByVal isHeader As Boolean) As Single
-			Dim brickHeight As Single = 0
+			Dim brickHeight As Single
 
 			If (Not isHeader AndAlso TableControl.CellAutoHeight) OrElse (isHeader AndAlso TableControl.HeaderAutoHeight) Then
 				Dim tempSize As SizeF = Me.MeasureTextSize(valueBrick.Text, columnWidth, TableControl.Dpi, valueBrick.Style, TableControl.RootReport.PrintingSystem)

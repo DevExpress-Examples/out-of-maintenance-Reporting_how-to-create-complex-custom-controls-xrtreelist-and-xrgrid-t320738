@@ -1,21 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using DevExpress.DocumentView;
 using DevExpress.Utils.Serializing;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraPrinting.BrickExporters;
 using DevExpress.XtraPrinting.Export;
 using DevExpress.XtraPrinting.Export.Imaging;
-using DevExpress.XtraPrinting.Export.Rtf;
 using DevExpress.XtraPrinting.Export.Web;
 using DevExpress.XtraPrinting.Native;
-using DevExpress.XtraPrinting.NativeBricks;
 
-namespace DevExpress.XtraReports.CustomControls
-{
+namespace DevExpress.XtraReports.CustomControls {
     [Flags]
     public enum XRDataCellPosition
     {
@@ -27,19 +22,16 @@ namespace DevExpress.XtraReports.CustomControls
         LowerLevel = 16,
         LeftMost = 32,
         RightMost = 64
-    };
+    }
 
     public class DataContainerBrick : PanelBrick
     {
-        XRDataContainerPrintCache cache;
-        bool isHeader;
-
         public DataContainerBrick() : base() { }
 
         public DataContainerBrick(XRDataContainerControl owner, bool isHeader)
             : base(owner)
         {
-            this.isHeader = isHeader;
+            this.IsHeader = isHeader;
         }
 
         protected override bool AfterPrintOnPage(IList<int> indices, RectangleF brickBounds, RectangleF clipRect, Page page, int pageIndex, int pageCount, Action<Brick, RectangleF> callback) {
@@ -57,29 +49,24 @@ namespace DevExpress.XtraReports.CustomControls
 
         public override void Dispose()
         {
-            if (cache != null)
+            if (PrintCache != null)
             {
-                cache.Clear();
-                cache = null;
+                PrintCache.Clear();
+                PrintCache = null;
             }
             base.Dispose();
         }
 
         [XtraSerializableProperty]
-        public bool IsHeader { get { return isHeader; } }
+        public bool IsHeader { get; }
 
         [XtraSerializableProperty]
-        internal XRDataContainerPrintCache PrintCache
-        {
-            get { return cache; }
-            set { cache = value; }
-        }
+        internal XRDataContainerPrintCache PrintCache { get; set; }
     }
 
     public class DataRecordBrick : PanelBrick
     {
         protected DataContainerBrick parentBrick;
-        private bool isHeaderBrick;
 
         public DataRecordBrick() : base() { }
 
@@ -87,7 +74,7 @@ namespace DevExpress.XtraReports.CustomControls
             : base(brickOwner)
         {
             this.parentBrick = parentBrick;
-            this.isHeaderBrick = isHeaderBrick;
+            this.IsHeaderBrick = isHeaderBrick;
         }
 
         protected void AddCellPosition(XRDataCellPosition position)
@@ -103,7 +90,7 @@ namespace DevExpress.XtraReports.CustomControls
                 RectangleF headerBrickBounds = page.GetBrickBounds(headerBrick);
                 RectangleF brickRect = page.GetBrickBounds(this);
 
-                RecordPrintCache currentCache = parentBrick.PrintCache.GetCacheByBrick(this) as RecordPrintCache;
+                RecordPrintCache currentCache = parentBrick.PrintCache.GetCacheByBrick(this);
                 int cacheIndex = parentBrick.PrintCache.RecordsCache.IndexOf(currentCache);
 
                 float delta = brickRect.Top - headerBrickBounds.Bottom;
@@ -136,7 +123,7 @@ namespace DevExpress.XtraReports.CustomControls
             foreach (IDataCellBrick innerBrick in this.Bricks)
             {
                 innerBrick.CellPosition &= ~XRDataCellPosition.FirstOnPage;
-                innerBrick.CellPosition &= ~XRDataCellPosition.LastOnPage;                
+                innerBrick.CellPosition &= ~XRDataCellPosition.LastOnPage;
             }
         }
 
@@ -149,10 +136,7 @@ namespace DevExpress.XtraReports.CustomControls
         }
 
         [XtraSerializableProperty]
-        public bool IsHeaderBrick { 
-            get { return isHeaderBrick; }
-            set { isHeaderBrick = value; }
-        }
+        public bool IsHeaderBrick { get; set; }
     }
 
     interface IDataCellBrick
@@ -163,8 +147,6 @@ namespace DevExpress.XtraReports.CustomControls
     [BrickExporter(typeof(DataCellTextBrickExporter))]
     public class DataCellTextBrick : LabelBrick, IDataCellBrick
     {
-        XRDataCellPosition cellPosition;
-
         public DataCellTextBrick() : base() { }
         public DataCellTextBrick(IBrickOwner brickOwner) : base(brickOwner) { }
 
@@ -177,18 +159,12 @@ namespace DevExpress.XtraReports.CustomControls
         }
 
         [XtraSerializableProperty]
-        public XRDataCellPosition CellPosition 
-        { 
-            get { return cellPosition; }
-            set { cellPosition = value;} 
-        }
+        public XRDataCellPosition CellPosition { get; set; }
     }
 
     [BrickExporter(typeof(DataCellCheckBrickExporter))]
     public class DataCellCheckBrick : CheckBoxBrick, IDataCellBrick
     {
-        XRDataCellPosition cellPosition;
-
         public DataCellCheckBrick() : base() { }
         public DataCellCheckBrick(IBrickOwner brickOwner) : base(brickOwner) { }
 
@@ -201,11 +177,7 @@ namespace DevExpress.XtraReports.CustomControls
         }
 
         [XtraSerializableProperty]
-        public XRDataCellPosition CellPosition
-        {
-            get { return cellPosition; }
-            set { cellPosition = value; }
-        }
+        public XRDataCellPosition CellPosition { get; set; }
     }
 
     static class DataCellExportHelper
