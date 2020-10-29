@@ -121,7 +121,7 @@ namespace DevExpress.XtraReports.CustomControls
         public XRTreeListDesignTimePresenter(XRTreeList treeList) : base(treeList) { }
 
 		public override VisualBrick CreateBrick(VisualBrick[] childrenBricks) {
-            return new DataContainerBrick(TreeList, false) { PrintCache = new XRDataContainerPrintCache((XRTreeList)Control) };
+            return new DataContainerBrick(TreeList, false) { PrintCache = new XRDataContainerPrintCache((XRTreeList)ContainerControl) };
 		}
 
         protected override XRDataRecordCollection GetActualDataCollection()

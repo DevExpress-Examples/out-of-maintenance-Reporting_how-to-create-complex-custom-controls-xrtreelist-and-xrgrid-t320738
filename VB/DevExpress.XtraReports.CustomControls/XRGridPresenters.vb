@@ -86,7 +86,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Sub
 
 		Public Overrides Function CreateBrick(ByVal childrenBricks() As VisualBrick) As VisualBrick
-			Return New DataContainerBrick(Grid, False) With {.PrintCache = New XRDataContainerPrintCache(DirectCast(Control, XRGrid))}
+			Return New DataContainerBrick(Grid, False) With {.PrintCache = New XRDataContainerPrintCache(DirectCast(ContainerControl, XRGrid))}
 		End Function
 
 		Protected Overrides Function GetActualDataCollection() As XRDataRecordCollection

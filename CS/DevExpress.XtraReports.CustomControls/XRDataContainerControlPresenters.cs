@@ -1,18 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraPrinting.Native;
 using DevExpress.XtraReports.Native.Presenters;
 using DevExpress.XtraReports.Native.Printing;
 using DevExpress.XtraReports.UI;
-using System.Diagnostics;
 
-namespace DevExpress.XtraReports.CustomControls
-{
+namespace DevExpress.XtraReports.CustomControls {
     internal class XRDataContainerControlPresenter : ControlPresenter
     {
         public XRDataContainerControlPresenter(XRDataContainerControl control)
@@ -22,7 +17,7 @@ namespace DevExpress.XtraReports.CustomControls
 
         public override VisualBrick CreateBrick(VisualBrick[] childrenBricks)
         {
-            return new SubreportBrick(Control);
+            return new SubreportBrick(ContainerControl);
         }
 
         protected virtual BrickStyle CreateBrickStyle(XRDataContainerControl control, VisualBrick parentBrick, VisualBrick valueBrick, XRDataRecord record, int fieldIndex, bool isHeader) 
@@ -32,13 +27,13 @@ namespace DevExpress.XtraReports.CustomControls
             if (isHeader)
             {
                 PrintCellEventArgs printCellArgs = new PrintCellEventArgs(control.VisibleHeaders[fieldIndex], valueBrick, style);
-                Control.OnPrintHeaderCell(printCellArgs);
+                ContainerControl.OnPrintHeaderCell(printCellArgs);
                 ((IDataCellBrick)valueBrick).CellPosition |= XRDataCellPosition.Header;
             }
             else
             {
                 PrintRecordCellEventArgs printCellArgs = new PrintRecordCellEventArgs(record, control.VisibleHeaders[fieldIndex], valueBrick, style);
-                Control.OnPrintRecordCell(printCellArgs);
+                ContainerControl.OnPrintRecordCell(printCellArgs);
             }
 
             return style;
@@ -59,12 +54,12 @@ namespace DevExpress.XtraReports.CustomControls
 
             if (value is bool)
             {
-                valueBrick = new DataCellCheckBrick(Control);
+                valueBrick = new DataCellCheckBrick(ContainerControl);
                 ((DataCellCheckBrick)valueBrick).Checked = Convert.ToBoolean(value);
             }
             else
             {
-                valueBrick = new DataCellTextBrick(Control);
+                valueBrick = new DataCellTextBrick(ContainerControl);
                 valueBrick.Text = Convert.ToString(value);
             }
 
@@ -103,7 +98,7 @@ namespace DevExpress.XtraReports.CustomControls
 
         protected virtual XRDataRecordCollection GetActualDataCollection()
         {
-            return Control.Records;
+            return ContainerControl.Records;
         }
 
         protected virtual BrickStyle GetActualBrickStyle(DataContainerBrick parentBrick, bool isHeader)
@@ -113,24 +108,24 @@ namespace DevExpress.XtraReports.CustomControls
 
             if (isHeader)
             {
-                resultingStyle = new XRControlStyle(Control.fDefaultHeaderStyle);
-                if (((XRDataContainerStyles)Control.Styles).HeaderStyle != null)
-                    ApplyStyleProperties(((XRDataContainerStyles)Control.Styles).HeaderStyle, resultingStyle);
+                resultingStyle = new XRControlStyle(ContainerControl.fDefaultHeaderStyle);
+                if (((XRDataContainerStyles)ContainerControl.Styles).HeaderStyle != null)
+                    ApplyStyleProperties(((XRDataContainerStyles)ContainerControl.Styles).HeaderStyle, resultingStyle);
             }
             else
             {
-                resultingStyle = new XRControlStyle(Control.fDefaultCellStyle);
-                if (((XRDataContainerStyles)Control.Styles).CellStyle != null)
-                    ApplyStyleProperties(((XRDataContainerStyles)Control.Styles).CellStyle, resultingStyle);
+                resultingStyle = new XRControlStyle(ContainerControl.fDefaultCellStyle);
+                if (((XRDataContainerStyles)ContainerControl.Styles).CellStyle != null)
+                    ApplyStyleProperties(((XRDataContainerStyles)ContainerControl.Styles).CellStyle, resultingStyle);
 
-                if (parentBrick.PrintCache.RecordsCache.Count % 2 == 0 && ((XRDataContainerStyles)Control.Styles).OddCellStyle != null)
-                    ApplyStyleProperties(((XRDataContainerStyles)Control.Styles).OddCellStyle, resultingStyle);
+                if (parentBrick.PrintCache.RecordsCache.Count % 2 == 0 && ((XRDataContainerStyles)ContainerControl.Styles).OddCellStyle != null)
+                    ApplyStyleProperties(((XRDataContainerStyles)ContainerControl.Styles).OddCellStyle, resultingStyle);
 
-                if (parentBrick.PrintCache.RecordsCache.Count % 2 != 0 && ((XRDataContainerStyles)Control.Styles).EvenCellStyle != null)
-                    ApplyStyleProperties(((XRDataContainerStyles)Control.Styles).EvenCellStyle, resultingStyle);
+                if (parentBrick.PrintCache.RecordsCache.Count % 2 != 0 && ((XRDataContainerStyles)ContainerControl.Styles).EvenCellStyle != null)
+                    ApplyStyleProperties(((XRDataContainerStyles)ContainerControl.Styles).EvenCellStyle, resultingStyle);
             }
 
-            resultingStyle.StringFormat = BrickStringFormat.Create(resultingStyle.TextAlignment, Control.WordWrap);
+            resultingStyle.StringFormat = BrickStringFormat.Create(resultingStyle.TextAlignment, ContainerControl.WordWrap);
 
             return resultingStyle;
         }
@@ -173,7 +168,7 @@ namespace DevExpress.XtraReports.CustomControls
         protected virtual void LoadData()
         {
             if (!IsDesignMode)
-                Control.LoadData();
+                ContainerControl.LoadData();
         }
 
         protected Size MeasureTextSize(string text, float width, float dpi, BrickStyle style, PrintingSystemBase ps)
@@ -206,19 +201,19 @@ namespace DevExpress.XtraReports.CustomControls
 
         protected virtual void CorrectBrickBounds(VisualBrick brick, float actualHeight)
         {
-            RectangleF actualBounds = RectangleF.Empty;
+            RectangleF actualBounds;
 
             if (IsDesignMode)
-                actualBounds = Control.BoundsF;
+                actualBounds = ContainerControl.BoundsF;
             else
-                actualBounds = new RectangleF(0, 0, Control.BoundsF.Width, actualHeight);
+                actualBounds = new RectangleF(0, 0, ContainerControl.BoundsF.Width, actualHeight);
 
-            VisualBrickHelper.SetBrickBounds(brick, actualBounds, Control.Dpi);
+            VisualBrickHelper.SetBrickBounds(brick, actualBounds, ContainerControl.Dpi);
         }
 
-        protected XRDataContainerControl Control
+        protected XRDataContainerControl ContainerControl
         {
-            get { return (XRDataContainerControl)control; }
+            get { return (XRDataContainerControl)base.control; }
         }
 
         protected virtual bool IsDesignMode { get { return false; } }

@@ -79,7 +79,7 @@ namespace DevExpress.XtraReports.CustomControls {
         public XRGridDesignTimePresenter(XRGrid grid) : base(grid) { }
 
 		public override VisualBrick CreateBrick(VisualBrick[] childrenBricks) {
-            return new DataContainerBrick(Grid, false) { PrintCache = new XRDataContainerPrintCache((XRGrid)Control) };
+            return new DataContainerBrick(Grid, false) { PrintCache = new XRDataContainerPrintCache((XRGrid)ContainerControl) };
 		}
 
         protected override XRDataRecordCollection GetActualDataCollection()

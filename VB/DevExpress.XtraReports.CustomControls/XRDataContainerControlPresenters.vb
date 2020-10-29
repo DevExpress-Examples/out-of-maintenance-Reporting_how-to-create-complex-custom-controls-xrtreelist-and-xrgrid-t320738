@@ -1,15 +1,11 @@
 ﻿Imports System
-Imports System.Collections.Generic
 Imports System.Drawing
-Imports System.Linq
 Imports System.Reflection
-Imports System.Text
 Imports DevExpress.XtraPrinting
 Imports DevExpress.XtraPrinting.Native
 Imports DevExpress.XtraReports.Native.Presenters
 Imports DevExpress.XtraReports.Native.Printing
 Imports DevExpress.XtraReports.UI
-Imports System.Diagnostics
 
 Namespace DevExpress.XtraReports.CustomControls
 	Friend Class XRDataContainerControlPresenter
@@ -20,7 +16,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Sub
 
 		Public Overrides Function CreateBrick(ByVal childrenBricks() As VisualBrick) As VisualBrick
-			Return New SubreportBrick(Control)
+			Return New SubreportBrick(ContainerControl)
 		End Function
 
 		Protected Overridable Function CreateBrickStyle(ByVal control As XRDataContainerControl, ByVal parentBrick As VisualBrick, ByVal valueBrick As VisualBrick, ByVal record As XRDataRecord, ByVal fieldIndex As Integer, ByVal isHeader As Boolean) As BrickStyle
@@ -28,11 +24,11 @@ Namespace DevExpress.XtraReports.CustomControls
 
 			If isHeader Then
 				Dim printCellArgs As New PrintCellEventArgs(control.VisibleHeaders(fieldIndex), valueBrick, style)
-				Me.Control.OnPrintHeaderCell(printCellArgs)
+				ContainerControl.OnPrintHeaderCell(printCellArgs)
 				DirectCast(valueBrick, IDataCellBrick).CellPosition = DirectCast(valueBrick, IDataCellBrick).CellPosition Or XRDataCellPosition.Header
 			Else
 				Dim printCellArgs As New PrintRecordCellEventArgs(record, control.VisibleHeaders(fieldIndex), valueBrick, style)
-				Me.Control.OnPrintRecordCell(printCellArgs)
+				ContainerControl.OnPrintRecordCell(printCellArgs)
 			End If
 
 			Return style
@@ -50,10 +46,10 @@ Namespace DevExpress.XtraReports.CustomControls
 			Dim value As Object = record(absoluteIndex)
 
 			If TypeOf value Is Boolean Then
-				valueBrick = New DataCellCheckBrick(Me.Control)
+				valueBrick = New DataCellCheckBrick(ContainerControl)
 				CType(valueBrick, DataCellCheckBrick).Checked = Convert.ToBoolean(value)
 			Else
-				valueBrick = New DataCellTextBrick(Me.Control)
+				valueBrick = New DataCellTextBrick(ContainerControl)
 				valueBrick.Text = Convert.ToString(value)
 			End If
 
@@ -91,7 +87,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Sub
 
 		Protected Overridable Function GetActualDataCollection() As XRDataRecordCollection
-			Return Control.Records
+			Return ContainerControl.Records
 		End Function
 
 		Protected Overridable Function GetActualBrickStyle(ByVal parentBrick As DataContainerBrick, ByVal isHeader As Boolean) As BrickStyle
@@ -99,26 +95,26 @@ Namespace DevExpress.XtraReports.CustomControls
 
 
 			If isHeader Then
-				resultingStyle = New XRControlStyle(Control.fDefaultHeaderStyle)
-				If CType(Control.Styles, XRDataContainerStyles).HeaderStyle IsNot Nothing Then
-					ApplyStyleProperties(CType(Control.Styles, XRDataContainerStyles).HeaderStyle, resultingStyle)
+				resultingStyle = New XRControlStyle(ContainerControl.fDefaultHeaderStyle)
+				If CType(ContainerControl.Styles, XRDataContainerStyles).HeaderStyle IsNot Nothing Then
+					ApplyStyleProperties(CType(ContainerControl.Styles, XRDataContainerStyles).HeaderStyle, resultingStyle)
 				End If
 			Else
-				resultingStyle = New XRControlStyle(Control.fDefaultCellStyle)
-				If CType(Control.Styles, XRDataContainerStyles).CellStyle IsNot Nothing Then
-					ApplyStyleProperties(CType(Control.Styles, XRDataContainerStyles).CellStyle, resultingStyle)
+				resultingStyle = New XRControlStyle(ContainerControl.fDefaultCellStyle)
+				If CType(ContainerControl.Styles, XRDataContainerStyles).CellStyle IsNot Nothing Then
+					ApplyStyleProperties(CType(ContainerControl.Styles, XRDataContainerStyles).CellStyle, resultingStyle)
 				End If
 
-				If parentBrick.PrintCache.RecordsCache.Count Mod 2 = 0 AndAlso CType(Control.Styles, XRDataContainerStyles).OddCellStyle IsNot Nothing Then
-					ApplyStyleProperties(CType(Control.Styles, XRDataContainerStyles).OddCellStyle, resultingStyle)
+				If parentBrick.PrintCache.RecordsCache.Count Mod 2 = 0 AndAlso CType(ContainerControl.Styles, XRDataContainerStyles).OddCellStyle IsNot Nothing Then
+					ApplyStyleProperties(CType(ContainerControl.Styles, XRDataContainerStyles).OddCellStyle, resultingStyle)
 				End If
 
-				If parentBrick.PrintCache.RecordsCache.Count Mod 2 <> 0 AndAlso CType(Control.Styles, XRDataContainerStyles).EvenCellStyle IsNot Nothing Then
-					ApplyStyleProperties(CType(Control.Styles, XRDataContainerStyles).EvenCellStyle, resultingStyle)
+				If parentBrick.PrintCache.RecordsCache.Count Mod 2 <> 0 AndAlso CType(ContainerControl.Styles, XRDataContainerStyles).EvenCellStyle IsNot Nothing Then
+					ApplyStyleProperties(CType(ContainerControl.Styles, XRDataContainerStyles).EvenCellStyle, resultingStyle)
 				End If
 			End If
 
-			resultingStyle.StringFormat = BrickStringFormat.Create(resultingStyle.TextAlignment, Control.WordWrap)
+			resultingStyle.StringFormat = BrickStringFormat.Create(resultingStyle.TextAlignment, ContainerControl.WordWrap)
 
 			Return resultingStyle
 		End Function
@@ -166,7 +162,7 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		Protected Overridable Sub LoadData()
 			If Not IsDesignMode Then
-				Control.LoadData()
+				ContainerControl.LoadData()
 			End If
 		End Sub
 
@@ -196,20 +192,20 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Sub
 
 		Protected Overridable Sub CorrectBrickBounds(ByVal brick As VisualBrick, ByVal actualHeight As Single)
-			Dim actualBounds As RectangleF = RectangleF.Empty
+			Dim actualBounds As RectangleF
 
 			If IsDesignMode Then
-				actualBounds = Control.BoundsF
+				actualBounds = ContainerControl.BoundsF
 			Else
-				actualBounds = New RectangleF(0, 0, Control.BoundsF.Width, actualHeight)
+				actualBounds = New RectangleF(0, 0, ContainerControl.BoundsF.Width, actualHeight)
 			End If
 
-			VisualBrickHelper.SetBrickBounds(brick, actualBounds, Control.Dpi)
+			VisualBrickHelper.SetBrickBounds(brick, actualBounds, ContainerControl.Dpi)
 		End Sub
 
-		Protected ReadOnly Property Control() As XRDataContainerControl
+		Protected ReadOnly Property ContainerControl() As XRDataContainerControl
 			Get
-				Return CType(control, XRDataContainerControl)
+				Return CType(MyBase.control, XRDataContainerControl)
 			End Get
 		End Property
 
