@@ -341,14 +341,14 @@ Namespace DevExpress.XtraReports.CustomControls
 		Public Function GetEffectiveDataSource() As Object
 			Return Me.DataSource
 		End Function
-		Private Function IDataContainerBase2_GetEffectiveDataSource() As Object Implements IDataContainerBase2.GetEffectiveDataSource
+		Private Function IEffectiveDataContainer_GetEffectiveDataSource() As Object Implements IEffectiveDataContainer.GetEffectiveDataSource
 			Return GetEffectiveDataSource()
 		End Function
 
 		Public Function GetEffectiveDataMember() As String
 			Return Me.DataMember
 		End Function
-		Private Function IDataContainerBase2_GetEffectiveDataMember() As String Implements IDataContainerBase2.GetEffectiveDataMember
+		Private Function IEffectiveDataContainer_GetEffectiveDataMember() As String Implements IEffectiveDataContainer.GetEffectiveDataMember
 			Return GetEffectiveDataMember()
 		End Function
 
@@ -491,7 +491,7 @@ Namespace DevExpress.XtraReports.CustomControls
 
 		<Editor(GetType(DataAdapterEditor), GetType(UITypeEditor)), TypeConverterAttribute(GetType(DataAdapterConverter)), System.ComponentModel.DefaultValue(CType(Nothing, Object))>
 		Public Property DataAdapter() As Object
-		Private Property IDataContainer_DataAdapter() As Object Implements IDataContainer.DataAdapter
+		Private Property IDataSourceAssignable_DataAdapter() As Object Implements IDataSourceAssignable.DataAdapter
 			Get
 				Return DataAdapter
 			End Get

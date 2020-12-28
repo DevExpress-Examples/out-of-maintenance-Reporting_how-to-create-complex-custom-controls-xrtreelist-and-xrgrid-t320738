@@ -288,7 +288,7 @@ namespace DevExpress.XtraReports.CustomControls
         {
             return this.DataSource;
         }
-        object IDataContainerBase2.GetEffectiveDataSource()
+        object IEffectiveDataContainer.GetEffectiveDataSource()
         {
             return GetEffectiveDataSource();
         }
@@ -297,7 +297,7 @@ namespace DevExpress.XtraReports.CustomControls
         {
             return this.DataMember;
         }
-        string IDataContainerBase2.GetEffectiveDataMember()
+        string IEffectiveDataContainer.GetEffectiveDataMember()
         {
             return GetEffectiveDataMember();
         }
@@ -456,7 +456,7 @@ namespace DevExpress.XtraReports.CustomControls
         DefaultValue(null)
         ]
         public object DataAdapter { get; set; }
-        object IDataContainer.DataAdapter {
+        object IDataSourceAssignable.DataAdapter {
             get
             {
                 return DataAdapter;
