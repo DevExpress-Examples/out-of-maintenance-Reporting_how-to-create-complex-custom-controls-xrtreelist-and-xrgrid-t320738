@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Reflection;
+using DevExpress.Drawing;
 using DevExpress.XtraPrinting;
 using DevExpress.XtraPrinting.Native;
 using DevExpress.XtraReports.Native.Presenters;
@@ -176,7 +177,7 @@ namespace DevExpress.XtraReports.CustomControls {
             float convertedWidth = GraphicsUnitConverter.Convert(width, dpi, GraphicsDpi.Document);
             style.Padding.DeflateWidth(convertedWidth);
 
-            ps.Graph.PageUnit = GraphicsUnit.Document;
+            ps.Graph.PageUnit = DXGraphicsUnit.Document;
             ps.Graph.Font = style.Font;
             SizeF size = ps.Graph.MeasureString(text, (int)convertedWidth, style.StringFormat.Value);
             size.Height += GraphicsUnitConverter.Convert((float)2f, GraphicsDpi.Pixel, GraphicsDpi.Document);

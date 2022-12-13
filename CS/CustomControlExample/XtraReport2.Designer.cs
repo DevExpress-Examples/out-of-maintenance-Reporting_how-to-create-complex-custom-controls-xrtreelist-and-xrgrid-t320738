@@ -29,39 +29,49 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.DataAccess.Sql.TableQuery tableQuery1 = new DevExpress.DataAccess.Sql.TableQuery();
-            DevExpress.DataAccess.Sql.QueryParameter queryParameter1 = new DevExpress.DataAccess.Sql.QueryParameter();
-            DevExpress.DataAccess.Sql.TableInfo tableInfo1 = new DevExpress.DataAccess.Sql.TableInfo();
-            DevExpress.DataAccess.Sql.ColumnInfo columnInfo1 = new DevExpress.DataAccess.Sql.ColumnInfo();
-            DevExpress.DataAccess.Sql.ColumnInfo columnInfo2 = new DevExpress.DataAccess.Sql.ColumnInfo();
-            DevExpress.DataAccess.Sql.ColumnInfo columnInfo3 = new DevExpress.DataAccess.Sql.ColumnInfo();
-            DevExpress.DataAccess.Sql.ColumnInfo columnInfo4 = new DevExpress.DataAccess.Sql.ColumnInfo();
-            DevExpress.DataAccess.Sql.ColumnInfo columnInfo5 = new DevExpress.DataAccess.Sql.ColumnInfo();
-            DevExpress.DataAccess.Sql.ColumnInfo columnInfo6 = new DevExpress.DataAccess.Sql.ColumnInfo();
-            DevExpress.DataAccess.Sql.ColumnInfo columnInfo7 = new DevExpress.DataAccess.Sql.ColumnInfo();
-            DevExpress.DataAccess.Sql.ColumnInfo columnInfo8 = new DevExpress.DataAccess.Sql.ColumnInfo();
-            DevExpress.DataAccess.Sql.ColumnInfo columnInfo9 = new DevExpress.DataAccess.Sql.ColumnInfo();
-            DevExpress.DataAccess.Sql.ColumnInfo columnInfo10 = new DevExpress.DataAccess.Sql.ColumnInfo();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XtraReport2));
+            DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn1 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
+            DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn2 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
+            DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn3 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
+            DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn4 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
+            DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn5 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
+            DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn6 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
+            DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn7 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
+            DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn8 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
+            DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn9 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
+            DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn10 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
             DevExpress.XtraReports.CustomControls.XRSortField xrSortField1 = new DevExpress.XtraReports.CustomControls.XRSortField();
+            DevExpress.DataAccess.Sql.SelectQuery selectQuery1 = new DevExpress.DataAccess.Sql.SelectQuery();
+            DevExpress.DataAccess.Sql.Column column1 = new DevExpress.DataAccess.Sql.Column();
+            DevExpress.DataAccess.Sql.ColumnExpression columnExpression1 = new DevExpress.DataAccess.Sql.ColumnExpression();
+            DevExpress.DataAccess.Sql.Table table1 = new DevExpress.DataAccess.Sql.Table();
+            DevExpress.DataAccess.Sql.Column column2 = new DevExpress.DataAccess.Sql.Column();
+            DevExpress.DataAccess.Sql.ColumnExpression columnExpression2 = new DevExpress.DataAccess.Sql.ColumnExpression();
+            DevExpress.DataAccess.Sql.Column column3 = new DevExpress.DataAccess.Sql.Column();
+            DevExpress.DataAccess.Sql.ColumnExpression columnExpression3 = new DevExpress.DataAccess.Sql.ColumnExpression();
+            DevExpress.DataAccess.Sql.Column column4 = new DevExpress.DataAccess.Sql.Column();
+            DevExpress.DataAccess.Sql.ColumnExpression columnExpression4 = new DevExpress.DataAccess.Sql.ColumnExpression();
+            DevExpress.DataAccess.Sql.Column column5 = new DevExpress.DataAccess.Sql.Column();
+            DevExpress.DataAccess.Sql.ColumnExpression columnExpression5 = new DevExpress.DataAccess.Sql.ColumnExpression();
+            DevExpress.DataAccess.Sql.Column column6 = new DevExpress.DataAccess.Sql.Column();
+            DevExpress.DataAccess.Sql.ColumnExpression columnExpression6 = new DevExpress.DataAccess.Sql.ColumnExpression();
+            DevExpress.DataAccess.Sql.Column column7 = new DevExpress.DataAccess.Sql.Column();
+            DevExpress.DataAccess.Sql.ColumnExpression columnExpression7 = new DevExpress.DataAccess.Sql.ColumnExpression();
+            DevExpress.DataAccess.Sql.Column column8 = new DevExpress.DataAccess.Sql.Column();
+            DevExpress.DataAccess.Sql.ColumnExpression columnExpression8 = new DevExpress.DataAccess.Sql.ColumnExpression();
+            DevExpress.DataAccess.Sql.Column column9 = new DevExpress.DataAccess.Sql.Column();
+            DevExpress.DataAccess.Sql.ColumnExpression columnExpression9 = new DevExpress.DataAccess.Sql.ColumnExpression();
+            DevExpress.DataAccess.Sql.Column column10 = new DevExpress.DataAccess.Sql.Column();
+            DevExpress.DataAccess.Sql.ColumnExpression columnExpression10 = new DevExpress.DataAccess.Sql.ColumnExpression();
+            DevExpress.DataAccess.Sql.QueryParameter queryParameter1 = new DevExpress.DataAccess.Sql.QueryParameter();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XtraReport2));
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
+            this.xrGrid1 = new DevExpress.XtraReports.CustomControls.XRGrid();
             this.sqlDataSource1 = new DevExpress.DataAccess.Sql.SqlDataSource(this.components);
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
             this.HeaderStyle = new DevExpress.XtraReports.UI.XRControlStyle();
             this.CellStyle = new DevExpress.XtraReports.UI.XRControlStyle();
             this.paramCatId = new DevExpress.XtraReports.Parameters.Parameter();
-            this.xrGrid1 = new DevExpress.XtraReports.CustomControls.XRGrid();
-            this.xrGridColumn1 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
-            this.xrGridColumn2 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
-            this.xrGridColumn3 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
-            this.xrGridColumn4 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
-            this.xrGridColumn5 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
-            this.xrGridColumn6 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
-            this.xrGridColumn7 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
-            this.xrGridColumn8 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
-            this.xrGridColumn9 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
-            this.xrGridColumn10 = new DevExpress.XtraReports.CustomControls.XRGridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.xrGrid1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
@@ -74,42 +84,133 @@
             this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
+            // xrGrid1
+            // 
+            this.xrGrid1.CellAutoHeight = true;
+            this.xrGrid1.CellStyleName = "CellStyle";
+            xrGridColumn1.Caption = "ProductID";
+            xrGridColumn1.FieldName = "ProductID";
+            xrGridColumn1.FieldType = typeof(int);
+            xrGridColumn1.Visible = false;
+            xrGridColumn1.Width = 78F;
+            xrGridColumn2.Caption = "ProductName";
+            xrGridColumn2.FieldName = "ProductName";
+            xrGridColumn2.FieldType = typeof(string);
+            xrGridColumn2.Width = 88F;
+            xrGridColumn3.Caption = "SupplierID";
+            xrGridColumn3.FieldName = "SupplierID";
+            xrGridColumn3.FieldType = typeof(int);
+            xrGridColumn3.Visible = false;
+            xrGridColumn3.Width = 70F;
+            xrGridColumn4.Caption = "CategoryID";
+            xrGridColumn4.FieldName = "CategoryID";
+            xrGridColumn4.FieldType = typeof(int);
+            xrGridColumn4.Visible = false;
+            xrGridColumn4.Width = 64F;
+            xrGridColumn5.Caption = "QuantityPerUnit";
+            xrGridColumn5.FieldName = "QuantityPerUnit";
+            xrGridColumn5.FieldType = typeof(string);
+            xrGridColumn5.Width = 88F;
+            xrGridColumn6.Caption = "UnitPrice";
+            xrGridColumn6.FieldName = "UnitPrice";
+            xrGridColumn6.FieldType = typeof(decimal);
+            xrGridColumn6.Width = 88F;
+            xrGridColumn7.Caption = "UnitsInStock";
+            xrGridColumn7.FieldName = "UnitsInStock";
+            xrGridColumn7.FieldType = typeof(short);
+            xrGridColumn7.Width = 88F;
+            xrGridColumn8.Caption = "UnitsOnOrder";
+            xrGridColumn8.FieldName = "UnitsOnOrder";
+            xrGridColumn8.FieldType = typeof(short);
+            xrGridColumn8.Width = 88F;
+            xrGridColumn9.Caption = "ReorderLevel";
+            xrGridColumn9.FieldName = "ReorderLevel";
+            xrGridColumn9.FieldType = typeof(short);
+            xrGridColumn9.Width = 88F;
+            xrGridColumn10.Caption = "Discontinued";
+            xrGridColumn10.FieldName = "Discontinued";
+            xrGridColumn10.FieldType = typeof(bool);
+            xrGridColumn10.Width = 122F;
+            this.xrGrid1.Columns.AddRange(new DevExpress.XtraReports.CustomControls.XRFieldHeader[] {
+            xrGridColumn1,
+            xrGridColumn2,
+            xrGridColumn3,
+            xrGridColumn4,
+            xrGridColumn5,
+            xrGridColumn6,
+            xrGridColumn7,
+            xrGridColumn8,
+            xrGridColumn9,
+            xrGridColumn10});
+            this.xrGrid1.DataMember = "Products";
+            this.xrGrid1.DataSource = this.sqlDataSource1;
+            this.xrGrid1.EvenCellStyleName = "EvenStyle";
+            this.xrGrid1.HeaderAutoHeight = true;
+            this.xrGrid1.HeaderStyleName = "HeaderStyle";
+            this.xrGrid1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
+            this.xrGrid1.Name = "xrGrid1";
+            this.xrGrid1.OddCellStyleName = "OddStyle";
+            this.xrGrid1.SizeF = new System.Drawing.SizeF(650F, 109.375F);
+            xrSortField1.FieldName = "Discontinued";
+            xrSortField1.SortOrder = DevExpress.XtraReports.UI.XRColumnSortOrder.Descending;
+            this.xrGrid1.SortFields.AddRange(new DevExpress.XtraReports.CustomControls.XRSortField[] {
+            xrSortField1});
+            // 
             // sqlDataSource1
             // 
             this.sqlDataSource1.ConnectionName = "TreeListExample.Properties.Settings.nwindConnectionString";
             this.sqlDataSource1.Name = "sqlDataSource1";
-            tableQuery1.FilterString = "[Products.CategoryID] = ?paramCategoryID";
-            tableQuery1.Name = "Products";
+            columnExpression1.ColumnName = "ProductID";
+            table1.MetaSerializable = "<Meta X=\"30\" Y=\"30\" Width=\"125\" Height=\"283\" />";
+            table1.Name = "Products";
+            columnExpression1.Table = table1;
+            column1.Expression = columnExpression1;
+            columnExpression2.ColumnName = "ProductName";
+            columnExpression2.Table = table1;
+            column2.Expression = columnExpression2;
+            columnExpression3.ColumnName = "SupplierID";
+            columnExpression3.Table = table1;
+            column3.Expression = columnExpression3;
+            columnExpression4.ColumnName = "CategoryID";
+            columnExpression4.Table = table1;
+            column4.Expression = columnExpression4;
+            columnExpression5.ColumnName = "QuantityPerUnit";
+            columnExpression5.Table = table1;
+            column5.Expression = columnExpression5;
+            columnExpression6.ColumnName = "UnitPrice";
+            columnExpression6.Table = table1;
+            column6.Expression = columnExpression6;
+            columnExpression7.ColumnName = "UnitsInStock";
+            columnExpression7.Table = table1;
+            column7.Expression = columnExpression7;
+            columnExpression8.ColumnName = "UnitsOnOrder";
+            columnExpression8.Table = table1;
+            column8.Expression = columnExpression8;
+            columnExpression9.ColumnName = "ReorderLevel";
+            columnExpression9.Table = table1;
+            column9.Expression = columnExpression9;
+            columnExpression10.ColumnName = "Discontinued";
+            columnExpression10.Table = table1;
+            column10.Expression = columnExpression10;
+            selectQuery1.Columns.Add(column1);
+            selectQuery1.Columns.Add(column2);
+            selectQuery1.Columns.Add(column3);
+            selectQuery1.Columns.Add(column4);
+            selectQuery1.Columns.Add(column5);
+            selectQuery1.Columns.Add(column6);
+            selectQuery1.Columns.Add(column7);
+            selectQuery1.Columns.Add(column8);
+            selectQuery1.Columns.Add(column9);
+            selectQuery1.Columns.Add(column10);
+            selectQuery1.FilterString = "[Products.CategoryID] = ?paramCategoryID";
+            selectQuery1.Name = "Products";
             queryParameter1.Name = "paramCategoryID";
             queryParameter1.Type = typeof(DevExpress.DataAccess.Expression);
             queryParameter1.Value = new DevExpress.DataAccess.Expression("[Parameters.paramCatId]", typeof(int));
-            tableQuery1.Parameters.Add(queryParameter1);
-            tableInfo1.Name = "Products";
-            columnInfo1.Name = "ProductID";
-            columnInfo2.Name = "ProductName";
-            columnInfo3.Name = "SupplierID";
-            columnInfo4.Name = "CategoryID";
-            columnInfo5.Name = "QuantityPerUnit";
-            columnInfo6.Name = "UnitPrice";
-            columnInfo7.Name = "UnitsInStock";
-            columnInfo8.Name = "UnitsOnOrder";
-            columnInfo9.Name = "ReorderLevel";
-            columnInfo10.Name = "Discontinued";
-            tableInfo1.SelectedColumns.AddRange(new DevExpress.DataAccess.Sql.ColumnInfo[] {
-            columnInfo1,
-            columnInfo2,
-            columnInfo3,
-            columnInfo4,
-            columnInfo5,
-            columnInfo6,
-            columnInfo7,
-            columnInfo8,
-            columnInfo9,
-            columnInfo10});
-            tableQuery1.Tables.AddRange(new DevExpress.DataAccess.Sql.TableInfo[] {
-            tableInfo1});
+            selectQuery1.Parameters.Add(queryParameter1);
+            selectQuery1.Tables.Add(table1);
             this.sqlDataSource1.Queries.AddRange(new DevExpress.DataAccess.Sql.SqlQuery[] {
-            tableQuery1});
+            selectQuery1});
             this.sqlDataSource1.ResultSchemaSerializable = resources.GetString("sqlDataSource1.ResultSchemaSerializable");
             // 
             // TopMargin
@@ -121,7 +222,6 @@
             // 
             // BottomMargin
             // 
-            this.BottomMargin.HeightF = 100F;
             this.BottomMargin.Name = "BottomMargin";
             this.BottomMargin.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F);
             this.BottomMargin.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
@@ -151,108 +251,6 @@
             this.paramCatId.Type = typeof(int);
             this.paramCatId.ValueInfo = "1";
             // 
-            // xrGrid1
-            // 
-            this.xrGrid1.CellAutoHeight = true;
-            this.xrGrid1.CellStyleName = "CellStyle";
-            this.xrGrid1.Columns.AddRange(new DevExpress.XtraReports.CustomControls.XRFieldHeader[] {
-            this.xrGridColumn1,
-            this.xrGridColumn2,
-            this.xrGridColumn3,
-            this.xrGridColumn4,
-            this.xrGridColumn5,
-            this.xrGridColumn6,
-            this.xrGridColumn7,
-            this.xrGridColumn8,
-            this.xrGridColumn9,
-            this.xrGridColumn10});
-            this.xrGrid1.DataMember = "Products";
-            this.xrGrid1.DataSource = this.sqlDataSource1;
-            this.xrGrid1.EvenCellStyleName = "EvenStyle";
-            this.xrGrid1.HeaderAutoHeight = true;
-            this.xrGrid1.HeaderStyleName = "HeaderStyle";
-            this.xrGrid1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
-            this.xrGrid1.Name = "xrGrid1";
-            this.xrGrid1.OddCellStyleName = "OddStyle";
-            this.xrGrid1.SizeF = new System.Drawing.SizeF(650F, 109.375F);
-            xrSortField1.FieldName = "Discontinued";
-            xrSortField1.SortOrder = DevExpress.XtraReports.UI.XRColumnSortOrder.Descending;
-            this.xrGrid1.SortFields.AddRange(new DevExpress.XtraReports.CustomControls.XRSortField[] {
-            xrSortField1});
-            // 
-            // xrGridColumn1
-            // 
-            this.xrGridColumn1.Caption = "ProductID";
-            this.xrGridColumn1.FieldName = "ProductID";
-            this.xrGridColumn1.FieldType = typeof(int);
-            this.xrGridColumn1.Visible = false;
-            this.xrGridColumn1.Width = 78F;
-            // 
-            // xrGridColumn2
-            // 
-            this.xrGridColumn2.Caption = "ProductName";
-            this.xrGridColumn2.FieldName = "ProductName";
-            this.xrGridColumn2.FieldType = typeof(string);
-            this.xrGridColumn2.Width = 88F;
-            // 
-            // xrGridColumn3
-            // 
-            this.xrGridColumn3.Caption = "SupplierID";
-            this.xrGridColumn3.FieldName = "SupplierID";
-            this.xrGridColumn3.FieldType = typeof(int);
-            this.xrGridColumn3.Visible = false;
-            this.xrGridColumn3.Width = 70F;
-            // 
-            // xrGridColumn4
-            // 
-            this.xrGridColumn4.Caption = "CategoryID";
-            this.xrGridColumn4.FieldName = "CategoryID";
-            this.xrGridColumn4.FieldType = typeof(int);
-            this.xrGridColumn4.Visible = false;
-            this.xrGridColumn4.Width = 64F;
-            // 
-            // xrGridColumn5
-            // 
-            this.xrGridColumn5.Caption = "QuantityPerUnit";
-            this.xrGridColumn5.FieldName = "QuantityPerUnit";
-            this.xrGridColumn5.FieldType = typeof(string);
-            this.xrGridColumn5.Width = 88F;
-            // 
-            // xrGridColumn6
-            // 
-            this.xrGridColumn6.Caption = "UnitPrice";
-            this.xrGridColumn6.FieldName = "UnitPrice";
-            this.xrGridColumn6.FieldType = typeof(decimal);
-            this.xrGridColumn6.Width = 88F;
-            // 
-            // xrGridColumn7
-            // 
-            this.xrGridColumn7.Caption = "UnitsInStock";
-            this.xrGridColumn7.FieldName = "UnitsInStock";
-            this.xrGridColumn7.FieldType = typeof(short);
-            this.xrGridColumn7.Width = 88F;
-            // 
-            // xrGridColumn8
-            // 
-            this.xrGridColumn8.Caption = "UnitsOnOrder";
-            this.xrGridColumn8.FieldName = "UnitsOnOrder";
-            this.xrGridColumn8.FieldType = typeof(short);
-            this.xrGridColumn8.Width = 88F;
-            // 
-            // xrGridColumn9
-            // 
-            this.xrGridColumn9.Caption = "ReorderLevel";
-            this.xrGridColumn9.FieldName = "ReorderLevel";
-            this.xrGridColumn9.FieldType = typeof(short);
-            this.xrGridColumn9.Width = 88F;
-            // 
-            // xrGridColumn10
-            // 
-            this.xrGridColumn10.Caption = "Discontinued";
-            this.xrGridColumn10.FieldName = "Discontinued";
-            this.xrGridColumn10.FieldType = typeof(bool);
-            this.xrGridColumn10.Width = 122F;
-            // 
             // XtraReport2
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -267,7 +265,7 @@
             this.StyleSheet.AddRange(new DevExpress.XtraReports.UI.XRControlStyle[] {
             this.HeaderStyle,
             this.CellStyle});
-            this.Version = "15.2";
+            this.Version = "21.1";
             ((System.ComponentModel.ISupportInitialize)(this.xrGrid1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
@@ -282,16 +280,6 @@
         private DevExpress.XtraReports.UI.XRControlStyle HeaderStyle;
         private DevExpress.XtraReports.UI.XRControlStyle CellStyle;
         private DevExpress.XtraReports.CustomControls.XRGrid xrGrid1;
-        private DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn1;
-        private DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn2;
-        private DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn3;
-        private DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn4;
-        private DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn5;
-        private DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn6;
-        private DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn7;
-        private DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn8;
-        private DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn9;
-        private DevExpress.XtraReports.CustomControls.XRGridColumn xrGridColumn10;
         private DevExpress.XtraReports.Parameters.Parameter paramCatId;
     }
 }

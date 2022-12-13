@@ -6,7 +6,6 @@ Imports DevExpress.Utils.Serializing
 Imports DevExpress.XtraPrinting
 Imports DevExpress.XtraPrinting.BrickExporters
 Imports DevExpress.XtraPrinting.Export
-Imports DevExpress.XtraPrinting.Export.Imaging
 Imports DevExpress.XtraPrinting.Export.Web
 Imports DevExpress.XtraPrinting.Native
 
@@ -188,7 +187,7 @@ Namespace DevExpress.XtraReports.CustomControls
 	End Class
 
 	Friend Module DataCellExportHelper
-		Public Function GetResultingStyle(ByVal isSingleFileMode As Boolean, ByVal originalStyle As BrickStyle, ByVal position As XRDataCellPosition) As BrickStyle
+		Public Function GetResultingStyle(ByVal originalStyle As BrickStyle, ByVal position As XRDataCellPosition) As BrickStyle
 			Dim style As New BrickStyle(originalStyle)
 
 			style.StringFormat = BrickStringFormat.Create(style.TextAlignment, style.StringFormat.WordWrap)
@@ -210,13 +209,11 @@ Namespace DevExpress.XtraReports.CustomControls
 				style.Sides = style.Sides And Not BorderSide.Bottom
 			End If
 
-			If Not isSingleFileMode Then
-				If position.HasFlag(XRDataCellPosition.FirstOnPage) Then
-					style.Sides = style.Sides And Not BorderSide.Top
-				End If
-				If position.HasFlag(XRDataCellPosition.LastOnPage) AndAlso sides.HasFlag(BorderSide.Bottom) Then
-					style.Sides = style.Sides Or BorderSide.Bottom
-				End If
+			If position.HasFlag(XRDataCellPosition.FirstOnPage) Then
+				style.Sides = style.Sides And Not BorderSide.Top
+			End If
+			If position.HasFlag(XRDataCellPosition.LastOnPage) AndAlso sides.HasFlag(BorderSide.Bottom) Then
+				style.Sides = style.Sides Or BorderSide.Bottom
 			End If
 
 			Return style
@@ -231,7 +228,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Function
 
 		Public Sub FillHtmlTableCellCore(ByVal exportProvider As IHtmlExportProvider, ByVal style As BrickStyle, ByVal position As XRDataCellPosition)
-			Using curStyle As BrickStyle = DataCellExportHelper.GetResultingStyle(exportProvider.HtmlExportContext.MainExportMode = HtmlExportMode.SingleFile, style, position)
+			Using curStyle As BrickStyle = DataCellExportHelper.GetResultingStyle(style, position)
 				Dim areaLayout As New DevExpress.XtraPrinting.Export.Web.HtmlBuilderBase.HtmlCellLayout(curStyle)
 				exportProvider.CurrentCell.Attributes("class") = RegisterHtmlClassName(exportProvider.HtmlExportContext, curStyle, areaLayout.Borders, areaLayout.Padding)
 			End Using
@@ -242,7 +239,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		Inherits LabelBrickExporter
 
 		Protected Overrides Sub DrawObject(ByVal gr As IGraphics, ByVal rect As RectangleF)
-			Using curStyle As BrickStyle = DataCellExportHelper.GetResultingStyle(TypeOf gr Is OnePageImageGraphics, DataCellTextBrick.Style, DataCellTextBrick.CellPosition)
+			Using curStyle As BrickStyle = DataCellExportHelper.GetResultingStyle(DataCellTextBrick.Style, DataCellTextBrick.CellPosition)
 				Me.BrickPaint.BrickStyle = curStyle
 				MyBase.DrawObject(gr, rect)
 			End Using
@@ -262,7 +259,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Sub
 
 		Protected Overrides Sub FillXlTableCellInternal(ByVal exportProvider As IXlExportProvider)
-			Using curStyle As BrickStyle = DataCellExportHelper.GetResultingStyle(False, DataCellTextBrick.Style, DataCellTextBrick.CellPosition)
+			Using curStyle As BrickStyle = DataCellExportHelper.GetResultingStyle(DataCellTextBrick.Style, DataCellTextBrick.CellPosition)
 				curStyle.Sides = BorderSide.All
 				CType(exportProvider.CurrentData, BrickViewData).Style = curStyle
 				MyBase.FillXlTableCellInternal(exportProvider)
@@ -280,7 +277,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		Inherits CheckBoxBrickExporter
 
 		Protected Overrides Sub DrawObject(ByVal gr As IGraphics, ByVal rect As RectangleF)
-			Using curStyle As BrickStyle = DataCellExportHelper.GetResultingStyle(TypeOf gr Is OnePageImageGraphics, DataCellCheckBrick.Style, DataCellCheckBrick.CellPosition)
+			Using curStyle As BrickStyle = DataCellExportHelper.GetResultingStyle(DataCellCheckBrick.Style, DataCellCheckBrick.CellPosition)
 				Me.BrickPaint.BrickStyle = curStyle
 				MyBase.DrawObject(gr, rect)
 			End Using
@@ -300,7 +297,7 @@ Namespace DevExpress.XtraReports.CustomControls
 		End Sub
 
 		Protected Overrides Sub FillXlTableCellInternal(ByVal exportProvider As IXlExportProvider)
-			Using curStyle As BrickStyle = DataCellExportHelper.GetResultingStyle(False, DataCellCheckBrick.Style, DataCellCheckBrick.CellPosition)
+			Using curStyle As BrickStyle = DataCellExportHelper.GetResultingStyle(DataCellCheckBrick.Style, DataCellCheckBrick.CellPosition)
 				curStyle.Sides = BorderSide.All
 				CType(exportProvider.CurrentData, BrickViewData).Style = curStyle
 				MyBase.FillXlTableCellInternal(exportProvider)

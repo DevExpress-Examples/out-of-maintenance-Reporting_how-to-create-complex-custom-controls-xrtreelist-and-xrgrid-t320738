@@ -67,7 +67,7 @@ Namespace DevExpress.XtraReports.CustomControls
 	Public Class XRTreeListFieldNameEditor
 		Inherits ColumnNameEditor
 
-		Protected Overrides Function GetDataSource(ByVal context As ITypeDescriptorContext) As Object
+		Public Overrides Function GetDataSource(ByVal context As ITypeDescriptorContext) As Object
 			Return DirectCast(context.Instance, ICustomDataContainer).GetDataSource()
 		End Function
 	End Class

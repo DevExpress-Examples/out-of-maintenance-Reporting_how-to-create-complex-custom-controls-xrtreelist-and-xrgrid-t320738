@@ -71,7 +71,7 @@ namespace DevExpress.XtraReports.CustomControls
 
     public class XRTreeListFieldNameEditor : ColumnNameEditor
     {
-        protected override object GetDataSource(ITypeDescriptorContext context)
+        public override object GetDataSource(ITypeDescriptorContext context)
         {
             return ((ICustomDataContainer)context.Instance).GetDataSource();
         }

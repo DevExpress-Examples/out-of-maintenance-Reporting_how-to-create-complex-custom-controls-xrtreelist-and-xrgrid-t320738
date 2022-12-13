@@ -24,39 +24,49 @@
 		''' </summary>
 		Private Sub InitializeComponent()
 			Me.components = New System.ComponentModel.Container()
-			Dim tableQuery1 As New DevExpress.DataAccess.Sql.TableQuery()
-			Dim queryParameter1 As New DevExpress.DataAccess.Sql.QueryParameter()
-			Dim tableInfo1 As New DevExpress.DataAccess.Sql.TableInfo()
-			Dim columnInfo1 As New DevExpress.DataAccess.Sql.ColumnInfo()
-			Dim columnInfo2 As New DevExpress.DataAccess.Sql.ColumnInfo()
-			Dim columnInfo3 As New DevExpress.DataAccess.Sql.ColumnInfo()
-			Dim columnInfo4 As New DevExpress.DataAccess.Sql.ColumnInfo()
-			Dim columnInfo5 As New DevExpress.DataAccess.Sql.ColumnInfo()
-			Dim columnInfo6 As New DevExpress.DataAccess.Sql.ColumnInfo()
-			Dim columnInfo7 As New DevExpress.DataAccess.Sql.ColumnInfo()
-			Dim columnInfo8 As New DevExpress.DataAccess.Sql.ColumnInfo()
-			Dim columnInfo9 As New DevExpress.DataAccess.Sql.ColumnInfo()
-			Dim columnInfo10 As New DevExpress.DataAccess.Sql.ColumnInfo()
-			Dim resources As New System.ComponentModel.ComponentResourceManager(GetType(XtraReport2))
+			Dim xrGridColumn1 As New DevExpress.XtraReports.CustomControls.XRGridColumn()
+			Dim xrGridColumn2 As New DevExpress.XtraReports.CustomControls.XRGridColumn()
+			Dim xrGridColumn3 As New DevExpress.XtraReports.CustomControls.XRGridColumn()
+			Dim xrGridColumn4 As New DevExpress.XtraReports.CustomControls.XRGridColumn()
+			Dim xrGridColumn5 As New DevExpress.XtraReports.CustomControls.XRGridColumn()
+			Dim xrGridColumn6 As New DevExpress.XtraReports.CustomControls.XRGridColumn()
+			Dim xrGridColumn7 As New DevExpress.XtraReports.CustomControls.XRGridColumn()
+			Dim xrGridColumn8 As New DevExpress.XtraReports.CustomControls.XRGridColumn()
+			Dim xrGridColumn9 As New DevExpress.XtraReports.CustomControls.XRGridColumn()
+			Dim xrGridColumn10 As New DevExpress.XtraReports.CustomControls.XRGridColumn()
 			Dim xrSortField1 As New DevExpress.XtraReports.CustomControls.XRSortField()
+			Dim selectQuery1 As New DevExpress.DataAccess.Sql.SelectQuery()
+			Dim column1 As New DevExpress.DataAccess.Sql.Column()
+			Dim columnExpression1 As New DevExpress.DataAccess.Sql.ColumnExpression()
+			Dim table1 As New DevExpress.DataAccess.Sql.Table()
+			Dim column2 As New DevExpress.DataAccess.Sql.Column()
+			Dim columnExpression2 As New DevExpress.DataAccess.Sql.ColumnExpression()
+			Dim column3 As New DevExpress.DataAccess.Sql.Column()
+			Dim columnExpression3 As New DevExpress.DataAccess.Sql.ColumnExpression()
+			Dim column4 As New DevExpress.DataAccess.Sql.Column()
+			Dim columnExpression4 As New DevExpress.DataAccess.Sql.ColumnExpression()
+			Dim column5 As New DevExpress.DataAccess.Sql.Column()
+			Dim columnExpression5 As New DevExpress.DataAccess.Sql.ColumnExpression()
+			Dim column6 As New DevExpress.DataAccess.Sql.Column()
+			Dim columnExpression6 As New DevExpress.DataAccess.Sql.ColumnExpression()
+			Dim column7 As New DevExpress.DataAccess.Sql.Column()
+			Dim columnExpression7 As New DevExpress.DataAccess.Sql.ColumnExpression()
+			Dim column8 As New DevExpress.DataAccess.Sql.Column()
+			Dim columnExpression8 As New DevExpress.DataAccess.Sql.ColumnExpression()
+			Dim column9 As New DevExpress.DataAccess.Sql.Column()
+			Dim columnExpression9 As New DevExpress.DataAccess.Sql.ColumnExpression()
+			Dim column10 As New DevExpress.DataAccess.Sql.Column()
+			Dim columnExpression10 As New DevExpress.DataAccess.Sql.ColumnExpression()
+			Dim queryParameter1 As New DevExpress.DataAccess.Sql.QueryParameter()
+			Dim resources As New System.ComponentModel.ComponentResourceManager(GetType(XtraReport2))
 			Me.Detail = New DevExpress.XtraReports.UI.DetailBand()
+			Me.xrGrid1 = New DevExpress.XtraReports.CustomControls.XRGrid()
 			Me.sqlDataSource1 = New DevExpress.DataAccess.Sql.SqlDataSource(Me.components)
 			Me.TopMargin = New DevExpress.XtraReports.UI.TopMarginBand()
 			Me.BottomMargin = New DevExpress.XtraReports.UI.BottomMarginBand()
 			Me.HeaderStyle = New DevExpress.XtraReports.UI.XRControlStyle()
 			Me.CellStyle = New DevExpress.XtraReports.UI.XRControlStyle()
 			Me.paramCatId = New DevExpress.XtraReports.Parameters.Parameter()
-			Me.xrGrid1 = New DevExpress.XtraReports.CustomControls.XRGrid()
-			Me.xrGridColumn1 = New DevExpress.XtraReports.CustomControls.XRGridColumn()
-			Me.xrGridColumn2 = New DevExpress.XtraReports.CustomControls.XRGridColumn()
-			Me.xrGridColumn3 = New DevExpress.XtraReports.CustomControls.XRGridColumn()
-			Me.xrGridColumn4 = New DevExpress.XtraReports.CustomControls.XRGridColumn()
-			Me.xrGridColumn5 = New DevExpress.XtraReports.CustomControls.XRGridColumn()
-			Me.xrGridColumn6 = New DevExpress.XtraReports.CustomControls.XRGridColumn()
-			Me.xrGridColumn7 = New DevExpress.XtraReports.CustomControls.XRGridColumn()
-			Me.xrGridColumn8 = New DevExpress.XtraReports.CustomControls.XRGridColumn()
-			Me.xrGridColumn9 = New DevExpress.XtraReports.CustomControls.XRGridColumn()
-			Me.xrGridColumn10 = New DevExpress.XtraReports.CustomControls.XRGridColumn()
 			CType(Me.xrGrid1, System.ComponentModel.ISupportInitialize).BeginInit()
 			CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
 			' 
@@ -68,30 +78,121 @@
 			Me.Detail.Padding = New DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F)
 			Me.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft
 			' 
+			' xrGrid1
+			' 
+			Me.xrGrid1.CellAutoHeight = True
+			Me.xrGrid1.CellStyleName = "CellStyle"
+			xrGridColumn1.Caption = "ProductID"
+			xrGridColumn1.FieldName = "ProductID"
+			xrGridColumn1.FieldType = GetType(Integer)
+			xrGridColumn1.Visible = False
+			xrGridColumn1.Width = 78F
+			xrGridColumn2.Caption = "ProductName"
+			xrGridColumn2.FieldName = "ProductName"
+			xrGridColumn2.FieldType = GetType(String)
+			xrGridColumn2.Width = 88F
+			xrGridColumn3.Caption = "SupplierID"
+			xrGridColumn3.FieldName = "SupplierID"
+			xrGridColumn3.FieldType = GetType(Integer)
+			xrGridColumn3.Visible = False
+			xrGridColumn3.Width = 70F
+			xrGridColumn4.Caption = "CategoryID"
+			xrGridColumn4.FieldName = "CategoryID"
+			xrGridColumn4.FieldType = GetType(Integer)
+			xrGridColumn4.Visible = False
+			xrGridColumn4.Width = 64F
+			xrGridColumn5.Caption = "QuantityPerUnit"
+			xrGridColumn5.FieldName = "QuantityPerUnit"
+			xrGridColumn5.FieldType = GetType(String)
+			xrGridColumn5.Width = 88F
+			xrGridColumn6.Caption = "UnitPrice"
+			xrGridColumn6.FieldName = "UnitPrice"
+			xrGridColumn6.FieldType = GetType(Decimal)
+			xrGridColumn6.Width = 88F
+			xrGridColumn7.Caption = "UnitsInStock"
+			xrGridColumn7.FieldName = "UnitsInStock"
+			xrGridColumn7.FieldType = GetType(Short)
+			xrGridColumn7.Width = 88F
+			xrGridColumn8.Caption = "UnitsOnOrder"
+			xrGridColumn8.FieldName = "UnitsOnOrder"
+			xrGridColumn8.FieldType = GetType(Short)
+			xrGridColumn8.Width = 88F
+			xrGridColumn9.Caption = "ReorderLevel"
+			xrGridColumn9.FieldName = "ReorderLevel"
+			xrGridColumn9.FieldType = GetType(Short)
+			xrGridColumn9.Width = 88F
+			xrGridColumn10.Caption = "Discontinued"
+			xrGridColumn10.FieldName = "Discontinued"
+			xrGridColumn10.FieldType = GetType(Boolean)
+			xrGridColumn10.Width = 122F
+			Me.xrGrid1.Columns.AddRange(New DevExpress.XtraReports.CustomControls.XRFieldHeader() { xrGridColumn1, xrGridColumn2, xrGridColumn3, xrGridColumn4, xrGridColumn5, xrGridColumn6, xrGridColumn7, xrGridColumn8, xrGridColumn9, xrGridColumn10})
+			Me.xrGrid1.DataMember = "Products"
+			Me.xrGrid1.DataSource = Me.sqlDataSource1
+			Me.xrGrid1.EvenCellStyleName = "EvenStyle"
+			Me.xrGrid1.HeaderAutoHeight = True
+			Me.xrGrid1.HeaderStyleName = "HeaderStyle"
+			Me.xrGrid1.LocationFloat = New DevExpress.Utils.PointFloat(0F, 0F)
+			Me.xrGrid1.Name = "xrGrid1"
+			Me.xrGrid1.OddCellStyleName = "OddStyle"
+			Me.xrGrid1.SizeF = New System.Drawing.SizeF(650F, 109.375F)
+			xrSortField1.FieldName = "Discontinued"
+			xrSortField1.SortOrder = DevExpress.XtraReports.UI.XRColumnSortOrder.Descending
+			Me.xrGrid1.SortFields.AddRange(New DevExpress.XtraReports.CustomControls.XRSortField() { xrSortField1})
+			' 
 			' sqlDataSource1
 			' 
 			Me.sqlDataSource1.ConnectionName = "TreeListExample.Properties.Settings.nwindConnectionString"
 			Me.sqlDataSource1.Name = "sqlDataSource1"
-			tableQuery1.FilterString = "[Products.CategoryID] = ?paramCategoryID"
-			tableQuery1.Name = "Products"
+			columnExpression1.ColumnName = "ProductID"
+			table1.MetaSerializable = "<Meta X=""30"" Y=""30"" Width=""125"" Height=""283"" />"
+			table1.Name = "Products"
+			columnExpression1.Table = table1
+			column1.Expression = columnExpression1
+			columnExpression2.ColumnName = "ProductName"
+			columnExpression2.Table = table1
+			column2.Expression = columnExpression2
+			columnExpression3.ColumnName = "SupplierID"
+			columnExpression3.Table = table1
+			column3.Expression = columnExpression3
+			columnExpression4.ColumnName = "CategoryID"
+			columnExpression4.Table = table1
+			column4.Expression = columnExpression4
+			columnExpression5.ColumnName = "QuantityPerUnit"
+			columnExpression5.Table = table1
+			column5.Expression = columnExpression5
+			columnExpression6.ColumnName = "UnitPrice"
+			columnExpression6.Table = table1
+			column6.Expression = columnExpression6
+			columnExpression7.ColumnName = "UnitsInStock"
+			columnExpression7.Table = table1
+			column7.Expression = columnExpression7
+			columnExpression8.ColumnName = "UnitsOnOrder"
+			columnExpression8.Table = table1
+			column8.Expression = columnExpression8
+			columnExpression9.ColumnName = "ReorderLevel"
+			columnExpression9.Table = table1
+			column9.Expression = columnExpression9
+			columnExpression10.ColumnName = "Discontinued"
+			columnExpression10.Table = table1
+			column10.Expression = columnExpression10
+			selectQuery1.Columns.Add(column1)
+			selectQuery1.Columns.Add(column2)
+			selectQuery1.Columns.Add(column3)
+			selectQuery1.Columns.Add(column4)
+			selectQuery1.Columns.Add(column5)
+			selectQuery1.Columns.Add(column6)
+			selectQuery1.Columns.Add(column7)
+			selectQuery1.Columns.Add(column8)
+			selectQuery1.Columns.Add(column9)
+			selectQuery1.Columns.Add(column10)
+			selectQuery1.FilterString = "[Products.CategoryID] = ?paramCategoryID"
+			selectQuery1.Name = "Products"
 			queryParameter1.Name = "paramCategoryID"
 			queryParameter1.Type = GetType(DevExpress.DataAccess.Expression)
 			queryParameter1.Value = New DevExpress.DataAccess.Expression("[Parameters.paramCatId]", GetType(Integer))
-			tableQuery1.Parameters.Add(queryParameter1)
-			tableInfo1.Name = "Products"
-			columnInfo1.Name = "ProductID"
-			columnInfo2.Name = "ProductName"
-			columnInfo3.Name = "SupplierID"
-			columnInfo4.Name = "CategoryID"
-			columnInfo5.Name = "QuantityPerUnit"
-			columnInfo6.Name = "UnitPrice"
-			columnInfo7.Name = "UnitsInStock"
-			columnInfo8.Name = "UnitsOnOrder"
-			columnInfo9.Name = "ReorderLevel"
-			columnInfo10.Name = "Discontinued"
-			tableInfo1.SelectedColumns.AddRange(New DevExpress.DataAccess.Sql.ColumnInfo() { columnInfo1, columnInfo2, columnInfo3, columnInfo4, columnInfo5, columnInfo6, columnInfo7, columnInfo8, columnInfo9, columnInfo10})
-			tableQuery1.Tables.AddRange(New DevExpress.DataAccess.Sql.TableInfo() { tableInfo1})
-			Me.sqlDataSource1.Queries.AddRange(New DevExpress.DataAccess.Sql.SqlQuery() { tableQuery1})
+			selectQuery1.Parameters.Add(queryParameter1)
+			selectQuery1.Tables.Add(table1)
+			Me.sqlDataSource1.Queries.AddRange(New DevExpress.DataAccess.Sql.SqlQuery() { selectQuery1})
 			Me.sqlDataSource1.ResultSchemaSerializable = resources.GetString("sqlDataSource1.ResultSchemaSerializable")
 			' 
 			' TopMargin
@@ -103,7 +204,6 @@
 			' 
 			' BottomMargin
 			' 
-			Me.BottomMargin.HeightF = 100F
 			Me.BottomMargin.Name = "BottomMargin"
 			Me.BottomMargin.Padding = New DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 100F)
 			Me.BottomMargin.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft
@@ -133,97 +233,6 @@
 			Me.paramCatId.Type = GetType(Integer)
 			Me.paramCatId.ValueInfo = "1"
 			' 
-			' xrGrid1
-			' 
-			Me.xrGrid1.CellAutoHeight = True
-			Me.xrGrid1.CellStyleName = "CellStyle"
-			Me.xrGrid1.Columns.AddRange(New DevExpress.XtraReports.CustomControls.XRFieldHeader() { Me.xrGridColumn1, Me.xrGridColumn2, Me.xrGridColumn3, Me.xrGridColumn4, Me.xrGridColumn5, Me.xrGridColumn6, Me.xrGridColumn7, Me.xrGridColumn8, Me.xrGridColumn9, Me.xrGridColumn10})
-			Me.xrGrid1.DataMember = "Products"
-			Me.xrGrid1.DataSource = Me.sqlDataSource1
-			Me.xrGrid1.EvenCellStyleName = "EvenStyle"
-			Me.xrGrid1.HeaderAutoHeight = True
-			Me.xrGrid1.HeaderStyleName = "HeaderStyle"
-			Me.xrGrid1.LocationFloat = New DevExpress.Utils.PointFloat(0F, 0F)
-			Me.xrGrid1.Name = "xrGrid1"
-			Me.xrGrid1.OddCellStyleName = "OddStyle"
-			Me.xrGrid1.SizeF = New System.Drawing.SizeF(650F, 109.375F)
-			xrSortField1.FieldName = "Discontinued"
-			xrSortField1.SortOrder = DevExpress.XtraReports.UI.XRColumnSortOrder.Descending
-			Me.xrGrid1.SortFields.AddRange(New DevExpress.XtraReports.CustomControls.XRSortField() { xrSortField1})
-			' 
-			' xrGridColumn1
-			' 
-			Me.xrGridColumn1.Caption = "ProductID"
-			Me.xrGridColumn1.FieldName = "ProductID"
-			Me.xrGridColumn1.FieldType = GetType(Integer)
-			Me.xrGridColumn1.Visible = False
-			Me.xrGridColumn1.Width = 78F
-			' 
-			' xrGridColumn2
-			' 
-			Me.xrGridColumn2.Caption = "ProductName"
-			Me.xrGridColumn2.FieldName = "ProductName"
-			Me.xrGridColumn2.FieldType = GetType(String)
-			Me.xrGridColumn2.Width = 88F
-			' 
-			' xrGridColumn3
-			' 
-			Me.xrGridColumn3.Caption = "SupplierID"
-			Me.xrGridColumn3.FieldName = "SupplierID"
-			Me.xrGridColumn3.FieldType = GetType(Integer)
-			Me.xrGridColumn3.Visible = False
-			Me.xrGridColumn3.Width = 70F
-			' 
-			' xrGridColumn4
-			' 
-			Me.xrGridColumn4.Caption = "CategoryID"
-			Me.xrGridColumn4.FieldName = "CategoryID"
-			Me.xrGridColumn4.FieldType = GetType(Integer)
-			Me.xrGridColumn4.Visible = False
-			Me.xrGridColumn4.Width = 64F
-			' 
-			' xrGridColumn5
-			' 
-			Me.xrGridColumn5.Caption = "QuantityPerUnit"
-			Me.xrGridColumn5.FieldName = "QuantityPerUnit"
-			Me.xrGridColumn5.FieldType = GetType(String)
-			Me.xrGridColumn5.Width = 88F
-			' 
-			' xrGridColumn6
-			' 
-			Me.xrGridColumn6.Caption = "UnitPrice"
-			Me.xrGridColumn6.FieldName = "UnitPrice"
-			Me.xrGridColumn6.FieldType = GetType(Decimal)
-			Me.xrGridColumn6.Width = 88F
-			' 
-			' xrGridColumn7
-			' 
-			Me.xrGridColumn7.Caption = "UnitsInStock"
-			Me.xrGridColumn7.FieldName = "UnitsInStock"
-			Me.xrGridColumn7.FieldType = GetType(Short)
-			Me.xrGridColumn7.Width = 88F
-			' 
-			' xrGridColumn8
-			' 
-			Me.xrGridColumn8.Caption = "UnitsOnOrder"
-			Me.xrGridColumn8.FieldName = "UnitsOnOrder"
-			Me.xrGridColumn8.FieldType = GetType(Short)
-			Me.xrGridColumn8.Width = 88F
-			' 
-			' xrGridColumn9
-			' 
-			Me.xrGridColumn9.Caption = "ReorderLevel"
-			Me.xrGridColumn9.FieldName = "ReorderLevel"
-			Me.xrGridColumn9.FieldType = GetType(Short)
-			Me.xrGridColumn9.Width = 88F
-			' 
-			' xrGridColumn10
-			' 
-			Me.xrGridColumn10.Caption = "Discontinued"
-			Me.xrGridColumn10.FieldName = "Discontinued"
-			Me.xrGridColumn10.FieldType = GetType(Boolean)
-			Me.xrGridColumn10.Width = 122F
-			' 
 			' XtraReport2
 			' 
 			Me.Bands.AddRange(New DevExpress.XtraReports.UI.Band() { Me.Detail, Me.TopMargin, Me.BottomMargin})
@@ -231,7 +240,7 @@
 			Me.Margins = New System.Drawing.Printing.Margins(100, 100, 86, 100)
 			Me.Parameters.AddRange(New DevExpress.XtraReports.Parameters.Parameter() { Me.paramCatId})
 			Me.StyleSheet.AddRange(New DevExpress.XtraReports.UI.XRControlStyle() { Me.HeaderStyle, Me.CellStyle})
-			Me.Version = "15.2"
+			Me.Version = "21.1"
 			CType(Me.xrGrid1, System.ComponentModel.ISupportInitialize).EndInit()
 			CType(Me, System.ComponentModel.ISupportInitialize).EndInit()
 
@@ -246,16 +255,6 @@
 		Private HeaderStyle As DevExpress.XtraReports.UI.XRControlStyle
 		Private CellStyle As DevExpress.XtraReports.UI.XRControlStyle
 		Private xrGrid1 As DevExpress.XtraReports.CustomControls.XRGrid
-		Private xrGridColumn1 As DevExpress.XtraReports.CustomControls.XRGridColumn
-		Private xrGridColumn2 As DevExpress.XtraReports.CustomControls.XRGridColumn
-		Private xrGridColumn3 As DevExpress.XtraReports.CustomControls.XRGridColumn
-		Private xrGridColumn4 As DevExpress.XtraReports.CustomControls.XRGridColumn
-		Private xrGridColumn5 As DevExpress.XtraReports.CustomControls.XRGridColumn
-		Private xrGridColumn6 As DevExpress.XtraReports.CustomControls.XRGridColumn
-		Private xrGridColumn7 As DevExpress.XtraReports.CustomControls.XRGridColumn
-		Private xrGridColumn8 As DevExpress.XtraReports.CustomControls.XRGridColumn
-		Private xrGridColumn9 As DevExpress.XtraReports.CustomControls.XRGridColumn
-		Private xrGridColumn10 As DevExpress.XtraReports.CustomControls.XRGridColumn
 		Private paramCatId As DevExpress.XtraReports.Parameters.Parameter
 	End Class
 End Namespace

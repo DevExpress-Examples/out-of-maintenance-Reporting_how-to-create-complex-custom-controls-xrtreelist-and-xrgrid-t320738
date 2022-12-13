@@ -1,6 +1,7 @@
 ﻿Imports System
 Imports System.Drawing
 Imports System.Reflection
+Imports DevExpress.Drawing
 Imports DevExpress.XtraPrinting
 Imports DevExpress.XtraPrinting.Native
 Imports DevExpress.XtraReports.Native.Presenters
@@ -170,7 +171,7 @@ Namespace DevExpress.XtraReports.CustomControls
 			Dim convertedWidth As Single = GraphicsUnitConverter.Convert(width, dpi, GraphicsDpi.Document)
 			style.Padding.DeflateWidth(convertedWidth)
 
-			ps.Graph.PageUnit = GraphicsUnit.Document
+			ps.Graph.PageUnit = DXGraphicsUnit.Document
 			ps.Graph.Font = style.Font
 			Dim size As SizeF = ps.Graph.MeasureString(text, CInt(Math.Truncate(convertedWidth)), style.StringFormat.Value)
 			size.Height += GraphicsUnitConverter.Convert(CSng(2F), GraphicsDpi.Pixel, GraphicsDpi.Document)
